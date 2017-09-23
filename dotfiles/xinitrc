@@ -1,0 +1,29 @@
+# Merge .Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+
+# Set keyboard layout
+setxkbmap -layout it -variant nodeadkeys
+# Remap caps lock to Windows key when held
+xmodmap -e 'keysym Caps_Lock = Hyper_L'
+xmodmap -e 'keycode any = Caps_Lock'
+xmodmap -e 'remove lock = Hyper_L'
+xmodmap -e 'add lock = Caps_Lock'
+xcape -e 'Hyper_L=Caps_Lock'
+
+{%@@ if profile == "home-desktop" @@%}
+# Set HDMI-1 screen to primary
+xrandr --output HDMI-1 --primary
+{%@@ endif @@%}
+
+# Activate numlock
+numlockx &
+
+# Start background programs
+trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+       --expand true --width 3 --transparent true --tint 0x000000 --height 16 \
+       --monitor primary &
+dunst & # Notification server
+redshift &
+dropbox &
+
+exec xmonad
