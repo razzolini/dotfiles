@@ -3,4 +3,14 @@ config:
   create: true
   dotpath: dotfiles
 dotfiles:
+  f_xresources:
+    dst: ~/.Xresources
+    src: Xresources
+    link: true
 profiles:
+  home-desktop:
+    dotfiles:
+    - f_xresources
+  laptop:
+    dotfiles:
+    - f_xresources

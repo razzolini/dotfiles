@@ -1,0 +1,23 @@
+XTerm.termName: xterm-256color
+
+! Set scrollback buffer size
+XTerm.vt100.saveLines: 4096
+
+! Treat all input as UTF-8
+XTerm.vt100.locale: true
+
+! Save selection to clipboard instead of primary
+XTerm.vt100.selectToClipboard: true
+
+! Correctly send Alt key
+XTerm.vt100.metaSendsEscape: true
+
+! Use dark background
+XTerm.vt100.foreground: rgb:b2/b2/b2
+XTerm.vt100.background: rgb:08/08/08
+
+! Set font
+XTerm.vt100.faceName: DejaVu Sans Mono:size=9:antialias=true
+
+! Fix underscore not displaying at some font sizes
+XTerm.scaleHeight: 1.01
