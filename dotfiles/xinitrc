@@ -21,7 +21,11 @@ numlockx &
 # Start background programs
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 3 --transparent true --tint 0x000000 --height 16 \
+{%@@ if profile == "home-desktop" @@%}
        --monitor primary &
+{%@@ else @@%}
+       &
+{%@@ endif @@%}
 dunst & # Notification server
 redshift &
 dropbox &
