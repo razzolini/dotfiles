@@ -3,6 +3,9 @@ config:
   create: true
   dotpath: dotfiles
 dotfiles:
+  f_dunstrc:
+    dst: ~/.config/dunst/dunstrc
+    src: config/dunst/dunstrc
   f_xinitrc:
     dst: ~/.xinitrc
     src: xinitrc
@@ -12,9 +15,11 @@ dotfiles:
 profiles:
   home-desktop:
     dotfiles:
+    - f_dunstrc
     - f_xinitrc
     - f_xresources
   laptop:
     dotfiles:
+    - f_dunstrc
     - f_xinitrc
     - f_xresources
