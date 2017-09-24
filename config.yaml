@@ -6,6 +6,9 @@ dotfiles:
   f_dunstrc:
     dst: ~/.config/dunst/dunstrc
     src: config/dunst/dunstrc
+  f_profile:
+    dst: ~/.profile
+    src: profile
   f_xinitrc:
     dst: ~/.xinitrc
     src: xinitrc
@@ -16,10 +19,12 @@ profiles:
   home-desktop:
     dotfiles:
     - f_dunstrc
+    - f_profile
     - f_xinitrc
     - f_xresources
   laptop:
     dotfiles:
     - f_dunstrc
+    - f_profile
     - f_xinitrc
     - f_xresources
