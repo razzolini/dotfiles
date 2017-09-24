@@ -3,6 +3,13 @@ config:
   create: true
   dotpath: dotfiles
 dotfiles:
+  d_fish_functions:
+    dst: ~/.config/fish/functions
+    link: true
+    src: config/fish/functions
+  f_config.fish:
+    dst: ~/.config/fish/config.fish
+    src: config/fish/config.fish
   f_dunstrc:
     dst: ~/.config/dunst/dunstrc
     src: config/dunst/dunstrc
@@ -18,12 +25,16 @@ dotfiles:
 profiles:
   home-desktop:
     dotfiles:
+    - d_fish_functions
+    - f_config.fish
     - f_dunstrc
     - f_profile
     - f_xinitrc
     - f_xresources
   laptop:
     dotfiles:
+    - d_fish_functions
+    - f_config.fish
     - f_dunstrc
     - f_profile
     - f_xinitrc
