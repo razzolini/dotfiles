@@ -25,7 +25,7 @@ env -i HOME=$HOME bash -l -c 'export -p' \
 # Start ssh agent and/or load its environment vars if needed
 set -l agent_output "$HOME/.ssh-agent-output"
 if not pgrep -u $USER ssh-agent > /dev/null
-    ssh-agent | sed -r '/s/^([A-Z_]+)=([^;]+).*/set -x \1 \2/' > $agent_output
+    ssh-agent | sed -r 's/^([A-Z_]+)=([^;]+).*/set -x \1 \2/' > $agent_output
 end
 if test -z $SSH_AGENT_PID
     source $agent_output > /dev/null
