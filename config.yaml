@@ -13,6 +13,10 @@ dotfiles:
   f_dunstrc:
     dst: ~/.config/dunst/dunstrc
     src: config/dunst/dunstrc
+  f_init.vim:
+    dst: ~/.config/nvim/init.vim
+    link: true
+    src: config/nvim/init.vim
   f_profile:
     dst: ~/.profile
     src: profile
@@ -28,6 +32,7 @@ profiles:
     - d_fish_functions
     - f_config.fish
     - f_dunstrc
+    - f_init.vim
     - f_profile
     - f_xinitrc
     - f_xresources
@@ -36,6 +41,7 @@ profiles:
     - d_fish_functions
     - f_config.fish
     - f_dunstrc
+    - f_init.vim
     - f_profile
     - f_xinitrc
     - f_xresources
