@@ -20,6 +20,9 @@ dotfiles:
   f_profile:
     dst: ~/.profile
     src: profile
+  f_ssh_config:
+    dst: ~/.ssh/config
+    src: ssh/config
   f_xinitrc:
     dst: ~/.xinitrc
     src: xinitrc
@@ -34,6 +37,7 @@ profiles:
     - f_dunstrc
     - f_init.vim
     - f_profile
+    - f_ssh_config
     - f_xinitrc
     - f_xresources
   laptop:
@@ -43,5 +47,6 @@ profiles:
     - f_dunstrc
     - f_init.vim
     - f_profile
+    - f_ssh_config
     - f_xinitrc
     - f_xresources
