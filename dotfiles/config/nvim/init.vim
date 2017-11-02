@@ -311,6 +311,10 @@ set inccommand=split
 " Save backup and swap files out of the way
 set backupdir=~/.local/share/nvim/backup
 set directory=~/.local/share/nvim/swap
+" Create backupdir if it doesn't exist
+if !isdirectory(&backupdir)
+    call mkdir(&backupdir, 'p')
+endif
 
 " Create a backup when overwriting a file
 set backup
