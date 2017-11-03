@@ -13,7 +13,7 @@ let mapleader = 'ò'
 " Install vim-plug if needed
 let $VIM_DIR=expand('<sfile>:p:h')
 let $PLUG_PATH=$VIM_DIR . '/autoload/plug.vim'
-if empty($PLUG_PATH)
+if empty(glob($PLUG_PATH))
     silent !curl -fLo $PLUG_PATH --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
