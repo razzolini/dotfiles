@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# If the first argument is:
+#  - 'init', create the volume file if it doesn't exist.
+#  - 'read', monitor the file and print new lines (using tail -f).
+# Otherwise, execute the pactl command specified by the arguments (if any) to
+# update the volume/mute, then fetch the new values and write them to a file
+# (specified by the $VOLUME_FILE environment variable) to be displayed by the
+# status bar.
+# This single script implements both writing and reading to avoid having to
+# specify the volume file path in multiple places: an environment variable is
+# not a valid solution because xmobar can't get its value.
+# A file is used instead of a pipe to allow multiple status bar instances.
+
+readonly VOLUME_FILE='/tmp/.volume'
+
+write_volume() {
+    local -r volume_status="$(amixer sget Master)"
+    local -r volume="$(echo "$volume_status" | grep -oEm 1 '[[:digit:]]+%')"
+    local mute_string=''
+    if echo "$volume_status" | grep -qF '[off]'; then
+        mute_string=' <fc=red>MUTE</fc>'
+    fi
+    readonly mute_string
+
+    printf 'VOL %s%s\n' "$volume" "$mute_string" >> "$VOLUME_FILE"
+}
+
+case "$1" in
+    'init')
+        touch "$VOLUME_FILE"
+        ;;
+
+    'read')
+        # Skip all preexisting lines except the last one.
+        tail -n 1 -f "$VOLUME_FILE"
+        ;;
+
+    *)
+        if [[ $# -gt 0 ]]; then
+            pactl "$@"
+        fi
+        write_volume
+        ;;
+esac

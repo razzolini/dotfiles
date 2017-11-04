@@ -7,6 +7,14 @@ dotfiles:
     dst: ~/.config/fish/functions
     link: true
     src: config/fish/functions
+  f_bin_toggle-touchpad:
+    dst: ~/bin/toggle-touchpad
+    link: true
+    src: bin/toggle-touchpad
+  f_bin_volume:
+    dst: ~/bin/volume
+    link: true
+    src: bin/volume
   f_config.fish:
     dst: ~/.config/fish/config.fish
     src: config/fish/config.fish
@@ -26,6 +34,12 @@ dotfiles:
   f_xinitrc:
     dst: ~/.xinitrc
     src: xinitrc
+  f_xmobar:
+    dst: ~/.xmonad/xmobar
+    src: xmonad/xmobar
+  f_xmonad.hs:
+    dst: ~/.xmonad/xmonad.hs
+    src: xmonad/xmonad.hs
   f_xresources:
     dst: ~/.Xresources
     src: Xresources
@@ -33,20 +47,26 @@ profiles:
   home-desktop:
     dotfiles:
     - d_fish_functions
+    - f_bin_volume
     - f_config.fish
     - f_dunstrc
     - f_init.vim
     - f_profile
     - f_ssh_config
     - f_xinitrc
+    - f_xmobar
+    - f_xmonad.hs
     - f_xresources
   laptop:
     dotfiles:
     - d_fish_functions
+    - f_bin_toggle-touchpad
     - f_config.fish
     - f_dunstrc
     - f_init.vim
     - f_profile
     - f_ssh_config
     - f_xinitrc
+    - f_xmobar
+    - f_xmonad.hs
     - f_xresources

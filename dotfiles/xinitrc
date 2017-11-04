@@ -25,6 +25,12 @@ unclutter --fork
 {%@@ if profile == "home-desktop" @@%}
 # Set HDMI-1 screen to primary
 xrandr --output HDMI-1 --primary
+
+# Status bar volume setup (see ~/bin/volume)
+# Create a volume file if it doesn't exist
+volume init
+# Write the initial value (in the background because this may be slow before X is started)
+volume &
 {%@@ endif @@%}
 
 # Activate numlock

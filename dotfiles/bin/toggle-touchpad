@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+readonly TOUCHPAD_NAME='SynPS/2 Synaptics TouchPad'
+
+readonly touchpad_status="$(xinput list-props "$TOUCHPAD_NAME" | grep 'Device Enabled' | grep -o '[01]$')"
+if [[ $touchpad_status -eq 0 ]]; then
+    xinput enable "$TOUCHPAD_NAME"
+else
+    xinput disable "$TOUCHPAD_NAME"
+fi
