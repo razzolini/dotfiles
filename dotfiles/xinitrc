@@ -15,6 +15,13 @@ xmodmap -e 'remove lock = Hyper_L'
 xmodmap -e 'add lock = Caps_Lock'
 xcape -e 'Hyper_L=Caps_Lock'
 
+# Set default cursor to left pointer instead of cross
+xsetroot -cursor_name left_ptr
+{%@@ if profile == "laptop" @@%}
+# Hide mouse cursor when inactive (unclutter-xfixes)
+unclutter --fork
+{%@@ endif @@%}
+
 {%@@ if profile == "home-desktop" @@%}
 # Set HDMI-1 screen to primary
 xrandr --output HDMI-1 --primary
