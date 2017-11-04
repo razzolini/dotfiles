@@ -51,6 +51,6 @@ Config
 {%@@ if profile == "home-desktop" @@%}
     , template = "%StdinReader% }{ %wlp5s0wi% | %volume% | %cpu% %thermal0% | %memory% | %disku% | %date%"
 {%@@ else @@%}
-    , template = "%StdinReader% }{ %wlp13s0b1% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
+    , template = "%StdinReader% }{ %wlp13s0b1wi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
 {%@@ endif @@%}
     }
