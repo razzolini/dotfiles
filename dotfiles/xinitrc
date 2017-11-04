@@ -1,3 +1,8 @@
+# Rename old log file if it exists
+[[ -f ~/.xsession-errors ]] && mv ~/.xsession-errors ~/.xsession-errors.old
+# Redirect stdout/err from virtual console to log file
+exec > ~/.xsession-errors 2>&1
+
 # Merge .Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 
