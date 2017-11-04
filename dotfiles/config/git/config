@@ -1,0 +1,5 @@
+[user]
+    name = Riccardo Azzolini
+    email = riccardo4096@gmail.com
+[diff]
+    indentHeuristic = true
