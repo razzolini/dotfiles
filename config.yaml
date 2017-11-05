@@ -7,6 +7,10 @@ dotfiles:
     dst: ~/.config/fish/functions
     link: true
     src: config/fish/functions
+  d_spacemacs.d:
+    dst: ~/.spacemacs.d
+    link: true
+    src: spacemacs.d
   f_bin_toggle-touchpad:
     dst: ~/bin/toggle-touchpad
     link: true
@@ -50,6 +54,7 @@ profiles:
   home-desktop:
     dotfiles:
     - d_fish_functions
+    - d_spacemacs.d
     - f_bin_volume
     - f_config.fish
     - f_dunstrc
@@ -64,6 +69,7 @@ profiles:
   laptop:
     dotfiles:
     - d_fish_functions
+    - d_spacemacs.d
     - f_bin_toggle-touchpad
     - f_config.fish
     - f_dunstrc
