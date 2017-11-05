@@ -51,6 +51,7 @@ values."
      javascript
      latex
      org
+     php
      rust ;; includes toml support
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
