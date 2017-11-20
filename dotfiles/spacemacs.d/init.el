@@ -323,6 +323,9 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Rebind 'SPC q q' to frame-killer (like 'SPC q z') to avoid stopping the server by accident.
+  (spacemacs/set-leader-keys "qq" 'spacemacs/frame-killer)
+
   ;; Activate visual line mode in every buffer
   (global-visual-line-mode t)
 
