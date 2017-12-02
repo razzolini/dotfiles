@@ -50,6 +50,7 @@ values."
      html
      javascript
      latex
+     markdown
      org
      php
      rust ;; includes toml support
