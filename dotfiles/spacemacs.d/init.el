@@ -63,7 +63,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(org-alert)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -379,10 +379,17 @@ The original mappings are not removed."
   (add-hook 'org-mode-hook
             (lambda () (add-to-list 'org-modules 'org-drill t)))
 
+  ;; Enable org agenda notifications
+  (require 'org-alert)
+  (org-alert-enable)
+
   (setq-default
    evil-escape-unordered-key-sequence t
 
    tab-width 4
+
+   ;; Use system notifications for org-alert
+   alert-default-style 'libnotify
 
    ;; asm layer
    nasm-basic-offset 4
