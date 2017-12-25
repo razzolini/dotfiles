@@ -384,6 +384,9 @@ The original mappings are not removed."
   (require 'org-alert)
   (org-alert-enable)
 
+  ;; Associate .blade.* extension to web-mode
+  (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
+
   (setq-default
    evil-escape-unordered-key-sequence t
 
