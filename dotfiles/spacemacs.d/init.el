@@ -380,6 +380,11 @@ The original mappings are not removed."
   (add-hook 'org-mode-hook
             (lambda () (add-to-list 'org-modules 'org-drill t)))
 
+  (defun org-drill-agenda ()
+    "Execute org-drill with agenda scope regardless of the value of org-drill-scope."
+    (interactive)
+    (org-drill 'agenda))
+
   ;; Enable org agenda notifications
   (require 'org-alert)
   (org-alert-enable)
