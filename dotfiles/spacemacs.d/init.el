@@ -387,7 +387,13 @@ The original mappings are not removed."
 
   ;; Enable org agenda notifications
   (require 'org-alert)
+  (advice-add 'org-alert-check :around
+              ;; Correctly restore current buffer after org-alert-check, even if it's a popwin popup
+              (lambda (f &rest args)
+                (save-window-excursion (apply f args)))
+              '((name . "restore popup buffer")))
   (org-alert-enable)
+
 
   ;; Associate .blade.* extension to web-mode
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
