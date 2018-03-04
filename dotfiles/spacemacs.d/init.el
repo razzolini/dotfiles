@@ -53,6 +53,7 @@ values."
      markdown
      org
      php
+     python
      rust ;; includes toml support
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
@@ -395,6 +396,8 @@ The original mappings are not removed."
               '((name . "restore popup buffer")))
   (org-alert-enable)
 
+  ;; Enable syntax checking by default in python-mode
+  (add-hook 'python-mode-hook 'flycheck-mode)
 
   ;; Associate .blade.* extension to web-mode
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
