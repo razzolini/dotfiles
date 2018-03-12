@@ -403,6 +403,10 @@ The original mappings are not removed."
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
 
   (setq-default
+   ;; Use evil search module instead of isearch
+   ;; Workaround for issue #9915
+   evil-search-module 'evil-search
+
    evil-escape-unordered-key-sequence t
 
    tab-width 4
