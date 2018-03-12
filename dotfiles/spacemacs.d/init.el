@@ -326,6 +326,18 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Workaround for Spacemacs issue #9915
+  ;; For the first frame, even if created with emacsclient -a '' -c
+  (defun fix-evil-highlight-persist-face-first-frame ()
+    (when (face-background 'evil-search-highlight-persist-highlight-face)
+      (spacemacs//adaptive-evil-highlight-persist-face)
+      (remove-hook 'evil-search-highlight-persist-hook 'fix-evil-highlight-persist-face)))
+  (add-hook 'evil-search-highlight-persist-hook 'fix-evil-highlight-persist-face-first-frame)
+  ;; For subsequent frames
+  (add-hook 'after-make-frame-functions
+            (lambda (frame)
+              (spacemacs//adaptive-evil-highlight-persist-face)))
+
   ;; Rebind 'SPC q q' to frame-killer (like 'SPC q z') to avoid stopping the server by accident.
   (spacemacs/set-leader-keys "qq" 'spacemacs/frame-killer)
 
@@ -403,10 +415,6 @@ The original mappings are not removed."
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
 
   (setq-default
-   ;; Use evil search module instead of isearch
-   ;; Workaround for issue #9915
-   evil-search-module 'evil-search
-
    evil-escape-unordered-key-sequence t
 
    tab-width 4
