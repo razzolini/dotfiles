@@ -411,6 +411,11 @@ The original mappings are not removed."
   ;; Enable syntax checking by default in python-mode
   (add-hook 'python-mode-hook 'flycheck-mode)
 
+  ;; Partially fix missing prompt issues when using MariaDB with sql-mode
+  (add-hook 'sql-mode-hook
+            (lambda ()
+              (sql-set-product-feature 'mysql :prompt-regexp "^\\(MariaDB\\|MySQL\\) \\[[_a-zA-Z()]*\\]> ")))
+
   ;; Associate .blade.* extension to web-mode
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
 
