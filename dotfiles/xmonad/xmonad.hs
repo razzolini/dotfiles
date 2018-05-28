@@ -94,8 +94,8 @@ workspaceKeys = do
 screenKeys = do
     (key, screen) <- zip ['w', 'e', 'r'] [0..]
     (otherModMasks, action) <-
-        [ ("", viewScreen)
-        , ("S-", sendToScreen)
+        [ ("", viewScreen def)
+        , ("S-", sendToScreen def)
         ]
     pure (otherModMasks ++ "M-" ++ [key], action screen)
 
