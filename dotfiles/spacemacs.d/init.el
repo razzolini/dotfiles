@@ -49,7 +49,7 @@ values."
      (haskell :variables haskell-completion-backend 'intero)
      html
      javascript
-     latex
+     (latex :variables latex-enable-auto-fill nil)
      markdown
      org
      php
