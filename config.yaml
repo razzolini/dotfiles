@@ -12,7 +12,7 @@ dotfiles:
     link: true
     src: spacemacs.d
   f_aurman_config:
-    dst: ../.config/aurman/aurman_config
+    dst: ~/.config/aurman/aurman_config
     src: config/aurman/aurman_config
   f_bin_toggle-touchpad:
     dst: ~/bin/toggle-touchpad
