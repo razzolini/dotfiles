@@ -416,8 +416,9 @@ The original mappings are not removed."
             (lambda ()
               (sql-set-product-feature 'mysql :prompt-regexp "^\\(MariaDB\\|MySQL\\) \\[[_a-zA-Z()]*\\]> ")))
 
-  ;; Associate .blade.* extension to web-mode
+  ;; Associate .blade.* and .vue extensions to web-mode
   (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
 
   (setq-default
    evil-escape-unordered-key-sequence t
