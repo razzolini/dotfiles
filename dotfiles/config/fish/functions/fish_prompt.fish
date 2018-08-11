@@ -23,7 +23,7 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     # Show $HOME as ~
-    set -l cwd (pwd | sed "s_$HOME\>_~_")
+    set -l cwd (pwd | sed -E "s_^$HOME(/|\$)_~\1_")
 
     echo -n -s (set_color $color_cwd) $cwd (set_color normal) (__fish_git_prompt) (set_color normal) "$suffix "
 end
