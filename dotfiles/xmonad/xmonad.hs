@@ -18,7 +18,7 @@ main = do
     xmonad $ def
         -- Leave space for the status bar
         { manageHook = manageSpawn <+> manageDocks <+> manageHook def
-        , layoutHook = lessBorders OnlyFloat $ avoidStruts $ layoutHook def
+        , layoutHook = lessBorders OnlyScreenFloat $ avoidStruts $ layoutHook def
         , handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook def
         , startupHook = myStartupHook <+> docksStartupHook <+> startupHook def
         -- Rebind Mod to the Windows key
