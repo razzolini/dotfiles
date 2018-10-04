@@ -20,6 +20,12 @@ fi
 export EDITOR="$(which nvim)"
 export VISUAL="${EDITOR}"
 
+# Set Java CLASSPATH
+export CLASSPATH='.'
+# Add user libraries
+CLASSPATH="${CLASSPATH}:$(find "${HOME}/.local/share/java" -type f -name '*.jar' -print0 \
+    | tr '\0' ':' | sed 's/:$//')"
+
 {%@@ if profile == "home-desktop" @@%}
 # Set default hledger journal (most recent one, assuming YEAR.journal name format)
 export LEDGER_FILE="$(find "${HOME}/Documents/Accounting/" -type f -regex '.*/[0-9]+\.journal' \
