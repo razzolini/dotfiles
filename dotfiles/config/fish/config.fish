@@ -18,9 +18,7 @@ set __fish_git_prompt_char_untrackedfiles '☡'
 set __fish_git_prompt_char_stashstate '↩'
 
 # Import bash environment variables
-env -i HOME=$HOME bash -l -c 'export -p' \
-    | sed '/PWD/d; /SHLVL/d; /PATH/s/"//g; /PATH/s/:/ /g; s/=/ /; s/^declare/set/' \
-    | source
+import_bash_env
 
 # Start ssh agent and/or load its environment vars if needed
 set -l agent_output "$HOME/.ssh-agent-output"
