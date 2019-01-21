@@ -338,8 +338,14 @@ you should place your code here."
             (lambda (frame)
               (spacemacs//adaptive-evil-highlight-persist-face)))
 
-  ;; Rebind 'SPC q q' to frame-killer (like 'SPC q z') to avoid stopping the server by accident.
-  (spacemacs/set-leader-keys "qq" 'spacemacs/frame-killer)
+  ;; Rebind 'SPC q q' to avoid stopping the server by accident.
+  (defun quit-or-kill-frame ()
+    "Propmt to save and quit, or kill the current frame when in daemon mode."
+    (interactive)
+    (if (daemonp)
+        (call-interactively 'spacemacs/frame-killer)
+      (call-interactively 'spacemacs/prompt-kill-emacs)))
+  (spacemacs/set-leader-keys "qq" 'quit-or-kill-frame)
 
   ;; Activate visual line mode in every buffer
   (global-visual-line-mode t)
