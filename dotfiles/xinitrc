@@ -47,6 +47,6 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true \
 dunst & # Notification server
 redshift &
 dropbox &
-emacs --daemon > /dev/null 2>&1 &
+emacs --daemon &
 
 exec xmonad
