@@ -3,3 +3,5 @@
     email = riccardo4096@gmail.com
 [diff]
     indentHeuristic = true
+[core]
+    autocrlf = input
