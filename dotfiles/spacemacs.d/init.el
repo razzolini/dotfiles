@@ -47,18 +47,14 @@ values."
      finance
      git
      (haskell :variables haskell-completion-backend 'intero)
-     html
-     javascript
      (latex :variables latex-enable-auto-fill nil)
      markdown
      org
-     php
      python
      rust ;; includes toml support
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
-     sql
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      yaml
      )
@@ -417,15 +413,6 @@ The original mappings are not removed."
   ;; Enable syntax checking by default in python-mode
   (add-hook 'python-mode-hook 'flycheck-mode)
 
-  ;; Partially fix missing prompt issues when using MariaDB with sql-mode
-  (add-hook 'sql-mode-hook
-            (lambda ()
-              (sql-set-product-feature 'mysql :prompt-regexp "^\\(MariaDB\\|MySQL\\) \\[[_a-zA-Z()]*\\]> ")))
-
-  ;; Associate .blade.* and .vue extensions to web-mode
-  (add-to-list 'auto-mode-alist '("\\.blade\\." . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-
   (setq-default
    evil-escape-unordered-key-sequence t
 
@@ -445,11 +432,6 @@ The original mappings are not removed."
    ledger-report-links-in-register nil ;; Uses command line option not supported by hledger
    ;; Disable highlighting of transaction under point
    ledger-highlight-xact-under-point nil
-
-   ;; html layer
-   web-mode-markup-indent-offset 2
-   ;; Write self-closing tags without final slash
-   emmet-self-closing-tag-style ""
 
    ;; haskell layer
    ;; Configure indentation
