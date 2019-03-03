@@ -47,6 +47,7 @@ values."
      finance
      git
      (haskell :variables haskell-completion-backend 'intero)
+     idris
      (latex :variables latex-enable-auto-fill nil)
      markdown
      org
