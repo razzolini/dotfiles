@@ -411,6 +411,15 @@ The original mappings are not removed."
               '((name . "restore popup buffer")))
   (org-alert-enable)
 
+  ;; Configure smart quotes for org export
+  (with-eval-after-load 'ox
+    (add-to-list 'org-export-smart-quotes-alist
+                 '("it"
+                   (primary-opening :latex "``")
+                   (primary-closing :latex "''")
+                   (secondary-opening :latex "`")
+                   (secondary-closing :latex "'"))))
+
   ;; Enable syntax checking by default in python-mode
   (add-hook 'python-mode-hook 'flycheck-mode)
 
@@ -442,8 +451,13 @@ The original mappings are not removed."
    haskell-indentation-where-pre-offset 2 ;; where keyword
 
    ;; org layer
-   ;; Disable table of contents by default when exporting
+   ;; Configure export settings (shared by all backends)
+   org-export-default-language "it"
+   org-export-with-smart-quotes t
    org-export-with-toc nil
    ;; Disable postamble (footer) in html export
    org-html-postamble nil
+   ;; Configure latex preview and export
+   org-latex-compiler "xelatex"
+   org-preview-latex-default-process 'imagemagick ;; dvipng doesn't support TikZ
    ))
