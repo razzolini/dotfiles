@@ -460,4 +460,8 @@ The original mappings are not removed."
    ;; Configure latex preview and export
    org-latex-compiler "xelatex"
    org-preview-latex-default-process 'imagemagick ;; dvipng doesn't support TikZ
+   org-latex-listings 'minted ;; requires -shell-escape
+   org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                           "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
    ))
