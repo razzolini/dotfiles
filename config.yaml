@@ -36,6 +36,9 @@ dotfiles:
     dst: ~/.config/nvim/init.vim
     link: link
     src: config/nvim/init.vim
+  f_pacdiff-merge3:
+    src: bin/pacdiff-merge3
+    dst: ~/bin/pacdiff-merge3
   f_profile:
     dst: ~/.profile
     src: profile
@@ -65,6 +68,7 @@ profiles:
     - f_dunstrc
     - f_git_config
     - f_init.vim
+    - f_pacdiff-merge3
     - f_profile
     - f_ssh_config
     - f_xinitrc
@@ -81,6 +85,7 @@ profiles:
     - f_dunstrc
     - f_git_config
     - f_init.vim
+    - f_pacdiff-merge3
     - f_profile
     - f_ssh_config
     - f_xinitrc

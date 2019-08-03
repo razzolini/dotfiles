@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+# Arguments: new_file cur_file
+newfile="$1"
+curfile="$2"
+
+trap 'rm -f $prevfile ' EXIT
+prevfile="$(mktemp -q -p "${TMPDIR:-/tmp}" "$(basename "${curfile:-$0}").XXXXXXXX")"
+
+download() { # package_name prev_version arch
+  printf '  > Previous version (%s) not in pacman cache; downloading from Arch Linux Archive...\n' "$2"
+  pushd /var/cache/pacman/pkg >/dev/null
+  curl -O "https://archive.archlinux.org/packages/${1::1}/$1/$1-$2-$3.pkg.tar.xz"
+  popd >/dev/null
+}
+
+if [[ "${newfile##*.}" == "pacnew" ]]; then
+  printf -- '--> Getting old version of %s\n' "$curfile"
+  pkgname="$(pacman -Qqo "$curfile")"
+  printf '  > provided by %s package\n' "$pkgname"
+
+  # Get the from/to versions of the latest upgrade
+  IFS=" " read -r -a versions <<< "$(awk '/upgraded '"$pkgname"' / {split($0,a,"[()]"); split(a[2],b)} END {printf "%s %s", b[1], b[3]}' /var/log/pacman.log)"
+
+  # Determine package architecture
+  [[ -e "/var/cache/pacman/pkg/$pkgname-${versions[1]}-any.pkg.tar.xz" ]] && arch="any" || arch=${HOSTTYPE:-x86_64}
+
+  # The cached 'from' package (download from ALA if missing)
+  cached="/var/cache/pacman/pkg/$pkgname-${versions[0]}-$arch.pkg.tar.xz"
+  [[ ! -e $cached ]] && download "$pkgname" "${versions[0]}" "$arch"
+
+  # Get 'from' version of the file
+  tar -xOJf "$cached" "${curfile:1}" >| "$prevfile"
+
+  kdiff3 "$prevfile" "$curfile" "$newfile" --out "$newfile" 2>/dev/null
+else
+  kdiff3 "$curfile" "$newfile" --out "$newfile" 2>/dev/null
+fi
