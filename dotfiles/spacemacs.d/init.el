@@ -389,10 +389,8 @@ same `major-mode'."
       (setq-local local-abbrev-table (eval tblsym))))
 
   ;; Default to k&r style for C and C++
-  (add-hook 'c-mode-hook
-            (lambda ()
-              (add-to-list 'c-default-style '(c-mode . "k&r"))
-              (setq c-basic-offset 4)))
+  (with-eval-after-load 'cc-mode
+    (add-to-list 'c-default-style '(c-mode . "k&r")))
 
   ;; Auto-reload files in doc-mode
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
@@ -406,15 +404,14 @@ same `major-mode'."
   (add-to-list 'auto-mode-alist '("\\.\\(h?ledger\\|journal\\)$" . ledger-mode))
 
   ;; Add hledger income statement to ledger-mode reports
-  (add-hook 'ledger-mode-hook
-            (lambda ()
-              (add-to-list 'ledger-reports
-                           '("income" "%(binary) -f %(ledger-file) incomestatement")
-                           t)))
+  (with-eval-after-load 'ledger-report
+    (add-to-list 'ledger-reports
+                 '("income" "%(binary) -f %(ledger-file) incomestatement")
+                 t))
 
   ;; Enable additional org modules
-  (add-hook 'org-mode-hook
-            (lambda () (add-to-list 'org-modules 'org-drill t)))
+  (with-eval-after-load 'org
+    (add-to-list 'org-modules 'org-drill t))
 
   (defun org-drill-agenda ()
     "Execute org-drill with agenda scope regardless of the value of org-drill-scope."
@@ -454,6 +451,9 @@ same `major-mode'."
 
    ;; asm layer
    nasm-basic-offset 4
+
+   ;; c-c++ layer
+   c-basic-offset 4
 
    ;; finance layer (ledger-mode)
    ;; Set up for hledger instead of ledger
