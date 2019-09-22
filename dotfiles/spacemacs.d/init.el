@@ -52,7 +52,7 @@ values."
      markdown
      org
      python
-     rust ;; includes toml support
+     rust ; includes toml support
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
@@ -335,7 +335,7 @@ you should place your code here."
             (lambda (frame)
               (spacemacs//adaptive-evil-highlight-persist-face)))
 
-  ;; Rebind 'SPC q q' to avoid stopping the server by accident.
+  ;; Rebind 'SPC q q' to avoid stopping the server by accident
   (defun quit-or-kill-frame ()
     "Propmt to save and quit, or kill the current frame when in daemon mode."
     (interactive)
@@ -392,7 +392,7 @@ same `major-mode'."
   (with-eval-after-load 'cc-mode
     (add-to-list 'c-default-style '(c-mode . "k&r")))
 
-  ;; Auto-reload files in doc-mode
+  ;; Auto-reload files in `doc-mode'
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
   ;; Insert a single ' character in Haskell mode
@@ -400,10 +400,10 @@ same `major-mode'."
             (lambda ()
               (define-key evil-insert-state-local-map (kbd "C-'") (kbd "C-q '"))))
 
-  ;; Associate more file extensions to ledger-mode
+  ;; Associate more file extensions to `ledger-mode'
   (add-to-list 'auto-mode-alist '("\\.\\(h?ledger\\|journal\\)$" . ledger-mode))
 
-  ;; Add hledger income statement to ledger-mode reports
+  ;; Add hledger income statement to `ledger-mode' reports
   (with-eval-after-load 'ledger-report
     (add-to-list 'ledger-reports
                  '("income" "%(binary) -f %(ledger-file) incomestatement")
@@ -414,14 +414,14 @@ same `major-mode'."
     (add-to-list 'org-modules 'org-drill t))
 
   (defun org-drill-agenda ()
-    "Execute org-drill with agenda scope regardless of the value of org-drill-scope."
+    "Execute `org-drill' with agenda scope, regardless of the value of `org-drill-scope'."
     (interactive)
     (org-drill 'agenda))
 
   ;; Enable org agenda notifications
   (require 'org-alert)
   (advice-add 'org-alert-check :around
-              ;; Correctly restore current buffer after org-alert-check, even if it's a popwin popup
+              ;; Correctly restore current buffer after `org-alert-check', even if it's a popwin popup
               (lambda (f &rest args)
                 (save-window-excursion (apply f args)))
               '((name . "restore popup buffer")))
@@ -436,7 +436,7 @@ same `major-mode'."
                    (secondary-opening :latex "`")
                    (secondary-closing :latex "'"))))
 
-  ;; Enable syntax checking by default in python-mode
+  ;; Enable syntax checking by default in `python-mode'
   (add-hook 'python-mode-hook 'flycheck-mode)
 
   (setq-default
@@ -444,37 +444,37 @@ same `major-mode'."
 
    tab-width 4
 
-   save-abbrevs nil ;; Do not (ask to) save abbreviations on quit
+   save-abbrevs nil ; Do not (ask to) save abbreviations on quit
 
-   ;; Use system notifications for org-alert
+   ;; Use system notifications for `org-alert'
    alert-default-style 'libnotify
 
-   ;; asm layer
+   ;; `asm' layer
    nasm-basic-offset 4
 
-   ;; c-c++ layer
+   ;; `c-c++' layer
    c-basic-offset 4
 
-   ;; finance layer (ledger-mode)
+   ;; `finance' layer (`ledger-mode')
    ;; Set up for hledger instead of ledger
    ledger-binary-path "hledger"
    ledger-mode-should-check-version nil
    ledger-init-file-name " "
-   ledger-report-links-in-register nil ;; Uses command line option not supported by hledger
+   ledger-report-links-in-register nil ; Uses command line option not supported by hledger
    ;; Disable highlighting of transaction under point
    ledger-highlight-xact-under-point nil
 
-   ;; haskell layer
+   ;; `haskell' layer
    ;; Configure indentation
-   haskell-indentation-layout-offset 4 ;; data declaration body
-   haskell-indentation-starter-offset 4 ;; let and case bodies
-   haskell-indentation-left-offset 4 ;; do body
-   haskell-indentation-where-pre-offset 2 ;; where keyword
+   haskell-indentation-layout-offset 4 ; data declaration body
+   haskell-indentation-starter-offset 4 ; let and case bodies
+   haskell-indentation-left-offset 4 ; do body
+   haskell-indentation-where-pre-offset 2 ; where keyword
 
-   ;; org layer
+   ;; `org' layer
    ;; Configure indentation
-   org-adapt-indentation nil ;; Do not indent text inside sections
-   org-list-description-max-indent 5 ;; Indent description list continuations by a fixed amount
+   org-adapt-indentation nil ; Do not indent text inside sections
+   org-list-description-max-indent 5 ; Indent description list continuations by a fixed amount
    ;; Configure export settings (shared by all backends)
    org-export-default-language "it"
    org-export-with-smart-quotes t
@@ -483,8 +483,8 @@ same `major-mode'."
    org-html-postamble nil
    ;; Configure latex preview and export
    org-latex-compiler "xelatex"
-   org-preview-latex-default-process 'imagemagick ;; dvipng doesn't support TikZ
-   org-latex-listings 'minted ;; requires -shell-escape
+   org-preview-latex-default-process 'imagemagick ; dvipng doesn't support TikZ
+   org-latex-listings 'minted ; requires -shell-escape
    org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
                            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
                            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
