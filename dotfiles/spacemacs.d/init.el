@@ -451,6 +451,9 @@ The original mappings are not removed."
    haskell-indentation-where-pre-offset 2 ;; where keyword
 
    ;; org layer
+   ;; Configure indentation
+   org-adapt-indentation nil ;; Do not indent text inside sections
+   org-list-description-max-indent 5 ;; Indent description list continuations by a fixed amount
    ;; Configure export settings (shared by all backends)
    org-export-default-language "it"
    org-export-with-smart-quotes t
