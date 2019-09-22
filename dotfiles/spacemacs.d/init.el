@@ -369,6 +369,25 @@ The original mappings are not removed."
     (flyspell-accept-buffer-local-defs 'force))
   (spacemacs/set-leader-keys "Sl" 'update-local-words-from-buffer)
 
+  (defun set-local-abbrevs (abbrevs)
+    "Add ABBREVS to `local-abbrev-table' and make it buffer local.
+ABBREVS should be a list of abbrevs as passed to `define-abbrev-table'.
+The `local-abbrev-table' will be replaced by a copy with the new abbrevs added,
+so that it is not the same as the abbrev table used in other buffers with the
+same `major-mode'."
+    (let* ((bufname (buffer-name))
+           (hash (md5 bufname))
+           (prefix-length (min (length bufname) (length hash)))
+           (prefix (substring hash 0 prefix-length))
+           (tblsym (intern (concat prefix "-abbrev-table"))))
+      (set tblsym (copy-abbrev-table local-abbrev-table))
+      (dolist (abbrev abbrevs)
+        (define-abbrev (eval tblsym)
+          (cl-first abbrev)
+          (cl-second abbrev)
+          (cl-third abbrev)))
+      (setq-local local-abbrev-table (eval tblsym))))
+
   ;; Default to k&r style for C and C++
   (add-hook 'c-mode-hook
             (lambda ()
@@ -427,6 +446,8 @@ The original mappings are not removed."
    evil-escape-unordered-key-sequence t
 
    tab-width 4
+
+   save-abbrevs nil ;; Do not (ask to) save abbreviations on quit
 
    ;; Use system notifications for org-alert
    alert-default-style 'libnotify
