@@ -436,6 +436,25 @@ same `major-mode'."
                    (secondary-opening :latex "`")
                    (secondary-closing :latex "'"))))
 
+  (defun hide-non-exported-org-src (&optional cycle-status)
+    "Hide `org-mode' src blocks if the code they contain isn't exported.
+The optional argument CYCLE-STATUS allows this function to be added to
+`org-cycle-hook': in this case, it will only hide blocks when the global
+visibility state becomes SHOW ALL (that is, when CYCLE-STATUS is `off'), since
+this change makes all blocks visible again."
+    (when (or (not cycle-status)
+              (eq 'all cycle-status))
+      (org-block-map
+       (lambda ()
+         (let* ((block-info (org-babel-get-src-block-info))
+                (header-args (cl-third block-info))
+                (exports (s-split-words (cdr (assoc :exports header-args)))))
+           (when (or (member "results" exports)
+                     (member "none" exports))
+             (org-hide-block-toggle t)))))))
+  (add-hook 'org-mode-hook 'hide-non-exported-org-src)
+  (add-hook 'org-cycle-hook 'hide-non-exported-org-src)
+
   ;; Enable syntax checking by default in `python-mode'
   (add-hook 'python-mode-hook 'flycheck-mode)
 
