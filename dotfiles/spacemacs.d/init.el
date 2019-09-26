@@ -335,14 +335,19 @@ you should place your code here."
             (lambda (frame)
               (spacemacs//adaptive-evil-highlight-persist-face)))
 
-  ;; Rebind 'SPC q q' to avoid stopping the server by accident
   (defun quit-or-kill-frame ()
-    "Propmt to save and quit, or kill the current frame when in daemon mode."
+    "Kill the current frame when in daemon mode, otherwise prompt to save and quit."
     (interactive)
     (if (daemonp)
         (call-interactively 'spacemacs/frame-killer)
       (call-interactively 'spacemacs/prompt-kill-emacs)))
-  (spacemacs/set-leader-keys "qq" 'quit-or-kill-frame)
+  ;; Rebind 'SPC q q' to avoid stopping the server by accident, while moving
+  ;; `spacemacs/prompt-kill-emacs' to 'SPC q Q' and `spacemacs/kill-emacs' to
+  ;; 'SPC q K' in order to still have them available
+  (spacemacs/set-leader-keys
+    "qq" 'quit-or-kill-frame
+    "qQ" 'spacemacs/prompt-kill-emacs
+    "qK" 'spacemacs/kill-emacs)
 
   ;; Activate visual line mode in every buffer
   (global-visual-line-mode t)
