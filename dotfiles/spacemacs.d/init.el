@@ -451,9 +451,9 @@ this change makes all blocks visible again."
               (eq 'all cycle-status))
       (org-block-map
        (lambda ()
-         (let* ((block-info (org-babel-get-src-block-info))
-                (header-args (cl-third block-info))
-                (exports (split-string (cdr (assoc :exports header-args)) " " t)))
+         (when-let ((block-info (org-babel-get-src-block-info))
+                    (header-args (cl-third block-info))
+                    (exports (split-string (cdr (assoc :exports header-args)) " " t)))
            (when (or (member "results" exports)
                      (member "none" exports))
              (org-hide-block-toggle t)))))))
