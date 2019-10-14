@@ -56,6 +56,7 @@ values."
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
+     sql
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      yaml
      )
@@ -454,6 +455,8 @@ this change makes all blocks visible again."
   ;; Enable syntax checking by default in `python-mode'
   (add-hook 'python-mode-hook 'flycheck-mode)
 
+  ;; Enable `sqlind-minor-mode' by default in `sql-mode'
+  (add-hook 'sql-mode-hook 'sqlind-minor-mode)
   (setq-default
    evil-escape-unordered-key-sequence t
 
