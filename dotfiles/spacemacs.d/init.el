@@ -457,6 +457,9 @@ this change makes all blocks visible again."
 
   ;; Enable `sqlind-minor-mode' by default in `sql-mode'
   (add-hook 'sql-mode-hook 'sqlind-minor-mode)
+  ;; Load indentation config
+  (load-file "~/.spacemacs.d/sql-indent-config.el")
+
   (setq-default
    evil-escape-unordered-key-sequence t
 
