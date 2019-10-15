@@ -8,5 +8,6 @@
      (select-join-condition +)
      (nested-statement-open sqlind-use-anchor-indentation +)
      (nested-statement-continuation sqlind-use-anchor-indentation +)
+     (create-statement 0) ;; For ALTER TABLE actions
      ,@sqlind-indentation-left-offsets-alist)))
 (add-hook 'sqlind-minor-mode-hook 'configure-sql-indentation)
