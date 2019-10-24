@@ -8,11 +8,10 @@ curfile="$2"
 trap 'rm -f $prevfile ' EXIT
 prevfile="$(mktemp -q -p "${TMPDIR:-/tmp}" "$(basename "${curfile:-$0}").XXXXXXXX")"
 
-download() { # package_name prev_version arch
-  printf '  > Previous version (%s) not in pacman cache; downloading from Arch Linux Archive...\n' "$2"
-  pushd /var/cache/pacman/pkg >/dev/null
-  curl -O "https://archive.archlinux.org/packages/${1::1}/$1/$1-$2-$3.pkg.tar.xz"
-  popd >/dev/null
+find_package_file() {
+    find /var/cache/pacman/pkg/ -maxdepth 1 \
+        -name '*.pkg.tar*.sig' -prune \
+        -o \( -name "$1.pkg.tar*" -print -quit \)
 }
 
 if [[ "${newfile##*.}" == "pacnew" ]]; then
@@ -24,14 +23,22 @@ if [[ "${newfile##*.}" == "pacnew" ]]; then
   IFS=" " read -r -a versions <<< "$(awk '/upgraded '"$pkgname"' / {split($0,a,"[()]"); split(a[2],b)} END {printf "%s %s", b[1], b[3]}' /var/log/pacman.log)"
 
   # Determine package architecture
-  [[ -e "/var/cache/pacman/pkg/$pkgname-${versions[1]}-any.pkg.tar.xz" ]] && arch="any" || arch=${HOSTTYPE:-x86_64}
+  if test -n "$(find_package_file "$pkgname-${versions[1]}-any")"; then
+      arch='any'
+  else
+      arch=${HOSTTYPE:-x86_64}
+  fi
 
-  # The cached 'from' package (download from ALA if missing)
-  cached="/var/cache/pacman/pkg/$pkgname-${versions[0]}-$arch.pkg.tar.xz"
-  [[ ! -e $cached ]] && download "$pkgname" "${versions[0]}" "$arch"
+  # The cached 'from' package
+  prev_version_name="$pkgname-${versions[0]}"
+  cached="$(find_package_file "$prev_version_name-$arch")"
+  if test -z "$cached"; then
+      echo "Previous package version is not in cache: $prev_version_name" >&2
+      exit 1
+  fi
 
   # Get 'from' version of the file
-  tar -xOJf "$cached" "${curfile:1}" >| "$prevfile"
+  tar --extract --to-stdout --auto-compress --file "$cached" "${curfile:1}" >| "$prevfile"
 
   kdiff3 "$prevfile" "$curfile" "$newfile" --out "$newfile" 2>/dev/null
 else
