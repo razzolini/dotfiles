@@ -499,6 +499,8 @@ this change makes all blocks visible again."
    ;; Configure indentation
    org-adapt-indentation nil ; Do not indent text inside sections
    org-list-description-max-indent 5 ; Indent description list continuations by a fixed amount
+   ;; Add footnotes at the end of the current outline node
+   org-footnote-section nil
    ;; Configure export settings (shared by all backends)
    org-export-default-language "it"
    org-export-with-smart-quotes t
