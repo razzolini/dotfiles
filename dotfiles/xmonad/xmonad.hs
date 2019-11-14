@@ -15,12 +15,20 @@ import XMonad.Util.EZConfig (additionalKeysP)
 
 main = do
     xmobarHandles <- xmobarOnScreens screens
-    xmonad $ def
-        -- Leave space for the status bar
-        { manageHook = manageSpawn <+> manageDocks <+> manageHook def
-        , layoutHook = lessBorders OnlyScreenFloat $ avoidStruts $ layoutHook def
-        , handleEventHook = docksEventHook <+> fullscreenEventHook <+> handleEventHook def
-        , startupHook = myStartupHook <+> docksStartupHook <+> startupHook def
+    xmonad . docks $ def -- 'docks' is required for 'avoidStruts'
+        { manageHook =
+            manageSpawn -- Required for spawnOn
+            <+> manageHook def
+        , layoutHook =
+            lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
+            $ avoidStruts -- Leave space for the status bar
+            $ layoutHook def
+        , handleEventHook =
+            fullscreenEventHook -- Handle applications that request to become fullscreen
+            <+> handleEventHook def
+        , startupHook =
+            myStartupHook
+            <+> startupHook def
         -- Rebind Mod to the Windows key
         , modMask = mod4Mask
         -- Send info to xmobar
@@ -28,6 +36,7 @@ main = do
             { ppOutput = multiHPutStrLn xmobarHandles
             , ppTitle = xmobarColor "green" "" . shorten 50
             }
+        -- Set custom workspace names
         , workspaces = myWorkspaces
         } `additionalKeysP` myKeys
 
