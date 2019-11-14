@@ -1,24 +1,35 @@
-XTerm.termName: xterm-256color
+! Increase scrollback buffer size
+URxvt.saveLines: 100000
 
-! Set scrollback buffer size
-XTerm.vt100.saveLines: 4096
+! Disable scrollbar
+URxvt.scrollBar: false
 
-! Treat all input as UTF-8, including window titles
-XTerm.vt100.locale: true
-XTerm.vt100.utf8Title: true
+! Do not add the output of programs in the secondary screen to the scrollback buffer
+! (for example, when scrolling down within less)
+URxvt.secondaryScroll: false
 
-! Save selection to clipboard instead of primary
-XTerm.vt100.selectToClipboard: true
+! Disable annoying Ctrl-Shift binding
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
-! Correctly send Alt key
-XTerm.vt100.metaSendsEscape: true
-
-! Use dark background
-XTerm.vt100.foreground: rgb:b2/b2/b2
-XTerm.vt100.background: rgb:08/08/08
+! Disable printing the terminal contents when pressing PrintScreen
+URxvt.print-pipe: "cat > /dev/null"
 
 ! Set font
-XTerm.vt100.faceName: DejaVu Sans Mono:size=9:antialias=true
+URxvt.font: xft:DejaVu Sans Mono:size=9:antialias=true
 
-! Fix underscore not displaying at some font sizes
-XTerm.scaleHeight: 1.01
+! Decrease font spacing
+URxvt.letterSpace: -1
+
+! Match default xterm colors
+URxvt.color12: rgb:5c/5c/ff
+! Use dark background
+URxvt.foreground: rgb:b2/b2/b2
+URxvt.background: rgb:08/08/08
+
+! Extensions
+URxvt.perl-ext-common: searchable-scrollback,resize-font
+
+! resize-font extension
+! Set keybindings for changing font size on the fly
+URxvt.keysym.C-0: resize-font:reset

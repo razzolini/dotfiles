@@ -29,6 +29,7 @@ main = do
         , startupHook =
             myStartupHook
             <+> startupHook def
+        , terminal = "urxvt"
         -- Rebind Mod to the Windows key
         , modMask = mod4Mask
         -- Send info to xmobar
