@@ -18,9 +18,6 @@ URxvt.print-pipe: "cat > /dev/null"
 ! Set font
 URxvt.font: xft:DejaVu Sans Mono:size=9:antialias=true
 
-! Decrease font spacing
-URxvt.letterSpace: -1
-
 ! Match default xterm colors
 URxvt.color12: rgb:5c/5c/ff
 ! Use dark background
