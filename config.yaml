@@ -15,6 +15,9 @@ dotfiles:
   f_aurman_config:
     dst: ~/.config/aurman/aurman_config
     src: config/aurman/aurman_config
+  f_bin_power-menu:
+    src: bin/power-menu
+    dst: ~/bin/power-menu
   f_bin_toggle-touchpad:
     dst: ~/bin/toggle-touchpad
     link: link
@@ -63,6 +66,7 @@ profiles:
     - d_fish_functions
     - d_spacemacs.d
     - f_aurman_config
+    - f_bin_power-menu
     - f_bin_volume
     - f_config.fish
     - f_dunstrc
@@ -80,6 +84,7 @@ profiles:
     - d_fish_functions
     - d_spacemacs.d
     - f_aurman_config
+    - f_bin_power-menu
     - f_bin_toggle-touchpad
     - f_config.fish
     - f_dunstrc

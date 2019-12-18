@@ -76,6 +76,7 @@ myKeys = workspaceKeys ++ screenKeys ++
     [ ("M-o", spawn "chromium")
     , ("M-S-o", spawn "chromium --incognito")
     , ("M-i", spawn "emacsclient -a '' -nqc")
+    , ("M-S-p", spawn "power-menu")
     , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
 {%@@ if profile == "home-desktop" @@%}
     -- Media keys
