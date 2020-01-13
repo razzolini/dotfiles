@@ -414,15 +414,6 @@ same `major-mode'."
                  '("income" "%(binary) -f %(ledger-file) incomestatement")
                  t))
 
-  ;; Enable additional org modules
-  (with-eval-after-load 'org
-    (add-to-list 'org-modules 'org-drill t))
-
-  (defun org-drill-agenda ()
-    "Execute `org-drill' with agenda scope, regardless of the value of `org-drill-scope'."
-    (interactive)
-    (org-drill 'agenda))
-
   ;; Enable org agenda notifications
   (require 'org-alert)
   (advice-add 'org-alert-check :around
@@ -498,7 +489,6 @@ this change makes all blocks visible again."
    ;; `org' layer
    ;; Configure indentation
    org-adapt-indentation nil ; Do not indent text inside sections
-   org-list-description-max-indent 5 ; Indent description list continuations by a fixed amount
    ;; Add footnotes at the end of the current outline node
    org-footnote-section nil
    ;; Configure export settings (shared by all backends)
