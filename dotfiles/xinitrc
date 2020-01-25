@@ -45,7 +45,7 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        &
 {%@@ endif @@%}
 dunst & # Notification server
-redshift &
+redshift-gtk &
 dropbox &
 emacs --daemon &
 
