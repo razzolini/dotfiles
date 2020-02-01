@@ -510,6 +510,11 @@ The original mappings are not removed."
   (remap-square-bracket-commands evil-normal-state-map)
   (remap-square-bracket-commands evil-motion-state-map)
 
+  ;; Disable evil-escape while using multiple cursors
+  ;; (see https://github.com/gabesoft/evil-mc/issues/27)
+  (with-eval-after-load 'evil-mc
+    (add-to-list 'evil-mc-incompatible-minor-modes 'evil-escape-mode))
+
   ;; Add keybinding to manually update local words for spell checking from buffer directives
   (defun update-local-words-from-buffer ()
     "Load new buffer-local word definitions from LocalWords directives."
