@@ -325,7 +325,7 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; Workaround for Spacemacs issue #9915
-  ;; For the first frame, even if created with emacsclient -a '' -c
+  ;; For the first frame, even if created with `emacsclient -a "" -c'
   (defun fix-evil-highlight-persist-face-first-frame ()
     (when (face-background 'evil-search-highlight-persist-highlight-face)
       (spacemacs//adaptive-evil-highlight-persist-face)
@@ -342,9 +342,9 @@ you should place your code here."
     (if (daemonp)
         (call-interactively 'spacemacs/frame-killer)
       (call-interactively 'spacemacs/prompt-kill-emacs)))
-  ;; Rebind 'SPC q q' to avoid stopping the server by accident, while moving
-  ;; `spacemacs/prompt-kill-emacs' to 'SPC q Q' and `spacemacs/kill-emacs' to
-  ;; 'SPC q K' in order to still have them available
+  ;; Rebind `SPC q q' to avoid stopping the server by accident, while moving
+  ;; `spacemacs/prompt-kill-emacs' to `SPC q Q' and `spacemacs/kill-emacs' to
+  ;; `SPC q K' in order to still have them available
   (spacemacs/set-leader-keys
     "qq" 'quit-or-kill-frame
     "qQ" 'spacemacs/prompt-kill-emacs
@@ -353,10 +353,10 @@ you should place your code here."
   ;; Activate visual line mode in every buffer
   (global-visual-line-mode t)
 
-  ;; Make  'à' and 'ù' act as '[' and ']' respectively in normal and motion state bindings
+  ;; Make `à' and `ù' act as `[' and `]' respectively in normal and motion state bindings
   ;; (for Italian qwerty layout)
   (defun remap-square-bracket-commands (keymap)
-    "Recursively map square bracket commands to 'à' and 'ù'.
+    "Recursively map square bracket commands to `à' and `ù'.
 The original mappings are not removed."
     (let* ((open-bracket-mapping (lookup-key keymap (kbd "[")))
            (closed-bracket-mapping (lookup-key keymap (kbd "]")))
