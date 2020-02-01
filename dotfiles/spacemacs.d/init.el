@@ -478,18 +478,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  ;; Workaround for Spacemacs issue #9915
-  ;; For the first frame, even if created with `emacsclient -a "" -c'
-  (defun fix-evil-highlight-persist-face-first-frame ()
-    (when (face-background 'evil-search-highlight-persist-highlight-face)
-      (spacemacs//adaptive-evil-highlight-persist-face)
-      (remove-hook 'evil-search-highlight-persist-hook 'fix-evil-highlight-persist-face)))
-  (add-hook 'evil-search-highlight-persist-hook 'fix-evil-highlight-persist-face-first-frame)
-  ;; For subsequent frames
-  (add-hook 'after-make-frame-functions
-            (lambda (frame)
-              (spacemacs//adaptive-evil-highlight-persist-face)))
-
   (defun quit-or-kill-frame ()
     "Kill the current frame when in daemon mode, otherwise prompt to save and quit."
     (interactive)
