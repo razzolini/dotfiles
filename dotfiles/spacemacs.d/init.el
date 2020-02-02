@@ -650,6 +650,8 @@ this change makes all blocks visible again."
    haskell-indentation-where-pre-offset 2 ; where keyword
 
    ;; `org' layer
+   ;; Respect the `vim-style-retain-visual-state-on-shift' setting
+   evil-org-retain-visual-state-on-shift vim-style-retain-visual-state-on-shift
    ;; Configure indentation
    org-adapt-indentation nil ; Do not indent text inside sections
    ;; Add footnotes at the end of the current outline node
