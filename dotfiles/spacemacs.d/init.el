@@ -571,6 +571,16 @@ same `major-mode'."
               '((name . "restore popup buffer")))
   (org-alert-enable)
 
+  ;; Bind more `helm-org-rifle' commands
+  (spacemacs/set-leader-keys "aor" nil)
+  (spacemacs/declare-prefix "aor" "rifle")
+  (spacemacs/set-leader-keys "aorr" 'helm-org-rifle)
+  (spacemacs/set-leader-keys "aora" 'helm-org-rifle-agenda-files)
+  (spacemacs/set-leader-keys "aorb" 'helm-org-rifle-current-buffer)
+  (spacemacs/set-leader-keys "aord" 'helm-org-rifle-directories)
+  (spacemacs/set-leader-keys "aorf" 'helm-org-rifle-files)
+  (spacemacs/set-leader-keys "aoro" 'helm-org-rifle-org-directory)
+
   ;; Configure smart quotes for org export
   (with-eval-after-load 'ox
     (add-to-list 'org-export-smart-quotes-alist
