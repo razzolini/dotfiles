@@ -48,6 +48,9 @@ dotfiles:
   f_redshift.conf:
     dst: ~/.config/redshift.conf
     src: config/redshift.conf
+  f_ripgreprc:
+    dst: ~/.config/ripgreprc
+    src: config/ripgreprc
   f_ssh_config:
     dst: ~/.ssh/config
     src: ssh/config
@@ -78,6 +81,7 @@ profiles:
     - f_pacdiff-merge3
     - f_profile
     - f_redshift.conf
+    - f_ripgreprc
     - f_ssh_config
     - f_xinitrc
     - f_xmobar
@@ -97,6 +101,7 @@ profiles:
     - f_pacdiff-merge3
     - f_profile
     - f_redshift.conf
+    - f_ripgreprc
     - f_ssh_config
     - f_xinitrc
     - f_xmobar
