@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Centered tikzpicture environment
+# key: tikz
+# expand-env: ((yas-indent-line 'fixed))
+# --
+\begin{center}
+\begin{tikzpicture}$1
+  $0
+\end{tikzpicture}
+\end{center}
