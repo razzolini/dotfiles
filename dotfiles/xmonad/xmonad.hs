@@ -49,7 +49,7 @@ screens = [0]
 
 xmobarOnScreens = traverse spawnXmobarOnScreen
   where
-    spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " /home/riccardo/.xmonad/xmobar"
+    spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.xmonad/xmobar\""
 
 multiHPutStrLn hs msg = traverse_ (\h -> hPutStrLn h msg) hs
 

@@ -9,5 +9,5 @@ function pacdiff --wraps pacdiff
     end
 
     # Run as root and use a three-way merge tool
-    command sudo --preserve-env DIFFPROG=/home/riccardo/bin/pacdiff-merge3 -- pacdiff $argv
+    command sudo --preserve-env DIFFPROG=$HOME/bin/pacdiff-merge3 -- pacdiff $argv
 end
