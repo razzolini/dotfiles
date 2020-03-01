@@ -1,6 +1,9 @@
 # Disable greeting message
 set fish_greeting
 
+# Disable shortening of path components in the prompt
+set fish_prompt_pwd_dir_length 0
+
 # Configure git prompt
 # Information
 set __fish_git_prompt_showdirtystate 'yes'

@@ -1,29 +1,25 @@
 function fish_prompt --description 'Write out the prompt'
-    # Save our status
-    set -l last_status $status
+    # Save the exit status of the last command / pipeline of commands
+    set -l last_pipestatus $pipestatus
 
-    set -l last_status_string ""
-    if [ $last_status -ne 0 ]
-        printf "%s(%d)%s " (set_color red --bold) $last_status (set_color normal)
-    end
-
-    set -l color_cwd
-    set -l suffix
-    switch $USER
-    case root toor
+    # Color the prompt differently when we're root
+    set -l color_cwd $fish_color_cwd
+    set -l suffix '>'
+    if contains -- $USER root toor
         if set -q fish_color_cwd_root
             set color_cwd $fish_color_cwd_root
-        else
-            set color_cwd $fish_color_cwd
         end
         set suffix '#'
-    case '*'
-        set color_cwd $fish_color_cwd
-        set suffix '>'
     end
 
-    # Show $HOME as ~
-    set -l cwd (string replace -r "^$HOME(/|\$)" '~$1' $PWD)
+    # Format the pipestatus
+    set -l prompt_status (__fish_print_pipestatus \
+        ' [' ']' '|' \
+        (set_color $fish_color_status) (set_color --bold $fish_color_status) \
+        $last_pipestatus)
 
-    echo -n -s (set_color $color_cwd) $cwd (set_color normal) (__fish_git_prompt) (set_color normal) "$suffix "
+    echo -n -s \
+        (set_color $color_cwd) (prompt_pwd) (set_color normal) \
+        (fish_vcs_prompt) (set_color $normal) \
+        $prompt_status $suffix ' '
 end
