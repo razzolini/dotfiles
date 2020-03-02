@@ -73,6 +73,7 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-alert)
+
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
 
@@ -161,6 +162,11 @@ It should only modify the values of Spacemacs settings."
    ;; (default 'vim)
    dotspacemacs-editing-style '(vim :variables
                                     vim-style-remap-Y-to-y$ t)
+
+   ;; If non-nil show the version string in the Spacemacs buffer. It will
+   ;; appear as (spacemacs version)@(emacs version)
+   ;; (default t)
+   dotspacemacs-startup-buffer-show-version t
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
