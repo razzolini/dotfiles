@@ -1,5 +1,8 @@
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 import Control.Monad (when)
-import Data.Foldable (traverse_)
+import Data.Foldable (find, traverse_)
 import System.Exit (exitSuccess)
 import System.IO
 import XMonad
@@ -8,7 +11,9 @@ import XMonad.Actions.SpawnOn
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders
+import XMonad.Layout.Reflect (reflectHoriz)
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.EZConfig (additionalKeysP)
@@ -22,7 +27,7 @@ main = do
         , layoutHook =
             lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
             $ avoidStruts -- Leave space for the status bar
-            $ layoutHook def
+            $ myLayouts
         , handleEventHook =
             fullscreenEventHook -- Handle applications that request to become fullscreen
             <+> handleEventHook def
@@ -52,6 +57,54 @@ xmobarOnScreens = traverse spawnXmobarOnScreen
     spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.xmonad/xmobar\""
 
 multiHPutStrLn hs msg = traverse_ (\h -> hPutStrLn h msg) hs
+
+{%@@ if profile == "home-desktop" @@%}
+myLayouts = autoReflectX [1] tall ||| Mirror tall ||| Full
+  where
+    tall = Tall nmaster delta ratio
+    nmaster = 1 -- The default number of windows in the master pane
+    delta = 3/100 -- Percent of screen to increment by when resizing panes
+    ratio = 1/2 -- Default proportion of screen occupied by master pane
+
+autoReflectX :: [ScreenId] -> l a -> ModifiedLayout AutoReflectX l a
+autoReflectX screensToReflect = ModifiedLayout (AutoReflectX NotReflecting screensToReflect)
+
+data AutoReflectX a = AutoReflectX !AutoReflection ![ScreenId]
+    deriving (Read, Show)
+
+data AutoReflection = NotReflecting | Reflecting
+    deriving (Read, Show)
+
+instance LayoutModifier AutoReflectX a where
+    modifyLayoutWithUpdate (AutoReflectX _ screensToReflect) workspace rect = do
+        maybeScreen <- workspaceScreenId (W.tag workspace)
+        case maybeScreen of
+            Just screen | screen `elem` screensToReflect -> runReflected
+            _ -> runNormal
+      where
+        runReflected = do
+            let reflectedWorkspace = workspace { W.layout = reflectHoriz (W.layout workspace) }
+            (windowRects, newReflectedLayout) <- runLayout reflectedWorkspace rect
+            let newLayout = fmap unmodifyLayout newReflectedLayout
+            pure ((windowRects, newLayout), newModifier Reflecting)
+        runNormal = (,) <$> runLayout workspace rect <*> pure (newModifier NotReflecting)
+        newModifier refl = Just $ AutoReflectX refl screensToReflect
+
+    modifierDescription (AutoReflectX refl _) = case refl of
+        NotReflecting -> ""
+        Reflecting -> "ReflectX"
+
+workspaceScreenId :: WorkspaceId -> X (Maybe ScreenId)
+workspaceScreenId wid = do
+    screens <- gets (W.screens . windowset)
+    let maybeScreen = find ((== wid) . W.tag . W.workspace) screens
+    pure (W.screen <$> maybeScreen)
+
+unmodifyLayout :: ModifiedLayout m l a -> l a
+unmodifyLayout (ModifiedLayout _ l) = l
+{%@@ else @@%}
+myLayouts = layoutHook def
+{%@@ endif @@%}
 
 myStartupHook = do
 {%@@ if profile == "home-desktop" @@%}
