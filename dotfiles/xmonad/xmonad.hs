@@ -4,22 +4,23 @@
 import Control.Monad (when)
 import Data.Foldable (find, traverse_)
 import System.Exit (exitSuccess)
-import System.IO
+import System.IO (Handle, hPutStrLn)
 import XMonad
-import XMonad.Actions.PhysicalScreens
-import XMonad.Actions.SpawnOn
+import XMonad.Actions.PhysicalScreens (sendToScreen, viewScreen)
+import XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Hooks.ManageDocks (avoidStruts, docks)
 import XMonad.Layout.LayoutModifier
-import XMonad.Layout.NoBorders
+import XMonad.Layout.NoBorders (lessBorders, Ambiguity(OnlyScreenFloat))
 import XMonad.Layout.Reflect (reflectHoriz)
 import qualified XMonad.StackSet as W
-import XMonad.Util.Run
+import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (additionalKeysP)
 
+main :: IO ()
 main = do
-    xmobarHandles <- xmobarOnScreens screens
+    xmobarHandles <- xmobarOnScreens myScreens
     xmonad . ewmh . docks $ def -- 'docks' is required for 'avoidStruts'
         { manageHook =
             manageSpawn -- Required for spawnOn
@@ -46,19 +47,23 @@ main = do
         , workspaces = myWorkspaces
         } `additionalKeysP` myKeys
 
+myScreens :: [Int]
 {%@@ if profile == "home-desktop" @@%}
-screens = [0, 1]
+myScreens = [0, 1]
 {%@@ else @@%}
-screens = [0]
+myScreens = [0]
 {%@@ endif @@%}
 
+xmobarOnScreens :: [Int] -> IO [Handle]
 xmobarOnScreens = traverse spawnXmobarOnScreen
   where
     spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.xmonad/xmobar\""
 
+multiHPutStrLn :: Foldable t => t Handle -> String -> IO ()
 multiHPutStrLn hs msg = traverse_ (\h -> hPutStrLn h msg) hs
 
 {%@@ if profile == "home-desktop" @@%}
+myLayouts :: Choose (ModifiedLayout AutoReflectX Tall) (Choose (Mirror Tall) Full) Window
 myLayouts = autoReflectX [1] tall ||| Mirror tall ||| Full
   where
     tall = Tall nmaster delta ratio
@@ -103,9 +108,11 @@ workspaceScreenId wid = do
 unmodifyLayout :: ModifiedLayout m l a -> l a
 unmodifyLayout (ModifiedLayout _ l) = l
 {%@@ else @@%}
+myLayouts :: Choose Tall (Choose (Mirror Tall) Full) Window
 myLayouts = layoutHook def
 {%@@ endif @@%}
 
+myStartupHook :: X ()
 myStartupHook = do
 {%@@ if profile == "home-desktop" @@%}
     windows $ W.view "1" -- Focus workspace 1 (instead of 2, because of screen order)
@@ -114,17 +121,20 @@ myStartupHook = do
     pure ()
 {%@@ endif @@%}
 
+myWorkspaces :: [String]
 myWorkspaces =
 {%@@ if profile == "home-desktop" @@%}
-    fmap show [1..8] ++ [mailWorkspace]
+    fmap (show :: Int -> String) [1..8] ++ [mailWorkspace]
 {%@@ else @@%}
-    fmap show [1..9]
+    workspaces def
 {%@@ endif @@%}
 
 {%@@ if profile == "home-desktop" @@%}
+mailWorkspace :: String
 mailWorkspace = "9.Mail"
 {%@@ endif @@%}
 
+myKeys :: Keymap
 myKeys = workspaceKeys ++ screenKeys ++
     [ ("M-o", spawn "chromium")
     , ("M-S-o", spawn "chromium --incognito")
@@ -145,7 +155,13 @@ myKeys = workspaceKeys ++ screenKeys ++
 {%@@ endif @@%}
     ]
 
+promptQuit :: X ()
+promptQuit = do
+    response <- runProcessWithInput "dmenu" ["-p", "Really quit?"] "no\nyes\n"
+    when (response == "yes\n") $ io exitSuccess
+
 -- Do not swap workspaces across screens
+workspaceKeys :: Keymap
 workspaceKeys = do
     (tag, key) <- zip myWorkspaces "123456789"
     (otherModMasks, action) <-
@@ -155,6 +171,7 @@ workspaceKeys = do
     pure (otherModMasks ++ "M-" ++ [key], action tag)
 
 -- Use physical screen order
+screenKeys :: Keymap
 screenKeys = do
     (key, screen) <- zip ['w', 'e', 'r'] [0..]
     (otherModMasks, action) <-
@@ -163,6 +180,4 @@ screenKeys = do
         ]
     pure (otherModMasks ++ "M-" ++ [key], action screen)
 
-promptQuit = do
-    response <- runProcessWithInput "dmenu" ["-p", "Really quit?"] "no\nyes\n"
-    when (response == "yes\n") $ io exitSuccess
+type Keymap = [(String, X ())]
