@@ -15,7 +15,7 @@ import XMonad.Util.EZConfig (additionalKeysP)
 
 main = do
     xmobarHandles <- xmobarOnScreens screens
-    xmonad . docks $ def -- 'docks' is required for 'avoidStruts'
+    xmonad . ewmh . docks $ def -- 'docks' is required for 'avoidStruts'
         { manageHook =
             manageSpawn -- Required for spawnOn
             <+> manageHook def
