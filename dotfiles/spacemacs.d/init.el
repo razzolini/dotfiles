@@ -592,6 +592,13 @@ same `major-mode'."
               '((name . "restore popup buffer")))
   (org-alert-enable)
 
+  ;; Configure org time tracking
+  (require 'org-clock)
+  (setq org-clock-idle-time 15
+        org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
+  (spacemacs/toggle-mode-line-org-clock-on)
+
   ;; Bind more `helm-org-rifle' commands
   (spacemacs/set-leader-keys "aor" nil)
   (spacemacs/declare-prefix "aor" "rifle")
