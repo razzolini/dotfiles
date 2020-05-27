@@ -72,7 +72,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-alert)
+   dotspacemacs-additional-packages '(org-alert real-auto-save)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -509,6 +509,8 @@ before packages are loaded."
 
   ;; Activate visual line mode in every buffer
   (global-visual-line-mode t)
+
+  (require 'real-auto-save)
 
   ;; Make `à' and `ù' act as `[' and `]' respectively in normal and motion state bindings
   ;; (for Italian qwerty layout)
