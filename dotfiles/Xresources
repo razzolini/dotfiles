@@ -25,6 +25,9 @@ URxvt.perl-ext-common: searchable-scrollback,resize-font
 ! Set keybindings for changing font size on the fly
 URxvt.keysym.C-0: resize-font:reset
 
+! Do not automatically use high intensity colors for bold
+URxvt.intensityStyles: false
+
 ! Set color theme
 ! special
 *.foreground:  #b2b2b2
