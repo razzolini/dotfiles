@@ -4,8 +4,8 @@
 
 set fish_color_autosuggestion 555
 set fish_color_cancel -r
-set fish_color_command 005fd7
-set fish_color_comment 990000
+set fish_color_command blue
+set fish_color_comment magenta
 set fish_color_cwd green
 set fish_color_cwd_root red
 set fish_color_end 009900
@@ -20,8 +20,8 @@ set fish_color_operator cyan
 set fish_color_param 00afff
 set fish_color_quote 999900
 set fish_color_redirection 00afff
-set fish_color_search_match --background=purple
-set fish_color_selection --background=purple
+set fish_color_search_match --background=normal --reverse
+set fish_color_selection --background=red
 set fish_color_status red
 set fish_color_user green
 set fish_color_valid_path --underline

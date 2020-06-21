@@ -4,19 +4,19 @@ function fish_mode_prompt --description 'Displays the current mode'
         or test "$fish_key_bindings" = "fish_hybrid_key_bindings"
         switch $fish_bind_mode
             case default
-                set_color --bold --background red white
+                set_color --bold --background blue white
                 echo '[N]'
             case insert
                 set_color --bold
                 echo '[I]'
             case replace_one
-                set_color --bold --background green white
+                set_color --bold --background green black
                 echo '[R]'
             case replace
-                set_color --bold --background cyan white
+                set_color --bold --background cyan black
                 echo '[R]'
             case visual
-                set_color --bold --background magenta white
+                set_color --bold --background red white
                 echo '[V]'
         end
         set_color normal
