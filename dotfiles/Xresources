@@ -46,10 +46,10 @@ URxvt.intensityStyles: false
 *.color3:      #cdcd00
 *.color11:     #ffff00
 ! blue
-*.color4:      #0000ee
-*.color12:     #5c5cff
+*.color4:      #0077ed
+*.color12:     #009cff
 ! magenta
-*.color5:      #cd00cd
+*.color5:      #ea61da
 *.color13:     #ff00ff
 ! cyan
 *.color6:      #00cdcd
