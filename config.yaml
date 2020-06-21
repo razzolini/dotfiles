@@ -32,6 +32,9 @@ dotfiles:
   f_dunstrc:
     dst: ~/.config/dunst/dunstrc
     src: config/dunst/dunstrc
+  f_fish_theme:
+    src: config/fish/conf.d/theme.fish
+    dst: ~/.config/fish/conf.d/theme.fish
   f_git_config:
     dst: ~/.config/git/config
     src: config/git/config
@@ -76,6 +79,7 @@ profiles:
     - f_bin_volume
     - f_config.fish
     - f_dunstrc
+    - f_fish_theme
     - f_git_config
     - f_init.vim
     - f_pacdiff-merge3
@@ -96,6 +100,7 @@ profiles:
     - f_bin_toggle-touchpad
     - f_config.fish
     - f_dunstrc
+    - f_fish_theme
     - f_git_config
     - f_init.vim
     - f_pacdiff-merge3
