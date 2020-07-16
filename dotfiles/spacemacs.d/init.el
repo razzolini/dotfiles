@@ -48,7 +48,7 @@ This function should only modify configuration layer settings."
      finance
      git
      helm
-     (haskell :variables haskell-completion-backend 'intero)
+     (haskell :variables haskell-completion-backend 'dante)
      idris
      (latex :variables latex-enable-auto-fill nil)
      markdown
