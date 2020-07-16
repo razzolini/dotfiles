@@ -43,6 +43,7 @@ This function should only modify configuration layer settings."
                       auto-completion-complete-with-key-sequence "jk")
      asm
      c-c++
+     coq
      csv
      emacs-lisp
      finance
@@ -573,6 +574,14 @@ same `major-mode'."
   (with-eval-after-load 'cc-mode
     (add-to-list 'c-default-style '(c-mode . "k&r")))
 
+  ;; Disable "prettification" of Coq symbols
+  (with-eval-after-load 'company-coq
+    (add-to-list 'company-coq-disabled-features 'prettify-symbols))
+  ;; Bind proof navigation to more ergonomic keys
+  (spacemacs/set-leader-keys-for-major-mode 'coq-mode
+    "à" 'proof-undo-last-successful-command
+    "ù" 'proof-assert-next-command-interactive)
+
   ;; Auto-reload files in `doc-mode'
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
@@ -675,6 +684,10 @@ this change makes all blocks visible again."
 
    ;; `c-c++' layer
    c-basic-offset 4
+
+   ;; `coq' layer
+   coq-accept-proof-using-suggestion 'never ; Disable "Proof using" suggestions
+   coq-compile-before-require t ; Enable auto-compilation of imports
 
    ;; `finance' layer (`ledger-mode')
    ;; Set up for hledger instead of ledger
