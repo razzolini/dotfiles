@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      org
+     (plantuml :variables plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
      python
      rust ; includes toml support
      (shell :variables shell-default-shell 'eshell)
