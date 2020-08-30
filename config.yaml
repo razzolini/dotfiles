@@ -5,70 +5,68 @@ config:
   minversion: 0.29.3
 dotfiles:
   d_fish_functions:
+    src: config/fish/functions
     dst: ~/.config/fish/functions
     link: link
-    src: config/fish/functions
   d_spacemacs.d:
+    src: spacemacs.d
     dst: ~/.spacemacs.d
     link: link
-    src: spacemacs.d
   f_aurman_config:
-    dst: ~/.config/aurman/aurman_config
     src: config/aurman/aurman_config
+    dst: ~/.config/aurman/aurman_config
   f_bin_power-menu:
     src: bin/power-menu
     dst: ~/bin/power-menu
   f_bin_toggle-touchpad:
-    dst: ~/bin/toggle-touchpad
-    link: link
     src: bin/toggle-touchpad
+    dst: ~/bin/toggle-touchpad
   f_bin_volume:
-    dst: ~/bin/volume
-    link: link
     src: bin/volume
+    dst: ~/bin/volume
   f_config.fish:
-    dst: ~/.config/fish/config.fish
     src: config/fish/config.fish
+    dst: ~/.config/fish/config.fish
   f_dunstrc:
-    dst: ~/.config/dunst/dunstrc
     src: config/dunst/dunstrc
+    dst: ~/.config/dunst/dunstrc
   f_fish_theme:
     src: config/fish/conf.d/theme.fish
     dst: ~/.config/fish/conf.d/theme.fish
   f_git_config:
-    dst: ~/.config/git/config
     src: config/git/config
+    dst: ~/.config/git/config
   f_init.vim:
+    src: config/nvim/init.vim
     dst: ~/.config/nvim/init.vim
     link: link
-    src: config/nvim/init.vim
   f_pacdiff-merge3:
     src: bin/pacdiff-merge3
     dst: ~/bin/pacdiff-merge3
   f_profile:
-    dst: ~/.profile
     src: profile
+    dst: ~/.profile
   f_redshift.conf:
-    dst: ~/.config/redshift.conf
     src: config/redshift.conf
+    dst: ~/.config/redshift.conf
   f_ripgreprc:
-    dst: ~/.config/ripgreprc
     src: config/ripgreprc
+    dst: ~/.config/ripgreprc
   f_ssh_config:
-    dst: ~/.ssh/config
     src: ssh/config
+    dst: ~/.ssh/config
   f_xinitrc:
-    dst: ~/.xinitrc
     src: xinitrc
+    dst: ~/.xinitrc
   f_xmobar:
-    dst: ~/.xmonad/xmobar
     src: xmonad/xmobar
+    dst: ~/.xmonad/xmobar
   f_xmonad.hs:
-    dst: ~/.xmonad/xmonad.hs
     src: xmonad/xmonad.hs
+    dst: ~/.xmonad/xmonad.hs
   f_xresources:
-    dst: ~/.Xresources
     src: Xresources
+    dst: ~/.Xresources
 profiles:
   home-desktop:
     dotfiles:
