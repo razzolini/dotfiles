@@ -12,7 +12,7 @@
   # available, otherwise `xterm-256color` is used.
   #TERM: alacritty
 
-#window:
+window:
   # Window dimensions (changes require restart)
   #
   # Specified in number of columns/lines, not pixels.
@@ -33,9 +33,9 @@
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  #padding:
-  #  x: 0
-  #  y: 0
+  padding:
+    x: 2
+    y: 3
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -90,16 +90,16 @@
   #multiplier: 3
 
 # Font configuration
-#font:
+font:
   # Normal (roman) font face
-  #normal:
+  normal:
     # Font family
     #
     # Default:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
+    family: DejaVu Sans Mono
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -138,7 +138,7 @@
     #style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 9.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -163,11 +163,11 @@
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
-#colors:
+colors:
   # Default colors
-  #primary:
-  #  background: '#1d1f21'
-  #  foreground: '#c5c8c6'
+  primary:
+    background: '#080808'
+    foreground: '#b2b2b2'
 
     # Bright and dim foreground colors
     #
@@ -222,26 +222,26 @@
     #  foreground: '#1d1f21'
 
   # Normal colors
-  #normal:
-  #  black:   '#1d1f21'
-  #  red:     '#cc6666'
-  #  green:   '#b5bd68'
-  #  yellow:  '#f0c674'
-  #  blue:    '#81a2be'
-  #  magenta: '#b294bb'
-  #  cyan:    '#8abeb7'
-  #  white:   '#c5c8c6'
+  normal:
+    black:   '#000000'
+    red:     '#ee2c2c'
+    green:   '#00cd00'
+    yellow:  '#cdcd00'
+    blue:    '#0077ed'
+    magenta: '#ea61da'
+    cyan:    '#00cdcd'
+    white:   '#e5e5e5'
 
   # Bright colors
-  #bright:
-  #  black:   '#666666'
-  #  red:     '#d54e53'
-  #  green:   '#b9ca4a'
-  #  yellow:  '#e7c547'
-  #  blue:    '#7aa6da'
-  #  magenta: '#c397d8'
-  #  cyan:    '#70c0b1'
-  #  white:   '#eaeaea'
+  bright:
+    black:   '#7f7f7f'
+    red:     '#ff0000'
+    green:   '#00ff00'
+    yellow:  '#ffff00'
+    blue:    '#009cff'
+    magenta: '#ff00ff'
+    cyan:    '#00ffff'
+    white:   '#ffffff'
 
   # Dim colors
   #
