@@ -59,11 +59,11 @@ dotfiles:
     src: xinitrc
     dst: ~/.xinitrc
   f_xmobar:
-    src: xmonad/xmobar
-    dst: ~/.xmonad/xmobar
+    src: config/xmonad/xmobarrc
+    dst: ~/.config/xmonad/xmobarrc
   f_xmonad.hs:
-    src: xmonad/xmonad.hs
-    dst: ~/.xmonad/xmonad.hs
+    src: config/xmonad/xmonad.hs
+    dst: ~/.config/xmonad/xmonad.hs
   f_xresources:
     src: Xresources
     dst: ~/.Xresources

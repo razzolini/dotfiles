@@ -57,7 +57,7 @@ myScreens = [0]
 xmobarOnScreens :: [Int] -> IO [Handle]
 xmobarOnScreens = traverse spawnXmobarOnScreen
   where
-    spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.xmonad/xmobar\""
+    spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.config/xmonad/xmobarrc\""
 
 multiHPutStrLn :: Foldable t => t Handle -> String -> IO ()
 multiHPutStrLn hs msg = traverse_ (\h -> hPutStrLn h msg) hs
