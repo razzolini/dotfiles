@@ -37,7 +37,7 @@ URxvt.intensityStyles: false
 *.color0:      #000000
 *.color8:      #7f7f7f
 ! red
-*.color1:      #cd0000
+*.color1:      #ee2c2c
 *.color9:      #ff0000
 ! green
 *.color2:      #00cd00
