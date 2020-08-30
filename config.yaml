@@ -12,6 +12,9 @@ dotfiles:
     src: spacemacs.d
     dst: ~/.spacemacs.d
     link: link
+  f_alacritty.yml:
+    src: config/alacritty/alacritty.yml
+    dst: ~/.config/alacritty/alacritty.yml
   f_aurman_config:
     src: config/aurman/aurman_config
     dst: ~/.config/aurman/aurman_config
@@ -72,6 +75,7 @@ profiles:
     dotfiles:
     - d_fish_functions
     - d_spacemacs.d
+    - f_alacritty.yml
     - f_aurman_config
     - f_bin_power-menu
     - f_bin_volume
@@ -93,6 +97,7 @@ profiles:
     dotfiles:
     - d_fish_functions
     - d_spacemacs.d
+    - f_alacritty.yml
     - f_aurman_config
     - f_bin_power-menu
     - f_bin_toggle-touchpad
