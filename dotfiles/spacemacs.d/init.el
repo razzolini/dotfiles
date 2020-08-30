@@ -55,7 +55,7 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      org
-     (plantuml :variables plantuml-default-exec-mode 'executable)
+     plantuml
      python
      rust ; includes toml support
      (shell :variables shell-default-shell 'eshell)
@@ -666,6 +666,12 @@ this change makes all blocks visible again."
              (org-hide-block-toggle t)))))))
   (add-hook 'org-mode-hook 'hide-non-exported-org-src)
   (add-hook 'org-cycle-hook 'hide-non-exported-org-src)
+
+  ;; Use plantuml through the executable on the system path (setting this as a
+  ;; layer variable, or directly in `dotspacemacs/user-config' doesn't currently
+  ;; work: it gets set back to 'jar).
+  (with-eval-after-load 'plantuml-mode
+    (setq plantuml-default-exec-mode 'executable))
 
   ;; Enable syntax checking by default in `python-mode'
   (add-hook 'python-mode-hook 'flycheck-mode)
