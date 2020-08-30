@@ -688,7 +688,7 @@ this change makes all blocks visible again."
 
    save-abbrevs nil ; Do not (ask to) save abbreviations on quit
 
-   terminal-here-terminal-command '("urxvt")
+   terminal-here-terminal-command '("alacritty")
 
    ;; Use system notifications for `org-alert'
    alert-default-style 'libnotify

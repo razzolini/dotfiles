@@ -36,7 +36,7 @@ main = do
         , startupHook =
             myStartupHook
             <+> startupHook def
-        , terminal = "urxvt"
+        , terminal = "alacritty"
         -- Rebind Mod to the Windows key
         , modMask = mod4Mask
         -- Send info to xmobar
