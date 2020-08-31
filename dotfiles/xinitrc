@@ -28,7 +28,7 @@ unclutter --fork
 # Set HDMI-1 screen to primary
 xrandr --output HDMI-1 --primary
 
-# Status bar volume setup (see ~/bin/volume)
+# Status bar volume setup (see ~/.local/bin/volume)
 # Create a volume file if it doesn't exist
 volume init
 # Write the initial value (in the background because this may be slow before X is started)

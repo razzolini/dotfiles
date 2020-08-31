@@ -8,11 +8,8 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# Add local bin dirs to PATH if they exist
-if [ -d "${HOME}/bin" ] ; then
-    PATH="${HOME}/bin:${PATH}"
-fi
-if [ -d "${HOME}/.local/bin" ] ; then
+# Add local bin dir to PATH if it exists
+if [ -d "${HOME}/.local/bin" ]; then
     PATH="${HOME}/.local/bin:${PATH}"
 fi
 

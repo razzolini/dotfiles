@@ -17,13 +17,13 @@ dotfiles:
     dst: ~/.config/aurman/aurman_config
   f_bin_power-menu:
     src: bin/power-menu
-    dst: ~/bin/power-menu
+    dst: ~/.local/bin/power-menu
   f_bin_toggle-touchpad:
     src: bin/toggle-touchpad
-    dst: ~/bin/toggle-touchpad
+    dst: ~/.local/bin/toggle-touchpad
   f_bin_volume:
     src: bin/volume
-    dst: ~/bin/volume
+    dst: ~/.local/bin/volume
   f_config.fish:
     src: config/fish/config.fish
     dst: ~/.config/fish/config.fish
@@ -42,7 +42,7 @@ dotfiles:
     link: link
   f_pacdiff-merge3:
     src: bin/pacdiff-merge3
-    dst: ~/bin/pacdiff-merge3
+    dst: ~/.local/bin/pacdiff-merge3
   f_profile:
     src: profile
     dst: ~/.profile
