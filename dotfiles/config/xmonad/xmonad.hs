@@ -6,6 +6,7 @@ import Data.Foldable (find, traverse_)
 import System.Exit (exitSuccess)
 import System.IO (Handle, hPutStrLn)
 import XMonad
+import XMonad.Actions.CycleWS (swapNextScreen)
 import XMonad.Actions.PhysicalScreens (sendToScreen, viewScreen)
 import XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import XMonad.Hooks.DynamicLog
@@ -142,6 +143,7 @@ myKeys = workspaceKeys ++ screenKeys ++
     , ("M-S-p", spawn "power-menu")
     , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
 {%@@ if profile == "home-desktop" @@%}
+    , ("M-0", swapNextScreen) -- Swap the workspaces on the two screens
     -- Media keys
     , ("<XF86AudioRaiseVolume>", spawn "volume set-sink-volume @DEFAULT_SINK@ +5%")
     , ("<XF86AudioLowerVolume>", spawn "volume set-sink-volume @DEFAULT_SINK@ -5%")
