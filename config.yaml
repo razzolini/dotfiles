@@ -67,9 +67,6 @@ dotfiles:
   f_xmonad.hs:
     src: config/xmonad/xmonad.hs
     dst: ~/.config/xmonad/xmonad.hs
-  f_xresources:
-    src: Xresources
-    dst: ~/.Xresources
 profiles:
   home-desktop:
     dotfiles:
@@ -92,7 +89,6 @@ profiles:
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
-    - f_xresources
   laptop:
     dotfiles:
     - d_fish_functions
@@ -114,4 +110,3 @@ profiles:
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
-    - f_xresources

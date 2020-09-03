@@ -37,13 +37,3 @@ if status is-login; and test -z "$DISPLAY" -a $XDG_VTNR -eq 1
     exec startx -- -keeptty
 end
 # The script only continues if this shell didn't start X
-
-# Workaround for urxvt line wrapping bug: https://superuser.com/a/499523
-set -l parent_pid (string trim (ps -o ppid= $fish_pid))
-set -l parent_command (cat /proc/$parent_pid/comm)
-if test $parent_command = 'urxvt'
-    for i in (seq 1 $LINES)
-        echo
-    end
-    clear
-end
