@@ -3,6 +3,7 @@ config:
   create: true
   dotpath: dotfiles
   minversion: 0.29.3
+  diff_command: diff --recursive --unified --color=always {0} {1}
 dotfiles:
   d_fish_functions:
     src: config/fish/functions
