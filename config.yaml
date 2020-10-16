@@ -28,6 +28,9 @@ dotfiles:
   f_bin_volume:
     src: bin/volume
     dst: ~/.local/bin/volume
+  f_bin_wifi-status:
+    src: bin/wifi-status
+    dst: ~/.local/bin/wifi-status
   f_config.fish:
     src: config/fish/config.fish
     dst: ~/.config/fish/config.fish
@@ -98,6 +101,7 @@ profiles:
     - f_aurman_config
     - f_bin_power-menu
     - f_bin_toggle-touchpad
+    - f_bin_wifi-status
     - f_config.fish
     - f_dunstrc
     - f_fish_theme

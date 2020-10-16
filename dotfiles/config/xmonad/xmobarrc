@@ -5,13 +5,13 @@ Config
     , position = TopW L 97
     , commands =
         [ Run StdinReader
-        , Run Wireless
 {%@@ if profile == "home-desktop" @@%}
+        , Run Wireless
             "wlp5s0"
-{%@@ else @@%}
-            "wlp13s0b1"
-{%@@ endif @@%}
             ["-t", "WIFI <essid> <quality>%", "-L", "0", "-l", "red"] 10
+{%@@ else @@%}
+        , Run Com "wifi-status" [] "wifi" 10
+{%@@ endif @@%}
 {%@@ if profile == "home-desktop" @@%}
         , Run CommandReader "volume read" "volume"
 {%@@ endif @@%}
@@ -51,6 +51,6 @@ Config
 {%@@ if profile == "home-desktop" @@%}
     , template = "%StdinReader% }{ %wlp5s0wi% | %volume% | %cpu% %thermal0% | %memory% | %disku% | %date%"
 {%@@ else @@%}
-    , template = "%StdinReader% }{ %wlp13s0b1wi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
+    , template = "%StdinReader% }{ %wifi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
 {%@@ endif @@%}
     }

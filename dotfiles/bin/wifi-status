@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# WARNING: this script parses iw output, which iw explicitly recommends not doing.
+# However, I couldn't find an (equally easy) alternative, and this is a very
+# non-critical script, so I think it's fine.
+
+readonly INTERFACE=wlo1
+
+sudo iw dev "$INTERFACE" link | awk -F ': ' '
+BEGIN { printf "WIFI" }
+/Not connected/ { printf " N/A" }
+/SSID/ { printf " %s", $2 }
+/signal/ { gsub(" ", "", $2); printf " %s", $2 }
+END { printf "\n" }
+'
