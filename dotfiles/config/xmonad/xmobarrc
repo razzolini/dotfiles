@@ -8,9 +8,9 @@ Config
 {%@@ if profile == "home-desktop" @@%}
         , Run Wireless
             "wlp5s0"
-            ["-t", "WIFI <essid> <quality>%", "-L", "0", "-l", "red"] 10
+            ["-t", "WIFI <essid> <quality>%", "-L", "0", "-l", "red"] 50
 {%@@ else @@%}
-        , Run Com "wifi-status" [] "wifi" 10
+        , Run Com "wifi-status" [] "wifi" 50
 {%@@ endif @@%}
 {%@@ if profile == "home-desktop" @@%}
         , Run CommandReader "volume read" "volume"
