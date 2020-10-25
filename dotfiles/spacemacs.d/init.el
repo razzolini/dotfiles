@@ -67,12 +67,13 @@ This function should only modify configuration layer settings."
      yaml
      )
 
-   ;; List of additional packages that will be installed without being
-   ;; wrapped in a layer. If you need some configuration for these
-   ;; packages, then consider creating a layer. You can also put the
-   ;; configuration in `dotspacemacs/user-config'.
-   ;; To use a local version of a package, use the `:location' property:
-   ;; '(your-package :location "~/path/to/your-package/")
+   ;; List of additional packages that will be installed without being wrapped
+   ;; in a layer (generally the packages are installed only and should still be
+   ;; loaded using load/require/use-package in the user-config section below in
+   ;; this file). If you need some configuration for these packages, then
+   ;; consider creating a layer. You can also put the configuration in
+   ;; `dotspacemacs/user-config'. To use a local version of a package, use the
+   ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(org-alert real-auto-save)
 
@@ -388,7 +389,7 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-line-numbers nil
 
-   ;; Code folding method. Possible values are `evil' and `origami'.
+   ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
 
@@ -632,14 +633,14 @@ same `major-mode'."
   (spacemacs/toggle-mode-line-org-clock-on)
 
   ;; Bind more `helm-org-rifle' commands
-  (spacemacs/set-leader-keys "aor" nil)
-  (spacemacs/declare-prefix "aor" "rifle")
-  (spacemacs/set-leader-keys "aorr" 'helm-org-rifle)
-  (spacemacs/set-leader-keys "aora" 'helm-org-rifle-agenda-files)
-  (spacemacs/set-leader-keys "aorb" 'helm-org-rifle-current-buffer)
-  (spacemacs/set-leader-keys "aord" 'helm-org-rifle-directories)
-  (spacemacs/set-leader-keys "aorf" 'helm-org-rifle-files)
-  (spacemacs/set-leader-keys "aoro" 'helm-org-rifle-org-directory)
+  (spacemacs/set-leader-keys "ao/" nil)
+  (spacemacs/declare-prefix "ao/" "rifle")
+  (spacemacs/set-leader-keys "ao//" 'helm-org-rifle)
+  (spacemacs/set-leader-keys "ao/a" 'helm-org-rifle-agenda-files)
+  (spacemacs/set-leader-keys "ao/b" 'helm-org-rifle-current-buffer)
+  (spacemacs/set-leader-keys "ao/d" 'helm-org-rifle-directories)
+  (spacemacs/set-leader-keys "ao/f" 'helm-org-rifle-files)
+  (spacemacs/set-leader-keys "ao/o" 'helm-org-rifle-org-directory)
 
   ;; Configure smart quotes for org export
   (with-eval-after-load 'ox
