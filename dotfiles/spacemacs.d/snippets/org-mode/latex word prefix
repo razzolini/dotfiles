@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: latex word prefix
+# key: \-
+# --
+\\($1\\)-$0
