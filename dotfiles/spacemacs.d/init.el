@@ -600,6 +600,10 @@ same `major-mode'."
   (spacemacs/set-leader-keys-for-major-mode 'coq-mode
     "à" 'proof-undo-last-successful-command
     "ù" 'proof-assert-next-command-interactive)
+  ;; Make evil use default undo, because undo-tree is not compatible with Proof General
+  (add-hook 'coq-mode-hook
+            (lambda ()
+              (setq-local evil-undo-function (symbol-function 'pg-protected-undo))))
 
   ;; Auto-reload files in `doc-mode'
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
