@@ -615,6 +615,13 @@ same `major-mode'."
               (c-set-offset 'arglist-intro '+)
               (c-set-offset 'arglist-close 0)))
 
+  (add-hook 'LaTeX-mode-hook
+            (lambda () (setq
+                        ;; Disable auto-indentation on newline
+                        electric-indent-inhibit t
+                        ;; Automatically add newline at end of file
+                        require-final-newline t)))
+
   ;; Associate more file extensions to `ledger-mode'
   (add-to-list 'auto-mode-alist '("\\.\\(h?ledger\\|journal\\)$" . ledger-mode))
 
