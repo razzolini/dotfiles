@@ -689,6 +689,21 @@ this change makes all blocks visible again."
   (add-hook 'org-mode-hook 'hide-non-exported-org-src)
   (add-hook 'org-cycle-hook 'hide-non-exported-org-src)
 
+  ;; As of imagemagick 7.0.10.46, conversion from PDF to PNG seems to add a
+  ;; transparent column at the right of the resulting image when the density
+  ;; (DPI) is an odd number. Because this extra column is distinct from the rest
+  ;; of the background, it fools the -trim function into thinking that the
+  ;; actual content of the image goes all the way to the right margin, resulting
+  ;; in a very large image with lots of empty space. The simplest way to work
+  ;; around this issue is to shave off one pixel from each side before trimming.
+  (with-eval-after-load 'org
+    (let ((imagemagick (copy-list (cdr (assoc 'imagemagick org-preview-latex-process-alist)))))
+      (setq imagemagick
+            (plist-put imagemagick
+                       :image-converter
+                       '("convert -density %D -antialias %f -shave 1x1 -trim -quality 100 %O")))
+      (add-to-list 'org-preview-latex-process-alist (cons 'imagemagick-dpi-fix imagemagick))))
+
   ;; Use plantuml through the executable on the system path (setting this as a
   ;; layer variable, or directly in `dotspacemacs/user-config' doesn't currently
   ;; work: it gets set back to 'jar).
@@ -756,7 +771,7 @@ this change makes all blocks visible again."
    org-html-postamble nil
    ;; Configure latex preview and export
    org-latex-compiler "xelatex"
-   org-preview-latex-default-process 'imagemagick ; dvipng doesn't support TikZ
+   org-preview-latex-default-process 'imagemagick-dpi-fix ; dvipng doesn't support TikZ
    org-latex-listings 'minted ; requires -shell-escape
    org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
                            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
