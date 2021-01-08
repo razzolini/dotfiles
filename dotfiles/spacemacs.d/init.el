@@ -511,7 +511,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Store custom settings in a different file
   (setq custom-file "~/.spacemacs.d/custom.el")
   (load custom-file)
-  )
+
+  ;; Visually align `org-mode' tables containing images, etc.
+  ;; This must be set before loading packages, otherwise the `valign' package is not loaded
+  (setq-default org-enable-valign t))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
