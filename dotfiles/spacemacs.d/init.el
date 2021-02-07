@@ -53,7 +53,7 @@ This function should only modify configuration layer settings."
      idris
      (latex :variables latex-enable-auto-fill nil)
      multiple-cursors
-     org
+     (org :variables org-enable-valign t)
      plantuml
      python
      rust ; includes toml support
@@ -519,11 +519,7 @@ It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; Store custom settings in a different file
   (setq custom-file "~/.spacemacs.d/custom.el")
-  (load custom-file)
-
-  ;; Visually align `org-mode' tables containing images, etc.
-  ;; This must be set before loading packages, otherwise the `valign' package is not loaded
-  (setq-default org-enable-valign t))
+  (load custom-file))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
