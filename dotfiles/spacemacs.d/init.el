@@ -47,14 +47,17 @@ This function should only modify configuration layer settings."
      finance
      git
      helm
-     (haskell :variables haskell-completion-backend 'dante)
-     (latex :variables latex-enable-auto-fill nil)
+     (haskell :variables haskell-completion-backend 'lsp)
+     (latex :variables
+            latex-backend 'company-auctex
+            latex-enable-auto-fill nil)
+     (lsp :variables lsp-modeline-code-actions-enable nil)
      multiple-cursors
      (org :variables org-enable-valign t)
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
-     sql
+     (sql :variables sql-backend 'company-sql)
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      yaml
      )
