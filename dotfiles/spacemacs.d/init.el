@@ -52,7 +52,6 @@ This function should only modify configuration layer settings."
      (haskell :variables haskell-completion-backend 'dante)
      idris
      (latex :variables latex-enable-auto-fill nil)
-     markdown
      multiple-cursors
      org
      plantuml
