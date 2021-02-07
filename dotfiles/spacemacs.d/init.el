@@ -41,28 +41,21 @@ This function should only modify configuration layer settings."
      (auto-completion :variables
                       auto-completion-return-key-behavior nil
                       auto-completion-complete-with-key-sequence "jk")
-     asm
      c-c++
      coq
-     csv
      emacs-lisp
      finance
      git
      helm
      (haskell :variables haskell-completion-backend 'dante)
-     idris
      (latex :variables latex-enable-auto-fill nil)
      multiple-cursors
      (org :variables org-enable-valign t)
-     plantuml
-     python
-     rust ; includes toml support
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
      sql
      (syntax-checking :variables syntax-checking-enable-by-default nil)
-     treemacs
      yaml
      )
 
@@ -714,15 +707,6 @@ this change makes all blocks visible again."
                        '("convert -density %D -antialias %f -shave 1x1 -trim -quality 100 %O")))
       (add-to-list 'org-preview-latex-process-alist (cons 'imagemagick-dpi-fix imagemagick))))
 
-  ;; Use plantuml through the executable on the system path (setting this as a
-  ;; layer variable, or directly in `dotspacemacs/user-config' doesn't currently
-  ;; work: it gets set back to 'jar).
-  (with-eval-after-load 'plantuml-mode
-    (setq plantuml-default-exec-mode 'executable))
-
-  ;; Enable syntax checking by default in `python-mode'
-  (add-hook 'python-mode-hook 'flycheck-mode)
-
   ;; Enable `sqlind-minor-mode' by default in `sql-mode'
   (add-hook 'sql-mode-hook 'sqlind-minor-mode)
   ;; Load indentation config
@@ -739,9 +723,6 @@ this change makes all blocks visible again."
 
    ;; Use system notifications for `org-alert'
    alert-default-style 'libnotify
-
-   ;; `asm' layer
-   nasm-basic-offset 4
 
    ;; `c-c++' layer
    c-basic-offset 4
@@ -786,7 +767,4 @@ this change makes all blocks visible again."
    org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
                            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
                            "%latex -shell-escape -interaction nonstopmode -output-directory %o %f")
-
-   ;; `plantuml' layer
-   plantuml-indent-level 4
    ))
