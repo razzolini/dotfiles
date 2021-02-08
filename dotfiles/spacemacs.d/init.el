@@ -564,6 +564,18 @@ The original mappings are not removed."
   (remap-square-bracket-commands evil-normal-state-map)
   (remap-square-bracket-commands evil-motion-state-map)
 
+  ;; Work around `lsp-mode' issue (see
+  ;; https://github.com/emacs-lsp/lsp-mode/issues/1447): when returning to
+  ;; normal mode, the completion popup doesn't close, and some evil commands
+  ;; (such as j, `evil-next-line') insert letters instead of executing the
+  ;; expected actions.
+  (with-eval-after-load 'company
+    (defun evil-normal-state-close-company-popup ()
+      "Force close the `company-mode' completion popup when returning to normal mode."
+      (when (company--active-p)
+        (company-abort)))
+    (add-hook 'evil-normal-state-entry-hook 'evil-normal-state-close-company-popup))
+
   ;; Disable evil-escape while using multiple cursors
   ;; (see https://github.com/gabesoft/evil-mc/issues/27)
   (with-eval-after-load 'evil-mc
