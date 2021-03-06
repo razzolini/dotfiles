@@ -137,8 +137,8 @@ mailWorkspace = "9.Mail"
 
 myKeys :: Keymap
 myKeys = workspaceKeys ++ screenKeys ++
-    [ ("M-o", spawn "chromium")
-    , ("M-S-o", spawn "chromium --incognito")
+    [ ("M-o", spawn "google-chrome-stable")
+    , ("M-S-o", spawn "google-chrome-stable --incognito")
     , ("M-i", spawn "emacsclient -a '' -nqc")
     , ("M-S-p", spawn "power-menu")
     , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
