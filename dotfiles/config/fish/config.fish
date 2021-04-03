@@ -6,9 +6,11 @@ set fish_prompt_pwd_dir_length 0
 
 # Select vi editing mode
 fish_vi_key_bindings
-
-# Disable cursor blinking
-set fish_cursor_unknown block
+# Emulate vim's cursor shape behavior
+set fish_cursor_default block
+set fish_cursor_insert line
+set fish_cursor_replace underscore
+set fish_cursor_replace_one underscore
 
 # Configure git prompt
 # Information
