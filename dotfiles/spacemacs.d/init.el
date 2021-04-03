@@ -707,9 +707,7 @@ this change makes all blocks visible again."
                        '("convert -density %D -antialias %f -shave 1x1 -trim -quality 100 %O")))
       (add-to-list 'org-preview-latex-process-alist (cons 'imagemagick-dpi-fix imagemagick))))
 
-  ;; Enable `sqlind-minor-mode' by default in `sql-mode'
-  (add-hook 'sql-mode-hook 'sqlind-minor-mode)
-  ;; Load indentation config
+  ;; Load SQL indentation config (for `sqlind-minor-mode')
   (load-file "~/.spacemacs.d/sql-indent-config.el")
 
   (setq-default
