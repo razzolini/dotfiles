@@ -4,6 +4,9 @@ set fish_greeting
 # Disable shortening of path components in the prompt
 set fish_prompt_pwd_dir_length 0
 
+# Disable cursor blinking
+set fish_cursor_unknown block
+
 # Configure git prompt
 # Information
 set __fish_git_prompt_showdirtystate 'yes'
