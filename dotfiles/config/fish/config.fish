@@ -4,6 +4,9 @@ set fish_greeting
 # Disable shortening of path components in the prompt
 set fish_prompt_pwd_dir_length 0
 
+# Select vi editing mode
+fish_vi_key_bindings
+
 # Disable cursor blinking
 set fish_cursor_unknown block
 
