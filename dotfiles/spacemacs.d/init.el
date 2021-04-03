@@ -70,7 +70,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-alert real-auto-save)
+   dotspacemacs-additional-packages '(real-auto-save)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -652,15 +652,6 @@ same `major-mode'."
     (add-to-list 'ledger-reports
                  '("income" "%(binary) -f %(ledger-file) incomestatement")
                  t))
-
-  ;; Enable org agenda notifications
-  (require 'org-alert)
-  (advice-add 'org-alert-check :around
-              ;; Correctly restore current buffer after `org-alert-check', even if it's a popwin popup
-              (lambda (f &rest args)
-                (save-window-excursion (apply f args)))
-              '((name . "restore popup buffer")))
-  (org-alert-enable)
 
   ;; Configure org time tracking
   (require 'org-clock)
