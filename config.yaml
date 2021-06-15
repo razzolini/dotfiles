@@ -16,9 +16,6 @@ dotfiles:
   f_alacritty.yml:
     src: config/alacritty/alacritty.yml
     dst: ~/.config/alacritty/alacritty.yml
-  f_aurman_config:
-    src: config/aurman/aurman_config
-    dst: ~/.config/aurman/aurman_config
   f_bin_power-menu:
     src: bin/power-menu
     dst: ~/.local/bin/power-menu
@@ -77,7 +74,6 @@ profiles:
     - d_fish_functions
     - d_spacemacs.d
     - f_alacritty.yml
-    - f_aurman_config
     - f_bin_power-menu
     - f_bin_volume
     - f_config.fish
@@ -98,7 +94,6 @@ profiles:
     - d_fish_functions
     - d_spacemacs.d
     - f_alacritty.yml
-    - f_aurman_config
     - f_bin_power-menu
     - f_bin_toggle-touchpad
     - f_bin_wifi-status
