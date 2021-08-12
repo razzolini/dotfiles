@@ -59,6 +59,9 @@ dotfiles:
   f_ssh_config:
     src: ssh/config
     dst: ~/.ssh/config
+  f_vifmrc:
+    src: config/vifm/vifmrc
+    dst: ~/.config/vifm/vifmrc
   f_xinitrc:
     src: xinitrc
     dst: ~/.xinitrc
@@ -86,6 +89,7 @@ profiles:
     - f_redshift.conf
     - f_ripgreprc
     - f_ssh_config
+    - f_vifmrc
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
@@ -107,6 +111,7 @@ profiles:
     - f_redshift.conf
     - f_ripgreprc
     - f_ssh_config
+    - f_vifmrc
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
