@@ -62,6 +62,9 @@ dotfiles:
   f_vifmrc:
     src: config/vifm/vifmrc
     dst: ~/.config/vifm/vifmrc
+  f_vifm_colors:
+    src: config/vifm/colors/Default-256-BoldStatus.vifm
+    dst: ~/.config/vifm/colors/Default-256-BoldStatus.vifm
   f_xinitrc:
     src: xinitrc
     dst: ~/.xinitrc
@@ -90,6 +93,7 @@ profiles:
     - f_ripgreprc
     - f_ssh_config
     - f_vifmrc
+    - f_vifm_colors
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
@@ -112,6 +116,7 @@ profiles:
     - f_ripgreprc
     - f_ssh_config
     - f_vifmrc
+    - f_vifm_colors
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
