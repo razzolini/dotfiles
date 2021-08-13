@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Vifm in Alacritty
+GenericName=Terminal File Manager
+Exec=alacritty -e vifm %F
+Terminal=false
+MimeType=inode/directory;
