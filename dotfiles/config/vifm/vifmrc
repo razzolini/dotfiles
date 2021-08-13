@@ -132,6 +132,7 @@ mark h ~/
 
 command! df df -h %m 2> /dev/null
 command! diff vim -d %f %F
+command! du du -hsc %f %m 2> /dev/null
 command! zip zip -r %f.zip %f
 command! run !! ./%f
 command! make !!make %a
