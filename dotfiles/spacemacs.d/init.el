@@ -564,8 +564,8 @@ before packages are loaded."
     "qQ" 'spacemacs/prompt-kill-emacs
     "qK" 'spacemacs/kill-emacs)
 
-  ;; Activate visual line mode in every buffer
-  (global-visual-line-mode t)
+  ;; Activate visual line mode (word wrap and navigation based on wrapped lines) in every buffer
+  (spacemacs/toggle-visual-line-navigation-globally-on)
 
   (require 'real-auto-save)
 
