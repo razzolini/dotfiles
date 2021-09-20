@@ -51,9 +51,12 @@ This function should only modify configuration layer settings."
      (latex :variables
             latex-backend 'company-auctex
             latex-enable-auto-fill nil)
-     (lsp :variables lsp-modeline-code-actions-enable nil)
+     (lsp :variables
+          lsp-modeline-code-actions-enable nil
+          lsp-rust-server 'rust-analyzer)
      multiple-cursors
      (org :variables org-enable-valign t)
+     (rust :variables rust-backend 'lsp)
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
