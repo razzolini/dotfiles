@@ -53,7 +53,8 @@ This function should only modify configuration layer settings."
             latex-enable-auto-fill nil)
      (lsp :variables
           lsp-modeline-code-actions-enable nil
-          lsp-rust-server 'rust-analyzer)
+          lsp-rust-server 'rust-analyzer
+          lsp-ui-doc-enable nil)
      multiple-cursors
      (org :variables org-enable-valign t)
      (rust :variables rust-backend 'lsp)
