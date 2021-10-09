@@ -49,10 +49,6 @@ highlight User2 ctermbg=240 ctermfg=231 cterm=bold
 highlight User3 ctermbg=240 ctermfg=white
 highlight User4 ctermbg=white ctermfg=240
 
-" software documentation
-highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICENCE,LICENSE,NEWS,
-          \README,README.*,AUTHORS,TODO,THANKS}
-        \ cterm=none ctermfg=187 ctermbg=default
 " build system files
 highlight {Makefile,Makefile.am,Makefile.in,Makefile.win,*.mak,*.mk,*.m4,*.ac,
           \configure,CMakeLists.txt,*.cmake,*.pro,*.pri,*.sln}
@@ -67,7 +63,7 @@ highlight {*.djvu,*.htm,*.html,*.shtml,*.css,*.markdown,*.md,*[^0-9].[1-9],
           \*.mkd,*.org,*.pandoc,*.pdc,*.pdf,*.epub,*.fb2,*.tex,*.txt,*.xhtml,
           \*.xml,*.pptx,*.ppt,*.doc,*.docx,*.xls,*.xlsm,*.xlsx,*.mobi,*.rtf,
           \*.less,*.scss,*.log,*.rss,*.xul,*.json,*.yaml,*.yml,*.desktop,*.csv,
-          \*.plist,*.ini,*.cfg,*.rc,*.conf,*.spec,*.qrc}
+          \*.plist,*.ini,*.cfg,*.rc,*.conf,*.spec,*.qrc,*.odg}
         \ cterm=none ctermfg=217 ctermbg=default
 " media
 highlight {*.aac,*.anx,*.asf,*.au,*.avi,*.ts,*.axa,*.axv,*.divx,*.flac,*.m2a,
@@ -88,5 +84,10 @@ highlight {*.sh,*.bash,*.zsh,*.bat,*.btm,*.cmd,*.com,*.dll,*.exe,*.run,*.msu,
 highlight {*.patch,*.diff,*.py,*.cpp,*.hpp,*.mk,*.c,*.h,*.cpp,*.hpp,*.cc,*.hs,
           \*.php,*.lua,*.vim,*.vifm,*.asm,*.s,*.java,*.cxx,*.c++,*.go,
           \*.pl,*.pm,*.t,*.cs,*.asp,*.dart,*.js,*.rb,*.scala,*.ts,*.coffee,
-          \*.ml,*.mli,*.rs,*.sql,*.qml,vifmrc,vimrc,.vimrc}
+          \*.ml,*.mli,*.rs,*.sql,*.qml,vifmrc,vimrc,.vimrc,*.flex,*.ypp,*.S,
+          \*.ld}
         \ cterm=none ctermfg=193 ctermbg=default
+" software documentation
+highlight {COPYRIGHT,COPYING*,BUGS,ChangeLog*,FAQ,INSTALL*,LICENCE,LICENSE,NEWS,
+          \README,README.*,AUTHORS,TODO,THANKS}
+        \ cterm=none ctermfg=187 ctermbg=default
