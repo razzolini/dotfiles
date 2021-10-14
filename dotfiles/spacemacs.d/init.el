@@ -63,6 +63,7 @@ This function should only modify configuration layer settings."
      (spell-checking :variables spell-checking-enable-by-default nil)
      (sql :variables sql-backend 'company-sql)
      (syntax-checking :variables syntax-checking-enable-by-default nil)
+     unicode-fonts
      yaml
      )
 
@@ -739,6 +740,15 @@ this change makes all blocks visible again."
 
   ;; Load SQL indentation config (for `sqlind-minor-mode')
   (load-file "~/.spacemacs.d/sql-indent-config.el")
+
+  ;; Make `unicode-fonts' work in emacs daemon mode
+  ;; (see https://github.com/rolandwalker/unicode-fonts/issues/3)
+  (defun unicode-fonts-setup-first-frame (frame)
+    "Set up unicode-fonts when the first frame is created."
+    (select-frame frame)
+    (unicode-fonts-setup)
+    (remove-hook 'after-make-frame-functions 'unicode-fonts-setup-first-frame))
+  (add-hook 'after-make-frame-functions 'unicode-fonts-setup-first-frame)
 
   (setq-default
    evil-escape-unordered-key-sequence t
