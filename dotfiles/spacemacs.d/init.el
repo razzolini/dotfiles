@@ -58,7 +58,8 @@ This function should only modify configuration layer settings."
      (org :variables org-enable-valign t)
      (rust :variables
            rust-backend 'lsp
-           lsp-rust-server 'rust-analyzer)
+           lsp-rust-server 'rust-analyzer
+           lsp-rust-analyzer-proc-macro-enable t)
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
      (spell-checking :variables spell-checking-enable-by-default nil)
