@@ -770,9 +770,6 @@ this change makes all blocks visible again."
 
    terminal-here-terminal-command '("alacritty")
 
-   ;; Use system notifications for `org-alert'
-   alert-default-style 'libnotify
-
    ;; `c-c++' layer
    c-basic-offset 4
 
