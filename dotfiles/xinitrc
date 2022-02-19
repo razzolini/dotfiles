@@ -60,9 +60,40 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true \
 dunst & # Notification server
 redshift-gtk &
 dropbox &
-emacs --daemon &
+emacs --fg-daemon &
 
 # Tell Java that xmonad is a non-reparenting window manager
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-exec xmonad
+# Note that running the window manager as a child process instead of using exec
+# only works if the WM doesn't fork to background (xmonad doesn't, but other
+# WMs might)
+xmonad
+
+# Terminate background processes, which would otherwise stay running after logging out
+#
+# The `jobs` command lists not only running and stopped jobs, but also all jobs
+# whose status has changed since it was last reported by the shell. Therefore,
+# some of the PIDs returned by `jobs` may correspond to already-terminated
+# processes, thus making the kill command produce some annoying error messages,
+# such as:
+#
+#   kill: sending signal to 7899 failed: No such process
+#
+# The `-r` argument, which limits the output to running jobs, is available in
+# bash but not in POSIX sh, so it technically shouldn't be used here, because
+# this script is run with plain sh (even though sh is often emulated by bash).
+# One solution would be to simply suppress `kill`'s stderr, but this might hide
+# some actually important error messages. Instead, `jobs` is invoked twice,
+# because, at least with bash, those jobs whose status has changed seem to be
+# reported just once by the first invocation (which, due to the lack of the
+# `-p` argument, displays job statuses as well as other information). Then, the
+# second invocation (done with `-p` to print a list of PIDs) should hopefully
+# only return running jobs and stopped jobs (i.e., those jobs that correspond
+# to still-existing processes). This is not actually guaranteed to work,
+# because some jobs could theoretically end between the two invocations of
+# `jobs`, but it should eliminate annoying error messages in most cases without
+# ever suppressing any important ones.
+jobs > /dev/null
+jobs -p | xargs --no-run-if-empty kill
+wait
