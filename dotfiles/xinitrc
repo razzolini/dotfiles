@@ -54,4 +54,4 @@ emacs --daemon &
 # Tell Java that xmonad is a non-reparenting window manager
 export _JAVA_AWT_WM_NONREPARENTING=1
 
-exec dbus-launch xmonad
+exec xmonad
