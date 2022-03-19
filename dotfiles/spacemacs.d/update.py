@@ -3,12 +3,14 @@
 import os
 import subprocess
 import sys
+from tempfile import NamedTemporaryFile
 import termios
 import tty
 
 
 DOTEMACS_DIR = os.path.expanduser('~/.emacs.d/')
 DOTSPACEMACS_TEMPLATE = 'core/templates/.spacemacs.template'
+DOTSPACEMACS = os.path.expanduser('~/.spacemacs.d/init.el')
 
 NORMAL = '\x1b[0m'
 BOLD = '\x1b[1m'
@@ -33,8 +35,8 @@ def main():
     show_changes()
     print()
 
-    template_changed = dotfile_template_changed()
-    if template_changed:
+    dotfile_needs_merging = dotfile_template_changed()
+    if dotfile_needs_merging:
         print_warning_title('Dotfile template changed')
         show_dotfile_template_changes()
         print_warning_body('These changes will need to be merged after the update.')
@@ -46,16 +48,25 @@ def main():
         return
     print()
 
-    print_step_title('Merging')
+    print_step_title('Merging updates')
     merge_changes()
     print()
+
+    if dotfile_needs_merging:
+        if prompt_merge_dotfile():
+            print()
+            print_step_title('Merging dotfile template changes')
+            print('Close the merge tool to continue.')
+            merge_dotfile()
+            dotfile_needs_merging = False
+        print()
 
     print_step_title('Starting package update')
     start_package_update()
     print()
 
-    if template_changed:
-        print_ansi('Remember to merge dotfile changes.', [BOLD, ITALIC, YELLOW_FG])
+    if dotfile_needs_merging:
+        print_ansi('Remember to merge dotfile template changes.', [BOLD, ITALIC, YELLOW_FG])
 
 
 def fetch():
@@ -116,28 +127,12 @@ def prompt_stop_emacs_and_update():
             print_warning_title('One or more emacs processes are running')
             print(running, end='')
             print_warning_body('If you want to update, you have to stop them manually before you can continue.')
-        print_ansi('Do you want to update [y/n]? ', [BOLD], end='', flush=True)
-        answer = unbuffered_input().lower()
+        answer = prompt_unbuffered('Do you want to update [y/n]?').lower()
         running = running_emacs_processes()
         if answer == 'y' and not running:
             return True
         elif answer == 'n':
             return False
-
-
-def unbuffered_input():
-    """Read a single character from stdin, without waiting for the enter key."""
-    # Adapted from http://code.activestate.com/recipes/134892/
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setcbreak(fd)
-        ch = sys.stdin.read(1)
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    # Echo the user input (to emulate what happens with buffered input)
-    print(ch)
-    return ch
 
 
 def running_emacs_processes():
@@ -159,6 +154,48 @@ def running_emacs_processes():
 def merge_changes():
     """Fast-forward merge the changes which have just been fetched."""
     run_in_dotemacs(['git', 'merge', '--ff-only', 'FETCH_HEAD'])
+
+
+def prompt_merge_dotfile():
+    """Ask the user whether they want to merge dotfile template changes now."""
+    while True:
+        answer = prompt_unbuffered('Do you want to merge dotfile template changes now [y/n]?').lower()
+        if answer == 'y':
+            return True
+        elif answer == 'n':
+            return False
+
+
+def prompt_unbuffered(prompt):
+    """Prompts the user to enter a single character using unbuffered input."""
+    print_ansi(prompt, [BOLD], end=' ', flush=True)
+    return unbuffered_input()
+
+
+def unbuffered_input():
+    """Read a single character from stdin, without waiting for the enter key."""
+    # Adapted from http://code.activestate.com/recipes/134892/
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setcbreak(fd)
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    # Echo the user input (to emulate what happens with buffered input)
+    print(ch)
+    return ch
+
+
+def merge_dotfile():
+    """Open a merge tool to let the user merge dotfile template changes."""
+    with NamedTemporaryFile(prefix='.spacemacs-old-', suffix='.template') as old_template:
+        run_in_dotemacs(['git', 'show', f'HEAD@{{1}}:{DOTSPACEMACS_TEMPLATE}'], stdout=old_template)
+        new_template_name = os.path.join(DOTEMACS_DIR, DOTSPACEMACS_TEMPLATE)
+        subprocess.run(
+            ['kdiff3', '--out', DOTSPACEMACS, '--', old_template.name, DOTSPACEMACS, new_template_name],
+            stderr=subprocess.DEVNULL,
+        )
 
 
 def run_in_dotemacs(command, check=True, **subprocess_args):
