@@ -761,6 +761,13 @@ this change makes all blocks visible again."
   ;; Load SQL indentation config (for `sqlind-minor-mode')
   (load-file "~/.spacemacs.d/sql-indent-config.el")
 
+  ;; Save `undo-tree' history to a central directory, rather than to the same directory as the edited file
+  ;; (code adapted from https://github.com/syl20bnr/spacemacs/commit/885d092e72aeaa470253c19831ba42e2eecf3514#diff-cf66f7b82b078ca6858049c89d6a2c73f94084135d822c2f00f511b3cbbfb835L1885-L1889)
+  (let ((undo-directory (concat spacemacs-cache-directory "undo")))
+    (unless (file-exists-p undo-directory)
+      (make-directory undo-directory))
+    (setq undo-tree-history-directory-alist `(("." . ,undo-directory))))
+
   ;; Make `unicode-fonts' work in emacs daemon mode
   ;; (see https://github.com/rolandwalker/unicode-fonts/issues/3)
   (defun unicode-fonts-setup-first-frame (frame)
