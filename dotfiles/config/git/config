@@ -7,3 +7,6 @@
     autocrlf = input
 [pull]
     ff = only
+
+[includeIf "gitdir:~/Work/"]
+    path = ~/Work/.gitconfig-include

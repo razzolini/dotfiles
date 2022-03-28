@@ -68,6 +68,9 @@ dotfiles:
   f_vifm_colors:
     src: config/vifm/colors/Default-256-BoldStatus.vifm
     dst: ~/.config/vifm/colors/Default-256-BoldStatus.vifm
+  f_work_gitconfig-include:
+    src: Work/.gitconfig-include
+    dst: ~/Work/.gitconfig-include
   f_xinitrc:
     src: xinitrc
     dst: ~/.xinitrc
@@ -98,6 +101,7 @@ profiles:
     - f_ssh_config
     - f_vifmrc
     - f_vifm_colors
+    - f_work_gitconfig-include
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
@@ -122,6 +126,7 @@ profiles:
     - f_ssh_config
     - f_vifmrc
     - f_vifm_colors
+    - f_work_gitconfig-include
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
