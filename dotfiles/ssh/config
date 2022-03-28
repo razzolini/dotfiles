@@ -1,2 +1,9 @@
+IdentityFile ~/.ssh/id_rsa
+
 Host *
     AddKeysToAgent yes
+
+Host gitlab.com-qpq
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_qpq.pub
