@@ -69,7 +69,7 @@ dotfiles:
     src: config/vifm/colors/Default-256-BoldStatus.vifm
     dst: ~/.config/vifm/colors/Default-256-BoldStatus.vifm
   f_work_gitconfig-include:
-    src: Work/.gitconfig-include
+    src: Work/gitconfig-include
     dst: ~/Work/.gitconfig-include
   f_xinitrc:
     src: xinitrc
