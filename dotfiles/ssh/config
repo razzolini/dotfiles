@@ -1,14 +1,2 @@
 Host *
     AddKeysToAgent yes
-
-Host gitlab.com
-    HostName gitlab.com
-    User git
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
-
-Host gitlab.com-qpq
-    HostName gitlab.com
-    User git
-    IdentityFile ~/.ssh/id_ed25519_qpq
-    IdentitiesOnly yes
