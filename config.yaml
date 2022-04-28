@@ -125,3 +125,7 @@ profiles:
     - f_xinitrc
     - f_xmobar
     - f_xmonad.hs
+  work-mac:
+    dotfiles:
+    - d_spacemacs.d
+    - f_init.vim
