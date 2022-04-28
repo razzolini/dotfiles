@@ -1,6 +1,10 @@
 [user]
     name = Riccardo Azzolini
+{%@@ if profile == "work-mac" @@%}
+    email = razzolini@qpq.io
+{%@@ else @@%}
     email = riccardo4096@gmail.com
+{%@@ endif @@%}
 [diff]
     indentHeuristic = true
 [core]

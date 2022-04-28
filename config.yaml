@@ -128,4 +128,5 @@ profiles:
   work-mac:
     dotfiles:
     - d_spacemacs.d
+    - f_git_config
     - f_init.vim
