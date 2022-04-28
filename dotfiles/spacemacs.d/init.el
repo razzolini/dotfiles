@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   `(
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -56,6 +56,7 @@ This function should only modify configuration layer settings."
           lsp-ui-doc-enable nil)
      multiple-cursors
      (org :variables org-enable-valign t)
+     ,@(when (spacemacs/system-is-mac) '(osx))
      (rust :variables
            rust-backend 'lsp
            lsp-rust-server 'rust-analyzer
@@ -263,8 +264,8 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 9.5
+   dotspacemacs-default-font `("Source Code Pro"
+                               :size ,(if (spacemacs/system-is-mac) 15.0 9.5)
                                :weight normal
                                :width normal)
 
@@ -753,6 +754,13 @@ this change makes all blocks visible again."
                        :image-converter
                        '("convert -density %D -antialias %f -shave 1x1 -trim -quality 100 %O")))
       (add-to-list 'org-preview-latex-process-alist (cons 'imagemagick-dpi-fix imagemagick))))
+
+  ;; Fix powerline separator colors on macOS, which are otherwise slightly off
+  ;; because the following variable shouldn't be set to t on emacs 28, and
+  ;; indeed the `powerline' package itself doesn't set it (see https://github.com/milkypostman/powerline/pull/188),
+  ;; but spacemacs does (see https://github.com/syl20bnr/spacemacs/blob/434e26486cfd2cd0db8c51f6e0d4e7b029187657/layers/%2Bspacemacs/spacemacs-modeline/packages.el#L119).
+  (when (spacemacs/system-is-mac)
+    (setq powerline-image-apple-rgb nil))
 
   ;; Set `fill-column' in `rust-mode' to the rustfmt default max line width
   (add-hook 'rust-mode-hook
