@@ -130,3 +130,4 @@ profiles:
     - d_spacemacs.d
     - f_git_config
     - f_init.vim
+    - f_ssh_config
