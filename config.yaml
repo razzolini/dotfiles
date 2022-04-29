@@ -127,7 +127,10 @@ profiles:
     - f_xmonad.hs
   work-mac:
     dotfiles:
+    - d_fish_functions
     - d_spacemacs.d
+    - f_config.fish
+    - f_fish_theme
     - f_git_config
     - f_init.vim
     - f_ssh_config

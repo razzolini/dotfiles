@@ -31,6 +31,7 @@ set __fish_git_prompt_char_stashstate '↩'
 # Import bash environment variables
 import_bash_env
 
+{%@@ if profile != "work-mac" @@%}
 # Start ssh agent and/or load its environment vars if needed
 set -l agent_output "$HOME/.ssh-agent-output"
 if not pgrep -u $USER ssh-agent > /dev/null
@@ -45,3 +46,4 @@ if status is-login; and test -z "$DISPLAY" -a $XDG_VTNR -eq 1
     exec startx -- -keeptty
 end
 # The script only continues if this shell didn't start X
+{%@@ endif @@%}
