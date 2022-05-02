@@ -17,15 +17,6 @@ fi
 export EDITOR="$(which nvim)"
 export VISUAL="${EDITOR}"
 
-# Set Java CLASSPATH
-export CLASSPATH='.'
-readonly local_java_dir="${HOME}/.local/share/java"
-if [ -d "${local_java_dir}" ]; then
-    readonly local_jars="$(find "${local_java_dir}" -type f -name '*.jar' -print0 \
-        | tr '\0' ':' | sed 's/:$//')"
-    CLASSPATH="${CLASSPATH}:${local_java_dir}:${local_jars}"
-fi
-
 # Set ripgrep config file path
 export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgreprc"
 
