@@ -133,4 +133,6 @@ profiles:
     - f_fish_theme
     - f_git_config
     - f_init.vim
+    - f_profile
+    - f_ripgreprc
     - f_ssh_config
