@@ -25,3 +25,9 @@ export RIPGREP_CONFIG_PATH="${HOME}/.config/ripgreprc"
 export LEDGER_FILE="$(find "${HOME}/Documents/Accounting/" -type f -regex '.*/[0-9]+\.journal' \
     | sort -n -t '.' -k 1 | tail -n 1)"
 {%@@ endif @@%}
+
+# Source rustup shell setup script if it exists
+if [ -f "$HOME/.cargo/env" ]; then
+# This line is not indented so that the rustup installer recognizes it and doesn't add it again
+. "$HOME/.cargo/env"
+fi
