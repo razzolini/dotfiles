@@ -77,6 +77,9 @@ dotfiles:
   f_xmonad.hs:
     src: config/xmonad/xmonad.hs
     dst: ~/.config/xmonad/xmonad.hs
+  f_zshenv:
+    src: zshenv
+    dst: ~/.zshenv
 profiles:
   home-desktop:
     dotfiles:
@@ -136,3 +139,4 @@ profiles:
     - f_profile
     - f_ripgreprc
     - f_ssh_config
+    - f_zshenv
