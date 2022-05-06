@@ -63,7 +63,7 @@ This function should only modify configuration layer settings."
            lsp-rust-analyzer-proc-macro-enable t)
      (shell :variables shell-default-shell 'eshell)
      shell-scripts
-     (spell-checking :variables spell-checking-enable-by-default nil)
+     spell-checking
      (sql :variables sql-backend 'company-sql)
      (syntax-checking :variables syntax-checking-enable-by-default nil)
      unicode-fonts
