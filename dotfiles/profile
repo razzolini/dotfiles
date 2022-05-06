@@ -13,6 +13,20 @@ if [ -d "${HOME}/.local/bin" ]; then
     PATH="${HOME}/.local/bin:${PATH}"
 fi
 
+{%@@ if profile == "work-mac" @@%}
+# Set the locale so that the macOS clipboard works correctly within neovim.
+#
+# iTerm provides an option to set locale variables automatically. When this
+# option is off, LC_CTYPE is set to 'en_US.UTF-8' and all other variables are
+# unset (therefore they they default to the 'C' locale). When it's on, with my
+# combination of country and language (Italy, English), LC_CTYPE is set to
+# 'UTF-8' and all other variables are still unset. Neither of these settings
+# makes the clipboard work correctly within neovim (it messes up non-ASCII
+# characters), whereas setting LANG here makes it work regardless of iTerm's
+# settings.
+export LANG='en_GB.UTF-8'
+{%@@ endif @@%}
+
 # Use neovim as default editor
 export EDITOR="$(which nvim)"
 export VISUAL="${EDITOR}"
