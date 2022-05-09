@@ -141,11 +141,18 @@ def running_emacs_processes():
 
     If no emacs processes are running, return the empty string.
 
-    The returned string is actually the raw output of the pgrep command. In
-    this script, there's no reason to parse it, because then it would just have
-    to be reformatted in pretty much the same way.
+    The returned string is actually the raw shell command output. In this
+    script, there's no reason to parse it, because then it would just have to
+    be reformatted in pretty much the same way.
     """
-    result = subprocess.run(['pgrep', '--list-full', 'emacs'], text=True, capture_output=True)
+    # On Linux, `pgrep --list-full` could be used instead of this pipeline, but
+    # it's not available on macOS
+    result = subprocess.run(
+        f"pgrep -i emacs | xargs -r ps -o pid=,command= -p",
+        shell=True,
+        text=True,
+        capture_output=True,
+    )
     if result.returncode not in [0, 1]:
         result.check_returncode() # Always raises an exception in this case
     return result.stdout
