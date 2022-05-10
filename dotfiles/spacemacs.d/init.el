@@ -767,6 +767,21 @@ this change makes all blocks visible again."
   (add-hook 'rust-mode-hook
             (lambda () (set-fill-column 100)))
 
+  ;; Use `electric-pair-local-mode' instead of `smartparens-mode' in
+  ;; `rust-mode', because it works better with yasnippet (see
+  ;; https://github.com/syl20bnr/spacemacs/issues/15009), though it does have
+  ;; its own flaws (for example, the closing delimiter is not automatically
+  ;; indented).
+  ;; Instead of disabling `smartparens-mode' by default and then adding hooks to
+  ;; re-enable it in all modes other than `rust-mode', it's easier to add a
+  ;; `rust-mode-hook' that disables it (and enables `electric-pair-local-mode'
+  ;; in its place) after it's already been enabled for the current buffer.
+  (defun replace-smartparens-with-electric-pair ()
+    "Disable `smartparens-mode' and enable `electric-pair-local-mode' in its place."
+    (spacemacs/toggle-smartparens-off)
+    (electric-pair-local-mode))
+  (add-hook 'rust-mode-hook 'replace-smartparens-with-electric-pair)
+
   ;; Load SQL indentation config (for `sqlind-minor-mode')
   (load-file "~/.spacemacs.d/sql-indent-config.el")
 
