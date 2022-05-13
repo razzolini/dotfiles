@@ -5,8 +5,12 @@ config:
   minversion: 0.29.3
   diff_command: git diff --no-index --color=always -- {0} {1}
 dotfiles:
-  d_fish_functions:
-    src: config/fish/functions
+  d_fish_functions_linux:
+    src: config/fish/functions/linux
+    dst: ~/.config/fish/functions
+    link: link
+  d_fish_functions_mac:
+    src: config/fish/functions/mac
     dst: ~/.config/fish/functions
     link: link
   d_spacemacs.d:
@@ -83,7 +87,7 @@ dotfiles:
 profiles:
   home-desktop:
     dotfiles:
-    - d_fish_functions
+    - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
@@ -106,7 +110,7 @@ profiles:
     - f_xmonad.hs
   laptop:
     dotfiles:
-    - d_fish_functions
+    - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
@@ -130,7 +134,7 @@ profiles:
     - f_xmonad.hs
   work-mac:
     dotfiles:
-    - d_fish_functions
+    - d_fish_functions_mac
     - d_spacemacs.d
     - f_config.fish
     - f_fish_theme
