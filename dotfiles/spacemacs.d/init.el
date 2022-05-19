@@ -803,6 +803,8 @@ this change makes all blocks visible again."
 
    terminal-here-terminal-command '("alacritty")
 
+   uniquify-buffer-name-style 'forward ;; Works well for Rust "mod.rs" buffers
+
    ;; `c-c++' layer
    c-basic-offset 4
 
