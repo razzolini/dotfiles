@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Cargo commands receive the command name (in this case, 'update-installed') as
+# the `$1` argument, and `cargo help <command>` calls the specified command
+# with '--help' as the `$2` argument. Print the help when `$1` is '-h'/'--help'
+# (in case the user calls this script directly, rather than through cargo), or,
+# for simplicity, whenever there are any arguments after `$1`.
+if [ "$1" = '-h' ] || [ "$1" = '--help' ] || [ "$#" -gt 1 ]; then
+    cat <<'EOF'
+cargo-update-installed
+Updates executables that have been installed using `cargo install`
+
+Usage:
+    cargo update-installed
+EOF
+    exit
+fi
+
+cargo install --list | awk '/^[^ ]/ { print $1 }' | xargs -r cargo install

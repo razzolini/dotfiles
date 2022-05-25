@@ -23,6 +23,9 @@ dotfiles:
   f_alacritty-vifm.desktop:
     src: local/share/applications/alacritty-vifm.desktop
     dst: ~/.local/share/applications/alacritty-vifm.desktop
+  f_bin_cargo-update-installed:
+    src: local/bin/cargo-update-installed
+    dst: ~/.local/bin/cargo-update-installed
   f_bin_power-menu:
     src: bin/power-menu
     dst: ~/.local/bin/power-menu
@@ -91,6 +94,7 @@ profiles:
     - d_spacemacs.d
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
+    - f_bin_cargo-update-installed
     - f_bin_power-menu
     - f_bin_volume
     - f_config.fish
@@ -136,6 +140,7 @@ profiles:
     dotfiles:
     - d_fish_functions_mac
     - d_spacemacs.d
+    - f_bin_cargo-update-installed
     - f_config.fish
     - f_fish_theme
     - f_git_config
