@@ -3,8 +3,9 @@ if &shell =~# 'fish$'
     set shell=bash
 endif
 
-" Set leader to ò (right of home row on Italian querty layout)
-let mapleader = 'ò'
+" Set leader to space, which is easy to press on many different keyboard
+" layouts and isn't otherwise useful in normal mode
+let mapleader = ' '
 
 " Plugins {{{
 
