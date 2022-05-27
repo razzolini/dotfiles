@@ -11,3 +11,7 @@
     autocrlf = input
 [pull]
     ff = only
+{%@@ if profile == "work-mac" @@%}
+[init]
+    defaultBranch = main
+{%@@ endif @@%}
