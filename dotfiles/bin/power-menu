@@ -2,11 +2,18 @@
 
 import subprocess
 
-VERBS = ['suspend', 'hybrid-sleep', 'hibernate', 'poweroff', 'reboot']
+COMMANDS = {
+    'lock': ('loginctl', 'lock-session'),
+    'suspend': ('systemctl', 'suspend'),
+    'hybrid-sleep': ('systemctl', 'hybrid-sleep'),
+    'hibernate': ('systemctl', 'hibernate'),
+    'poweroff': ('systemctl', 'poweroff'),
+    'reboot': ('systemctl', 'reboot'),
+}
 
 
 def main():
-    menu_items = '\n'.join(VERBS) + '\n'
+    menu_items = '\n'.join(COMMANDS.keys()) + '\n'
     result = subprocess.run(
         ['dmenu', '-p', 'Power management'],
         input=menu_items,
@@ -16,10 +23,12 @@ def main():
     if result.returncode != 0:
         return
 
-    selected_verb = result.stdout.strip()
-    if selected_verb not in VERBS:
+    selected_item = result.stdout.strip()
+    try:
+        selected_command = COMMANDS[selected_item]
+    except KeyError:
         return
-    subprocess.run(['systemctl', selected_verb])
+    subprocess.run(selected_command)
 
 
 if __name__ == '__main__':
