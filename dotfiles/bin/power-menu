@@ -5,7 +5,9 @@ import subprocess
 COMMANDS = {
     'lock': ('loginctl', 'lock-session'),
     'suspend': ('systemctl', 'suspend'),
+{%@@ if profile != "home-desktop" @@%}
     'hybrid-sleep': ('systemctl', 'hybrid-sleep'),
+{%@@ endif @@%}
     'hibernate': ('systemctl', 'hibernate'),
     'poweroff': ('systemctl', 'poweroff'),
     'reboot': ('systemctl', 'reboot'),
