@@ -2,21 +2,21 @@ config:
   backup: true
   create: true
   dotpath: dotfiles
-  minversion: 0.29.3
+  minversion: 1.10.0
   diff_command: git diff --no-index --color=always -- {0} {1}
 dotfiles:
   d_fish_functions_linux:
     src: config/fish/functions/linux
     dst: ~/.config/fish/functions
-    link: link
+    link: absolute
   d_fish_functions_mac:
     src: config/fish/functions/mac
     dst: ~/.config/fish/functions
-    link: link
+    link: absolute
   d_spacemacs.d:
     src: spacemacs.d
     dst: ~/.spacemacs.d
-    link: link
+    link: absolute
   f_alacritty.yml:
     src: config/alacritty/alacritty.yml
     dst: ~/.config/alacritty/alacritty.yml
@@ -53,7 +53,7 @@ dotfiles:
   f_init.vim:
     src: config/nvim/init.vim
     dst: ~/.config/nvim/init.vim
-    link: link
+    link: absolute
   f_pacdiff-merge3:
     src: bin/pacdiff-merge3
     dst: ~/.local/bin/pacdiff-merge3
