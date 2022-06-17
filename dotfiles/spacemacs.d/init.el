@@ -631,6 +631,13 @@ The original mappings are not removed."
     (flyspell-accept-buffer-local-defs 'force))
   (spacemacs/set-leader-keys "Sl" 'update-local-words-from-buffer)
 
+  ;; Set up multi-dictionary spell checking
+  (with-eval-after-load 'ispell
+    (setq ispell-program-name "hunspell")
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "en_US,en_GB")
+    (ispell-hunspell-add-multi-dic "en_US,en_GB,it_IT"))
+
   (defun set-local-abbrevs (abbrevs)
     "Add ABBREVS to `local-abbrev-table' and make it buffer local.
 ABBREVS should be a list of abbrevs as passed to `define-abbrev-table'.
