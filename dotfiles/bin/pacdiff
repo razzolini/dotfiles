@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+# This is a wrapper script for the pacdiff tool from the pacman-contrib
+# package. The main features of this script are the following:
+#  - it allows kdiff3 to be used as the diff and merge program for pacdiff;
+#  - it makes pacdiff's three-way diff and merge features work for both
+#    official and AUR packages at the same time, even if these two sets of
+#    packages are cached in different directories;
+#  - it invokes pacdiff with some arguments that I want to be enabled by
+#    default.
+
+any_output_only_args() {
+    for arg in "$@"; do
+        case "$arg" in
+            '-h' | '--help' | '-o' | '--output')
+                return 0
+                ;;
+        esac
+    done
+    return 1
+}
+
+find_package_files() {
+    readonly PACMAN_CACHE=/var/cache/pacman/pkg/
+    readonly AUR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/paru/clone/"
+    find "$PACMAN_CACHE" "$AUR_CACHE" -type f -name '*.pkg.*' \
+        \( -name '*.sig' -prune -o -print0 \)
+}
+
+symlink_into() {
+    xargs --null --no-run-if-empty ln --symbolic --target-directory "$1" --
+}
+
+diffprog() {
+    # When this is called to review the result after a merge, the order of the
+    # "old" and "new" arguments (i.e. the original file and the merge result,
+    # respectively) is swapped compared to the case of diffing a file with the
+    # corresponding "pacfile", so the original file ends up on the right.
+    # That's not what I'm used to, but I can live with it.
+    local pacfile="$1"
+    if [[ $# -eq 2 ]]; then
+        local file="$2"
+        exec kdiff3 -- "$file" "$pacfile" 2>/dev/null
+    else
+        local base="$2"
+        local file="$3"
+        exec kdiff3 -- "$base" "$file" "$pacfile" 2>/dev/null
+    fi
+}
+
+mergeprog() {
+    local file="$1"
+    local base="$2"
+    local pacfile="$3"
+    # Note that specifying /dev/stdout as kdiff3's output only works if kdiff3
+    # is set not to create a backup when overwriting a file, otherwise kdiff3
+    # tries to create /dev/stdout.orig (or something similar, depending on the
+    # backup suffix) and fails. Also note that, if kdiff3 ever printed any
+    # message to stdout, this would end up in the merged file. If that case, a
+    # more complex solution, like a temporary file, would need to be used,
+    # instead of simply specifying /dev/stdout as the output. Suppressing
+    # stdout or redirecting it to stderr wouldn't work, because it would also
+    # affect the output that's written to /dev/stdout.
+    exec kdiff3 --output /dev/stdout -- "$base" "$file" "$pacfile" 2>/dev/null
+}
+
+pacdiff_for_output_only() {
+    exec /usr/bin/pacdiff "$@"
+}
+
+pacdiff_for_diff_merge() {
+    trap 'rm --recursive --force "$unified_cache_index"' EXIT
+    unified_cache_index="$(mktemp --directory --tmpdir unified-pacdiff-index.XXXXXXXXXX)"
+    echo 'Building unified index of cached official and AUR packages'
+    find_package_files | symlink_into "$unified_cache_index"
+
+    # The arguments that pacdiff passes to the specified DIFFPROG and MERGEPROG
+    # aren't directly compatible with kdiff3 (mainly, their order is not
+    # correct), so kdiff3 must be invoked through wrappers which rearrange the
+    # arguments. To make this script self-contained, said wrappers are defined
+    # here as functions, and these functions are executed (in place of the
+    # usual behavior of calling pacdiff) when the script is invoked with one of
+    # the special 'diffprog' and 'mergeprog' arguments. This idea was inspired
+    # by https://www.baeldung.com/linux/run-function-in-script.
+    DIFFPROG="$0 diffprog" MERGEPROG="$0 mergeprog" \
+        /usr/bin/pacdiff --sudo --backup --cachedir "$unified_cache_index" "$@"
+    # pacdiff is launched without using exec here, so that the previously-set
+    # trap can run once pacdiff terminates.
+}
+
+if [[ ${1-} = 'diffprog' ]]; then
+    shift
+    diffprog "$@"
+elif [[ ${1-} = 'mergeprog' ]]; then
+    shift
+    mergeprog "$@"
+elif any_output_only_args "$@"; then
+    pacdiff_for_output_only "$@"
+else
+    pacdiff_for_diff_merge "$@"
+fi

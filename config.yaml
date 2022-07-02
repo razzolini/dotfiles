@@ -54,9 +54,9 @@ dotfiles:
     src: config/nvim/init.vim
     dst: ~/.config/nvim/init.vim
     link: absolute
-  f_pacdiff-merge3:
-    src: bin/pacdiff-merge3
-    dst: ~/.local/bin/pacdiff-merge3
+  f_pacdiff:
+    src: bin/pacdiff
+    dst: ~/.local/bin/pacdiff
   f_profile:
     src: profile
     dst: ~/.profile
@@ -102,7 +102,7 @@ profiles:
     - f_fish_theme
     - f_git_config
     - f_init.vim
-    - f_pacdiff-merge3
+    - f_pacdiff
     - f_profile
     - f_redshift.conf
     - f_ripgreprc
@@ -126,7 +126,7 @@ profiles:
     - f_fish_theme
     - f_git_config
     - f_init.vim
-    - f_pacdiff-merge3
+    - f_pacdiff
     - f_profile
     - f_redshift.conf
     - f_ripgreprc
