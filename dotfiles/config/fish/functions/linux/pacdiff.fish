@@ -8,6 +8,6 @@ function pacdiff --wraps pacdiff
         end
     end
 
-    # Run as root and use a three-way merge tool
-    command sudo --preserve-env DIFFPROG=$HOME/.local/bin/pacdiff-merge3 -- pacdiff $argv
+    # Run as root, use a three-way merge tool, and back up files when overwriting
+    command sudo --preserve-env DIFFPROG=$HOME/.local/bin/pacdiff-merge3 -- pacdiff --backup $argv
 end
