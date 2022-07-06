@@ -55,6 +55,7 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-modeline-code-actions-enable nil
           lsp-ui-doc-enable nil)
+     markdown
      multiple-cursors
      (org :variables org-enable-valign t)
      ,@(when (spacemacs/system-is-mac) '(osx))
