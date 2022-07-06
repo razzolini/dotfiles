@@ -632,6 +632,10 @@ The original mappings are not removed."
   (spacemacs/set-leader-keys "Sl" 'update-local-words-from-buffer)
 
   ;; Set up multi-dictionary spell checking
+  ;; Note that on macOS these settings only work if the DICTIONARY environment
+  ;; variable is set to the name of a Hunspell dictionary (e.g. "en_GB"),
+  ;; otherwise any attempts to enable spell checking fail with the following
+  ;; error: "Can’t find Hunspell dictionary with a .aff affix file".
   (with-eval-after-load 'ispell
     (setq ispell-program-name "hunspell")
     (ispell-set-spellchecker-params)
