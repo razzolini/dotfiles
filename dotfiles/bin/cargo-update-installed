@@ -16,4 +16,4 @@ EOF
     exit
 fi
 
-cargo install --list | awk '/^[^ ]/ { print $1 }' | xargs -r cargo install
+cargo install --list | awk '/^[^ ]/ { print $1 }' | xargs -r cargo install --

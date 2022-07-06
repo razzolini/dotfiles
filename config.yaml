@@ -24,7 +24,7 @@ dotfiles:
     src: local/share/applications/alacritty-vifm.desktop
     dst: ~/.local/share/applications/alacritty-vifm.desktop
   f_bin_cargo-update-installed:
-    src: local/bin/cargo-update-installed
+    src: bin/cargo-update-installed
     dst: ~/.local/bin/cargo-update-installed
   f_bin_power-menu:
     src: bin/power-menu
