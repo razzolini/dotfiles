@@ -11,6 +11,8 @@
     autocrlf = input
 [pull]
     ff = only
+[merge]
+    conflictStyle = diff3
 {%@@ if profile == "work-mac" @@%}
 [init]
     defaultBranch = main
