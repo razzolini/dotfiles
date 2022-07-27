@@ -847,6 +847,13 @@ this change makes all blocks visible again."
    haskell-indentation-left-offset 4 ; do body
    haskell-indentation-where-pre-offset 2 ; where keyword
 
+   ;; `lsp' layer
+   ;; Always show selection menu before executing a code action, even if only
+   ;; one is available. This is useful when settings which show available code
+   ;; actions while editing (e.g. in the modeline) are disabled (e.g. to reduce
+   ;; clutter).
+   lsp-auto-execute-action nil
+
    ;; `org' layer
    ;; Respect the `vim-style-retain-visual-state-on-shift' setting
    evil-org-retain-visual-state-on-shift vim-style-retain-visual-state-on-shift
