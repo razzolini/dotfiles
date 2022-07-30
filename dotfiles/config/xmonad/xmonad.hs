@@ -1,12 +1,12 @@
+{-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RankNTypes #-}
 
 import Control.Monad (when)
-import Data.Foldable (find, traverse_)
+import Data.Foldable (find)
 import System.Exit (exitSuccess)
-import System.IO (Handle, hPutStrLn)
 import XMonad
 import XMonad.Actions.CycleWS (swapNextScreen)
 import XMonad.Actions.PhysicalScreens (sendToScreen, viewScreen)
@@ -23,7 +23,7 @@ import XMonad.Layout.NoBorders (lessBorders, Ambiguity(OnlyScreenFloat))
 import XMonad.Layout.Reflect (reflectHoriz)
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.Hacks as Hacks
-import XMonad.Util.Run (runProcessWithInput, spawnPipe)
+import XMonad.Util.Run (runProcessWithInput)
 import XMonad.Util.EZConfig (additionalKeysP)
 
 data Profile
