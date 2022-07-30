@@ -19,6 +19,7 @@ import XMonad.Layout.LayoutModifier
 import XMonad.Layout.NoBorders (lessBorders, Ambiguity(OnlyScreenFloat))
 import XMonad.Layout.Reflect (reflectHoriz)
 import qualified XMonad.StackSet as W
+import qualified XMonad.Util.Hacks as Hacks
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (additionalKeysP)
 
@@ -26,6 +27,7 @@ main :: IO ()
 main = do
     xmobarHandles <- xmobarOnScreens myScreens
     xmonad
+        . Hacks.javaHack -- Tell Java that xmonad is a non-reparenting window manager
         . ewmhFullscreen -- Handle applications that request to become fullscreen
         . ewmh
         . docks -- Required for 'avoidStruts'

@@ -68,9 +68,6 @@ emacs --fg-daemon &
 restic-notifier &
 {%@@ endif @@%}
 
-# Tell Java that xmonad is a non-reparenting window manager
-export _JAVA_AWT_WM_NONREPARENTING=1
-
 # Note that running the window manager as a child process instead of using exec
 # only works if the WM doesn't fork to background (xmonad doesn't, but other
 # WMs might)
