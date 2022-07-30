@@ -9,10 +9,13 @@ import XMonad
 import XMonad.Actions.CycleWS (swapNextScreen)
 import XMonad.Actions.PhysicalScreens (sendToScreen, viewScreen)
 import XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops (ewmh, fullscreenEventHook)
+import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks (avoidStruts, docks)
+import XMonad.Hooks.StatusBar.PP (PP(..), dynamicLogWithPP, shorten, xmobarColor, xmobarPP)
 import XMonad.Layout.LayoutModifier
+    ( LayoutModifier(modifyLayoutWithUpdate, modifierDescription)
+    , ModifiedLayout(..)
+    )
 import XMonad.Layout.NoBorders (lessBorders, Ambiguity(OnlyScreenFloat))
 import XMonad.Layout.Reflect (reflectHoriz)
 import qualified XMonad.StackSet as W
@@ -22,31 +25,33 @@ import XMonad.Util.EZConfig (additionalKeysP)
 main :: IO ()
 main = do
     xmobarHandles <- xmobarOnScreens myScreens
-    xmonad . ewmh . docks $ def -- 'docks' is required for 'avoidStruts'
-        { manageHook =
-            manageSpawn -- Required for spawnOn
-            <+> manageHook def
-        , layoutHook =
-            lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
-            $ avoidStruts -- Leave space for the status bar
-            $ myLayouts
-        , handleEventHook =
-            fullscreenEventHook -- Handle applications that request to become fullscreen
-            <+> handleEventHook def
-        , startupHook =
-            myStartupHook
-            <+> startupHook def
-        , terminal = "alacritty"
-        -- Rebind Mod to the Windows key
-        , modMask = mod4Mask
-        -- Send info to xmobar
-        , logHook = dynamicLogWithPP xmobarPP
-            { ppOutput = multiHPutStrLn xmobarHandles
-            , ppTitle = xmobarColor "green" "" . shorten 50
+    xmonad
+        . ewmhFullscreen -- Handle applications that request to become fullscreen
+        . ewmh
+        . docks -- Required for 'avoidStruts'
+        . (`additionalKeysP` myKeys)
+        $ def
+            { manageHook =
+                manageSpawn -- Required for 'spawnOn'
+                <+> manageHook def
+            , layoutHook =
+                lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
+                $ avoidStruts -- Leave space for the status bar
+                $ myLayouts
+            , startupHook =
+                myStartupHook
+                <+> startupHook def
+            , terminal = "alacritty"
+            -- Rebind Mod to the Windows key
+            , modMask = mod4Mask
+            -- Send info to xmobar
+            , logHook = dynamicLogWithPP xmobarPP
+                { ppOutput = multiHPutStrLn xmobarHandles
+                , ppTitle = xmobarColor "green" "" . shorten 50
+                }
+            -- Set custom workspace names
+            , workspaces = myWorkspaces
             }
-        -- Set custom workspace names
-        , workspaces = myWorkspaces
-        } `additionalKeysP` myKeys
 
 myScreens :: [Int]
 {%@@ if profile == "home-desktop" @@%}
