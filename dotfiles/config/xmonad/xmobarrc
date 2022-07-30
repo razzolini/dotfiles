@@ -13,7 +13,7 @@ Config
         , Run Com "wifi-status" [] "wifi" 50
 {%@@ endif @@%}
 {%@@ if profile == "home-desktop" @@%}
-        , Run CommandReader "volume read" "volume"
+        , Run Alsa "default" "Master" ["-t", "VOL <volume>%<status>", "--", "-O", "", "-o", " MUTE"]
 {%@@ endif @@%}
         , Run Cpu ["-t", "CPU <total>%", "-p", "3", "-L", "10", "-H", "50", "-n", "green", "-h", "red"] 10
         , Run ThermalZone
@@ -49,7 +49,7 @@ Config
     , sepChar = "%"
     , alignSep = "}{"
 {%@@ if profile == "home-desktop" @@%}
-    , template = "%XMonadLog% }{ %wlp5s0wi% | %volume% | %cpu% %thermal0% | %memory% | %disku% | %date%"
+    , template = "%XMonadLog% }{ %wlp5s0wi% | %alsa:default:Master% | %cpu% %thermal0% | %memory% | %disku% | %date%"
 {%@@ else @@%}
     , template = "%XMonadLog% }{ %wifi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
 {%@@ endif @@%}

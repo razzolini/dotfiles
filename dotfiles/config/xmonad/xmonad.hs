@@ -145,9 +145,9 @@ myKeys = workspaceKeys ++ screenKeys ++
 {%@@ if profile == "home-desktop" @@%}
     , ("M-0", swapNextScreen) -- Swap the workspaces on the two screens
     -- Media keys
-    , ("<XF86AudioRaiseVolume>", spawn "volume set-sink-volume @DEFAULT_SINK@ +5%")
-    , ("<XF86AudioLowerVolume>", spawn "volume set-sink-volume @DEFAULT_SINK@ -5%")
-    , ("<XF86AudioMute>", spawn "volume set-sink-mute @DEFAULT_SINK@ toggle")
+    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
     , ("<XF86AudioStop>", spawn "playerctl stop")
     , ("<XF86AudioNext>", spawn "playerctl next")
