@@ -4,7 +4,7 @@ Config
     , fgColor = "grey"
     , position = TopW L 97
     , commands =
-        [ Run StdinReader
+        [ Run XMonadLog
 {%@@ if profile == "home-desktop" @@%}
         , Run Wireless
             "wlp5s0"
@@ -49,8 +49,8 @@ Config
     , sepChar = "%"
     , alignSep = "}{"
 {%@@ if profile == "home-desktop" @@%}
-    , template = "%StdinReader% }{ %wlp5s0wi% | %volume% | %cpu% %thermal0% | %memory% | %disku% | %date%"
+    , template = "%XMonadLog% }{ %wlp5s0wi% | %volume% | %cpu% %thermal0% | %memory% | %disku% | %date%"
 {%@@ else @@%}
-    , template = "%StdinReader% }{ %wifi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
+    , template = "%XMonadLog% }{ %wifi% | %cpu% %thermal1% | %memory% | %disku% | %battery% | %date%"
 {%@@ endif @@%}
     }

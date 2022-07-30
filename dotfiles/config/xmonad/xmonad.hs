@@ -11,7 +11,8 @@ import XMonad.Actions.PhysicalScreens (sendToScreen, viewScreen)
 import XMonad.Actions.SpawnOn (manageSpawn, spawnOn)
 import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks (avoidStruts, docks)
-import XMonad.Hooks.StatusBar.PP (PP(..), dynamicLogWithPP, shorten, xmobarColor, xmobarPP)
+import XMonad.Hooks.StatusBar (StatusBarConfig, statusBarProp, withSB)
+import XMonad.Hooks.StatusBar.PP (PP(..), shorten, xmobarColor, xmobarPP)
 import XMonad.Layout.LayoutModifier
     ( LayoutModifier(modifyLayoutWithUpdate, modifierDescription)
     , ModifiedLayout(..)
@@ -24,36 +25,30 @@ import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (additionalKeysP)
 
 main :: IO ()
-main = do
-    xmobarHandles <- xmobarOnScreens myScreens
-    xmonad
-        . Hacks.javaHack -- Tell Java that xmonad is a non-reparenting window manager
-        . ewmhFullscreen -- Handle applications that request to become fullscreen
-        . ewmh
-        . docks -- Required for 'avoidStruts'
-        . (`additionalKeysP` myKeys)
-        $ def
-            { manageHook =
-                manageSpawn -- Required for 'spawnOn'
-                <+> manageHook def
-            , layoutHook =
-                lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
-                $ avoidStruts -- Leave space for the status bar
-                $ myLayouts
-            , startupHook =
-                myStartupHook
-                <+> startupHook def
-            , terminal = "alacritty"
-            -- Rebind Mod to the Windows key
-            , modMask = mod4Mask
-            -- Send info to xmobar
-            , logHook = dynamicLogWithPP xmobarPP
-                { ppOutput = multiHPutStrLn xmobarHandles
-                , ppTitle = xmobarColor "green" "" . shorten 50
-                }
-            -- Set custom workspace names
-            , workspaces = myWorkspaces
-            }
+main = xmonad
+    . withSB (xmobarOnScreens myScreens)
+    . Hacks.javaHack -- Tell Java that xmonad is a non-reparenting window manager
+    . ewmhFullscreen -- Handle applications that request to become fullscreen
+    . ewmh
+    . docks -- Required for 'avoidStruts'
+    . (`additionalKeysP` myKeys)
+    $ def
+        { manageHook =
+            manageSpawn -- Required for 'spawnOn'
+            <+> manageHook def
+        , layoutHook =
+            lessBorders OnlyScreenFloat -- Do not draw borders for fullscreen windows
+            $ avoidStruts -- Leave space for the status bar
+            $ myLayouts
+        , startupHook =
+            myStartupHook
+            <+> startupHook def
+        , terminal = "alacritty"
+        -- Rebind Mod to the Windows key
+        , modMask = mod4Mask
+        -- Set custom workspace names
+        , workspaces = myWorkspaces
+        }
 
 myScreens :: [Int]
 {%@@ if profile == "home-desktop" @@%}
@@ -62,13 +57,11 @@ myScreens = [0, 1]
 myScreens = [0]
 {%@@ endif @@%}
 
-xmobarOnScreens :: [Int] -> IO [Handle]
-xmobarOnScreens = traverse spawnXmobarOnScreen
+xmobarOnScreens :: [Int] -> StatusBarConfig
+xmobarOnScreens = foldMap $ \screen -> statusBarProp (xmobarCommand screen) (pure myPP)
   where
-    spawnXmobarOnScreen sc = spawnPipe $ "xmobar -x " ++ show sc ++ " \"$HOME/.config/xmonad/xmobarrc\""
-
-multiHPutStrLn :: Foldable t => t Handle -> String -> IO ()
-multiHPutStrLn hs msg = traverse_ (\h -> hPutStrLn h msg) hs
+    xmobarCommand screen = "xmobar -x " ++ show screen ++ " \"$HOME/.config/xmonad/xmobarrc\""
+    myPP = xmobarPP { ppTitle = xmobarColor "green" "" . shorten 50 }
 
 {%@@ if profile == "home-desktop" @@%}
 myLayouts :: Choose (ModifiedLayout AutoReflectX Tall) (Choose (Mirror Tall) Full) Window
