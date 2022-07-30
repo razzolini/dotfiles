@@ -78,7 +78,7 @@ dotfiles:
   f_xinitrc:
     src: xinitrc
     dst: ~/.xinitrc
-  f_xmobar:
+  f_xmobarrc:
     src: config/xmonad/xmobarrc
     dst: ~/.config/xmonad/xmobarrc
   f_xmonad.hs:
@@ -110,7 +110,7 @@ profiles:
     - f_vifmrc
     - f_vifm_colors
     - f_xinitrc
-    - f_xmobar
+    - f_xmobarrc
     - f_xmonad.hs
   laptop:
     dotfiles:
@@ -134,7 +134,7 @@ profiles:
     - f_vifmrc
     - f_vifm_colors
     - f_xinitrc
-    - f_xmobar
+    - f_xmobarrc
     - f_xmonad.hs
   work-mac:
     dotfiles:
