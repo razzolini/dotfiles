@@ -1,5 +1,7 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE RankNTypes #-}
 
 import Control.Monad (when)
 import Data.Foldable (find, traverse_)
@@ -24,8 +26,21 @@ import qualified XMonad.Util.Hacks as Hacks
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (additionalKeysP)
 
+data Profile
+    = HomeDesktop
+    | Laptop
+    deriving (Eq)
+
+profile :: Profile
+{%@@ if profile == "home-desktop" @@%}
+profile = HomeDesktop
+{%@@ elif profile == "laptop" @@%}
+profile = Laptop
+{%@@ endif @@%}
+
 main :: IO ()
-main = xmonad
+main = withMyLayouts $ \myLayouts ->
+    xmonad
     . withSB (xmobarOnScreens myScreens)
     . Hacks.javaHack -- Tell Java that xmonad is a non-reparenting window manager
     . ewmhFullscreen -- Handle applications that request to become fullscreen
@@ -51,11 +66,9 @@ main = xmonad
         }
 
 myScreens :: [Int]
-{%@@ if profile == "home-desktop" @@%}
-myScreens = [0, 1]
-{%@@ else @@%}
-myScreens = [0]
-{%@@ endif @@%}
+myScreens = case profile of
+    HomeDesktop -> [0, 1]
+    Laptop -> [0]
 
 xmobarOnScreens :: [Int] -> StatusBarConfig
 xmobarOnScreens = foldMap $ \screen -> statusBarProp (xmobarCommand screen) (pure myPP)
@@ -63,14 +76,15 @@ xmobarOnScreens = foldMap $ \screen -> statusBarProp (xmobarCommand screen) (pur
     xmobarCommand screen = "xmobar -x " ++ show screen ++ " \"$HOME/.config/xmonad/xmobarrc\""
     myPP = xmobarPP { ppTitle = xmobarColor "green" "" . shorten 50 }
 
-{%@@ if profile == "home-desktop" @@%}
-myLayouts :: Choose (ModifiedLayout AutoReflectX Tall) (Choose (Mirror Tall) Full) Window
-myLayouts = autoReflectX [1] tall ||| Mirror tall ||| Full
+-- Workaround for runtime selection between layouts of different types
+-- (inspired by https://stackoverflow.com/a/60715978)
+withMyLayouts :: (forall l. (LayoutClass l Window, Read (l Window)) => l Window -> r) -> r
+withMyLayouts cont = case profile of
+    HomeDesktop -> cont $ autoReflectX [1] tall ||| others
+    Laptop -> cont defaultLayout
   where
-    tall = Tall nmaster delta ratio
-    nmaster = 1 -- The default number of windows in the master pane
-    delta = 3/100 -- Percent of screen to increment by when resizing panes
-    ratio = 1/2 -- Default proportion of screen occupied by master pane
+    defaultLayout :: Choose Tall (Choose (Mirror Tall) Full) Window
+    defaultLayout@(Choose _ tall others) = layoutHook def
 
 autoReflectX :: [ScreenId] -> l a -> ModifiedLayout AutoReflectX l a
 autoReflectX screensToReflect = ModifiedLayout (AutoReflectX NotReflecting screensToReflect)
@@ -108,54 +122,24 @@ workspaceScreenId wid = do
 
 unmodifyLayout :: ModifiedLayout m l a -> l a
 unmodifyLayout (ModifiedLayout _ l) = l
-{%@@ else @@%}
-myLayouts :: Choose Tall (Choose (Mirror Tall) Full) Window
-myLayouts = layoutHook def
-{%@@ endif @@%}
 
 myStartupHook :: X ()
-myStartupHook = do
-{%@@ if profile == "home-desktop" @@%}
+myStartupHook = when (profile == HomeDesktop) $ do
     windows $ W.view "1" -- Focus workspace 1 (instead of 2, because of screen order)
     spawnOn mailWorkspace "thunderbird"
-{%@@ else @@%}
-    pure ()
-{%@@ endif @@%}
 
 myWorkspaces :: [String]
-myWorkspaces =
-{%@@ if profile == "home-desktop" @@%}
-    fmap (show :: Int -> String) [1..8] ++ [mailWorkspace]
-{%@@ else @@%}
-    workspaces def
-{%@@ endif @@%}
+myWorkspaces = case profile of
+    HomeDesktop -> fmap (show :: Int -> String) [1..8] ++ [mailWorkspace]
+    Laptop -> workspaces def
 
-{%@@ if profile == "home-desktop" @@%}
 mailWorkspace :: String
 mailWorkspace = "9.Mail"
-{%@@ endif @@%}
+
+type Keymap = [(String, X ())]
 
 myKeys :: Keymap
-myKeys = workspaceKeys ++ screenKeys ++
-    [ ("M-o", spawn "google-chrome-stable")
-    , ("M-S-o", spawn "google-chrome-stable --incognito")
-    , ("M-i", spawn "emacsclient -a '' -nqc")
-    , ("M-S-p", spawn "power-menu")
-    , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
-{%@@ if profile == "home-desktop" @@%}
-    , ("M-0", swapNextScreen) -- Swap the workspaces on the two screens
-    -- Media keys
-    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
-    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
-    , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
-    , ("<XF86AudioStop>", spawn "playerctl stop")
-    , ("<XF86AudioNext>", spawn "playerctl next")
-    , ("<XF86AudioPrev>", spawn "playerctl previous")
-{%@@ else @@%}
-    , ("M-b", spawn "toggle-touchpad")
-{%@@ endif @@%}
-    ]
+myKeys = workspaceKeys ++ screenKeys ++ commonKeys ++ profileKeys
 
 promptQuit :: X ()
 promptQuit = do
@@ -182,4 +166,26 @@ screenKeys = do
         ]
     pure (otherModMasks ++ "M-" ++ [key], action screen)
 
-type Keymap = [(String, X ())]
+commonKeys :: Keymap
+commonKeys =
+    [ ("M-o", spawn "google-chrome-stable")
+    , ("M-S-o", spawn "google-chrome-stable --incognito")
+    , ("M-i", spawn "emacsclient -a '' -nqc")
+    , ("M-S-p", spawn "power-menu")
+    , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
+    , ("M-0", swapNextScreen) -- Swap workspaces between two screens
+    ]
+
+profileKeys :: Keymap
+profileKeys = case profile of
+    HomeDesktop ->
+        -- Media keys
+        [ ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+        , ("<XF86AudioStop>", spawn "playerctl stop")
+        , ("<XF86AudioNext>", spawn "playerctl next")
+        , ("<XF86AudioPrev>", spawn "playerctl previous")
+        ]
+    Laptop -> [("M-b", spawn "toggle-touchpad")]
