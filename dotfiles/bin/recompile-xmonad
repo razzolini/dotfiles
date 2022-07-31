@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+xmonad --recompile || exit $?
+# Show warnings but not build commands (i.e. lines that start with '$')
+sed '/^\$/d' "$HOME/.local/share/xmonad/xmonad.errors" >&2
