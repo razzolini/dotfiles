@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+readonly DOTFILES_DIR="$HOME/dotfiles"
+. "$DOTFILES_DIR/env/bin/activate"
+"$DOTFILES_DIR/dotdrop.sh" "$@"

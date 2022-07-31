@@ -26,6 +26,9 @@ dotfiles:
   f_bin_cargo-update-installed:
     src: bin/cargo-update-installed
     dst: ~/.local/bin/cargo-update-installed
+  f_bin_dotdrop:
+    src: bin/dotdrop
+    dst: ~/.local/bin/dotdrop
   f_bin_power-menu:
     src: bin/power-menu
     dst: ~/.local/bin/power-menu
@@ -95,6 +98,7 @@ profiles:
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
     - f_bin_cargo-update-installed
+    - f_bin_dotdrop
     - f_bin_power-menu
     - f_bin_recompile-xmonad
     - f_config.fish
@@ -118,6 +122,7 @@ profiles:
     - d_spacemacs.d
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
+    - f_bin_dotdrop
     - f_bin_power-menu
     - f_bin_recompile-xmonad
     - f_bin_toggle-touchpad
@@ -142,6 +147,7 @@ profiles:
     - d_fish_functions_mac
     - d_spacemacs.d
     - f_bin_cargo-update-installed
+    - f_bin_dotdrop
     - f_config.fish
     - f_fish_theme
     - f_git_config
