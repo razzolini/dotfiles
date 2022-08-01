@@ -57,11 +57,15 @@ mergeprog() {
     # is set not to create a backup when overwriting a file, otherwise kdiff3
     # tries to create /dev/stdout.orig (or something similar, depending on the
     # backup suffix) and fails. Also note that, if kdiff3 ever printed any
-    # message to stdout, this would end up in the merged file. If that case, a
+    # message to stdout, this would end up in the merged file. In that case, a
     # more complex solution, like a temporary file, would need to be used,
     # instead of simply specifying /dev/stdout as the output. Suppressing
     # stdout or redirecting it to stderr wouldn't work, because it would also
     # affect the output that's written to /dev/stdout.
+    # One thing that does work just fine when using /dev/stdout as the output
+    # is saving multiple times, because /dev/stdout supports truncation, so
+    # subsequent saved versions correctly overwrite the previous ones, rather
+    # than being concatenated after them.
     exec kdiff3 --output /dev/stdout -- "$base" "$file" "$pacfile" 2>/dev/null
 }
 
