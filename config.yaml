@@ -82,8 +82,8 @@ dotfiles:
     src: xinitrc
     dst: ~/.xinitrc
   f_xmobarrc:
-    src: config/xmonad/xmobarrc
-    dst: ~/.config/xmonad/xmobarrc
+    src: config/xmobar/xmobarrc
+    dst: ~/.config/xmobar/xmobarrc
   f_xmonad.hs:
     src: config/xmonad/xmonad.hs
     dst: ~/.config/xmonad/xmonad.hs

@@ -73,7 +73,7 @@ myScreens = case profile of
 xmobarOnScreens :: [Int] -> StatusBarConfig
 xmobarOnScreens = foldMap $ \screen -> statusBarProp (xmobarCommand screen) (pure myPP)
   where
-    xmobarCommand screen = "xmobar -x " ++ show screen ++ " \"$HOME/.config/xmonad/xmobarrc\""
+    xmobarCommand screen = "xmobar --screen " ++ show screen
     myPP = xmobarPP { ppTitle = xmobarColor "green" "" . shorten 50 }
 
 -- Workaround for runtime selection between layouts of different types
