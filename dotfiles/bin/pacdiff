@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -eu -o pipefail
+shopt -s nullglob
 
 # This is a wrapper script for the pacdiff tool from the pacman-contrib
 # package. The main features of this script are the following:
@@ -21,11 +22,25 @@ any_output_only_args() {
     return 1
 }
 
-find_package_files() {
-    readonly PACMAN_CACHE=/var/cache/pacman/pkg/
-    readonly AUR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/paru/clone/"
-    find "$PACMAN_CACHE" "$AUR_CACHE" -type f -name '*.pkg.*' \
-        \( -name '*.sig' -prune -o -print0 \)
+find_in_caches() {
+    readonly PACMAN_CACHE=/var/cache/pacman/pkg
+    readonly AUR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/paru/clone"
+    local package="$1"
+    for candidate in {"$PACMAN_CACHE","$AUR_CACHE/$package"}/"$package"-*.pkg.*; do
+        if [[ ! $candidate =~ \.sig$ ]]; then
+            printf '%s\0' "$candidate"
+        fi
+    done
+}
+
+find_merge_base_candidates() {
+    pacdiff --output | while IFS= read -r pacfile; do
+        # This is how $file is computed from $pacfile in /usr/bin/pacdiff
+        local file="${pacfile%.pac*}"
+        pacman --query --quiet --owns "$file" | while IFS= read -r package; do
+            find_in_caches "$package"
+        done
+    done
 }
 
 symlink_into() {
@@ -76,8 +91,8 @@ pacdiff_for_output_only() {
 pacdiff_for_diff_merge() {
     trap 'rm --recursive --force "$unified_cache_index"' EXIT
     unified_cache_index="$(mktemp --directory --tmpdir unified-pacdiff-index.XXXXXXXXXX)"
-    echo 'Building unified index of cached official and AUR packages'
-    find_package_files | symlink_into "$unified_cache_index"
+    echo 'Collecting merge base candidates from official and AUR package caches'
+    find_merge_base_candidates | symlink_into "$unified_cache_index"
 
     # The arguments that pacdiff passes to the specified DIFFPROG and MERGEPROG
     # aren't directly compatible with kdiff3 (mainly, their order is not
