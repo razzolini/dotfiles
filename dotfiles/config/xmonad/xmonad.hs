@@ -168,8 +168,8 @@ screenKeys = do
 
 commonKeys :: Keymap
 commonKeys =
-    [ ("M-o", spawn "google-chrome-stable")
-    , ("M-S-o", spawn "google-chrome-stable --incognito")
+    [ ("M-o", spawn "firefox")
+    , ("M-S-o", spawn "firefox --private-window")
     , ("M-i", spawn "emacsclient -a '' -nqc")
     , ("M-S-p", spawn "power-menu")
     , ("M-S-q", promptQuit) -- Ask for confirmation before quitting
