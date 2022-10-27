@@ -4,6 +4,8 @@ config:
   dotpath: dotfiles
   minversion: 1.10.0
   diff_command: git diff --no-index --color=always -- {0} {1}
+dynvariables:
+  firefox_profile: find ~/.mozilla/firefox -name '*.default-release'
 dotfiles:
   d_fish_functions_linux:
     src: config/fish/functions/linux
@@ -50,6 +52,9 @@ dotfiles:
   f_dunstrc:
     src: config/dunst/dunstrc
     dst: ~/.config/dunst/dunstrc
+  f_firefox_user.js:
+    src: firefox/user.js
+    dst: "{{@@ firefox_profile @@}}/user.js"
   f_fish_theme:
     src: config/fish/conf.d/theme.fish
     dst: ~/.config/fish/conf.d/theme.fish
@@ -104,6 +109,7 @@ profiles:
     - f_bin_recompile-xmonad
     - f_config.fish
     - f_dunstrc
+    - f_firefox_user.js
     - f_fish_theme
     - f_git_config
     - f_init.vim
@@ -130,6 +136,7 @@ profiles:
     - f_bin_wifi-status
     - f_config.fish
     - f_dunstrc
+    - f_firefox_user.js
     - f_fish_theme
     - f_git_config
     - f_init.vim
