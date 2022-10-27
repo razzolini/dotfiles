@@ -9,7 +9,15 @@ readonly INTERFACE=wlo1
 sudo iw dev "$INTERFACE" link | awk -F ': ' '
 BEGIN { printf "WIFI" }
 /Not connected/ { printf " N/A" }
-/SSID/ { printf " %s", $2 }
+/SSID/ {
+    ssid = $2
+    max_length = 12
+    ellipsis = "..."
+    if (length(ssid) > max_length) {
+        ssid = substr(ssid, 1, max_length - length(ellipsis)) ellipsis
+    }
+    printf " %s", ssid
+}
 /signal/ { gsub(" ", "", $2); printf " %s", $2 }
 END { printf "\n" }
 '
