@@ -42,7 +42,7 @@ Config
             ]
             ["-H", "90", "-h", "red"] 50
 {%@@ if profile == "laptop" @@%}
-        , Run Battery ["-t", "AC <acstatus>, BAT <left>% (<timeleft>)"] 100
+        , Run Battery ["-t", "<acstatus> <left>% (<timeleft>)", "--", "-O", "AC ", "-i", "AC ", "-o", "BAT"] 100
 {%@@ endif @@%}
         , Run Date "%a %Y-%m-%d %H:%M" "date" 10
         ]
