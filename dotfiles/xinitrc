@@ -1,9 +1,20 @@
 #!/usr/bin/env sh
 
+# Set up named pipe for logging
+readonly LOG_PIPE_PATH=/tmp/xsession-errors-pipe
+mkfifo "$LOG_PIPE_PATH" || exit 1
+exec 3<>"$LOG_PIPE_PATH"
+rm "$LOG_PIPE_PATH"
+
+readonly LOG_FILE_PATH=~/.xsession-errors
 # Rename old log file if it exists
-[ -f ~/.xsession-errors ] && mv ~/.xsession-errors ~/.xsession-errors.old
-# Redirect stdout/err from virtual console to log file
-exec > ~/.xsession-errors 2>&1
+[ -f "$LOG_FILE_PATH" ] && mv "$LOG_FILE_PATH" "$LOG_FILE_PATH.old"
+
+# Redirect stdout/err from virtual console to log file and add timestamps
+exec 1>&3 2>&1
+while IFS= read -r line; do
+    printf '[%s] %s\n' "$(date +'%Y-%m-%d %H:%M:%S')" "$line"
+done <&3 > "$LOG_FILE_PATH" &
 
 # Merge .Xresources
 [ -f ~/.Xresources ] && xrdb -merge -I"$HOME" ~/.Xresources
