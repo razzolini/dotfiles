@@ -74,7 +74,7 @@ xmobarOnScreens :: [Int] -> StatusBarConfig
 xmobarOnScreens = foldMap $ \screen -> statusBarProp (xmobarCommand screen) (pure myPP)
   where
     xmobarCommand screen = "xmobar --screen " ++ show screen
-    myPP = xmobarPP { ppTitle = xmobarColor "green" "" . shorten 50 }
+    myPP = xmobarPP { ppTitle = xmobarColor "#00ff00" "" . shorten 50 }
 
 -- Workaround for runtime selection between layouts of different types
 -- (inspired by https://stackoverflow.com/a/60715978)

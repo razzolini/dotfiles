@@ -1,7 +1,7 @@
 Config
-    { font = "xft:DejaVu Sans Mono:size=9:antialias=true"
+    { font = "DejaVu Sans Mono 9"
     , bgColor = "black"
-    , fgColor = "grey"
+    , fgColor = "#bebebe"
     , position = TopW L 97
     , commands =
         [ Run XMonadLog
@@ -15,7 +15,7 @@ Config
 {%@@ if profile == "home-desktop" @@%}
         , Run Alsa "default" "Master" ["-t", "VOL <volume>%<status>", "--", "-O", "", "-o", " MUTE"]
 {%@@ endif @@%}
-        , Run Cpu ["-t", "CPU <total>%", "-p", "3", "-L", "10", "-H", "50", "-n", "green", "-h", "red"] 10
+        , Run Cpu ["-t", "CPU <total>%", "-p", "3", "-L", "10", "-H", "50", "-n", "#00ff00", "-h", "red"] 10
         , Run ThermalZone
 {%@@ if profile == "home-desktop" @@%}
             0
@@ -29,10 +29,10 @@ Config
             , "-L", "50"
 {%@@ endif @@%}
             , "-H", "60"
-            , "-n", "green", "-h", "red"
+            , "-n", "#00ff00", "-h", "red"
             ]
             10
-        , Run Memory ["-t", "RAM <usedratio>%", "-p", "3", "-L", "50", "-H", "80", "-n", "green", "-h", "red"] 10
+        , Run Memory ["-t", "RAM <usedratio>%", "-p", "3", "-L", "50", "-H", "80", "-n", "#00ff00", "-h", "red"] 10
         , Run DiskU
             [ ("/", "/ <usedp>%")
 {%@@ if profile == "home-desktop" @@%}
