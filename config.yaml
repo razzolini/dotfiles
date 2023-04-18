@@ -149,6 +149,9 @@ profiles:
     - f_xinitrc
     - f_xmobarrc
     - f_xmonad.hs
+  work-linux:
+    dotfiles:
+    - f_bin_dotdrop
   work-mac:
     dotfiles:
     - d_fish_functions_mac
