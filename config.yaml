@@ -151,7 +151,10 @@ profiles:
     - f_xmonad.hs
   work-linux:
     dotfiles:
+    - d_fish_functions_linux
     - f_bin_dotdrop
+    - f_config.fish
+    - f_fish_theme
   work-mac:
     dotfiles:
     - d_fish_functions_mac

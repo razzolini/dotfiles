@@ -24,14 +24,20 @@ set __fish_git_prompt_color_upstream_ahead green
 set __fish_git_prompt_color_upstream_behind red
 # Chars
 set __fish_git_prompt_char_dirtystate 'Δ'
+{%@@ if profile == "work-linux" @@%}
+set __fish_git_prompt_char_stagedstate 's'
+set __fish_git_prompt_char_untrackedfiles 'u'
+set __fish_git_prompt_char_stashstate 'z'
+{%@@ else @@%}
 set __fish_git_prompt_char_stagedstate '→'
 set __fish_git_prompt_char_untrackedfiles '☡'
 set __fish_git_prompt_char_stashstate '↩'
+{%@@ endif @@%}
 
 # Import bash environment variables
 import_bash_env
 
-{%@@ if profile != "work-mac" @@%}
+{%@@ if profile not in ["work-mac", "work-linux"] @@%}
 # Start ssh agent and/or load its environment vars if needed
 set -l agent_output "$HOME/.ssh-agent-output"
 if not pgrep -u $USER ssh-agent > /dev/null
