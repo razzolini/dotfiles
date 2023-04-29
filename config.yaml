@@ -7,6 +7,10 @@ config:
 dynvariables:
   firefox_profile: find ~/.mozilla/firefox -name '*.default-release'
 dotfiles:
+  d_fish_completions:
+    src: config/fish/completions
+    dst: ~/.config/fish/completions
+    link: absolute
   d_fish_functions_linux:
     src: config/fish/functions/linux
     dst: ~/.config/fish/functions
@@ -98,6 +102,7 @@ dotfiles:
 profiles:
   home-desktop:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
@@ -124,6 +129,7 @@ profiles:
     - f_xmonad.hs
   laptop:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
@@ -151,12 +157,14 @@ profiles:
     - f_xmonad.hs
   work-linux:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_linux
     - f_bin_dotdrop
     - f_config.fish
     - f_fish_theme
   work-mac:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_mac
     - d_spacemacs.d
     - f_bin_cargo-update-installed
