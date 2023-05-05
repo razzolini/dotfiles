@@ -28,6 +28,9 @@ dotfiles:
   f_bin_cargo-update-installed:
     src: bin/cargo-update-installed
     dst: ~/.local/bin/cargo-update-installed
+  f_bin_configure-keyboard:
+    src: bin/configure-keyboard
+    dst: ~/.local/bin/configure-keyboard
   f_bin_dotdrop:
     src: bin/dotdrop
     dst: ~/.local/bin/dotdrop
@@ -103,6 +106,7 @@ profiles:
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
     - f_bin_cargo-update-installed
+    - f_bin_configure-keyboard
     - f_bin_dotdrop
     - f_bin_pacdiff
     - f_bin_power-menu
@@ -128,6 +132,7 @@ profiles:
     - d_spacemacs.d
     - f_alacritty.yml
     - f_alacritty-vifm.desktop
+    - f_bin_configure-keyboard
     - f_bin_dotdrop
     - f_bin_pacdiff
     - f_bin_power-menu

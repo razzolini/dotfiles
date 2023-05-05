@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# Set keyboard layout and compose key
+setxkbmap -layout it -variant nodeadkeys -option compose:prsc
+
+# Make caps lock act as Windows key when held
+xmodmap -e 'keysym Caps_Lock = Hyper_L'
+xmodmap -e 'keycode any = Caps_Lock'
+xmodmap -e 'remove lock = Hyper_L'
+xmodmap -e 'add lock = Caps_Lock'
+if ! pgrep xcape > /dev/null; then
+    xcape -e 'Hyper_L=Caps_Lock'
+fi

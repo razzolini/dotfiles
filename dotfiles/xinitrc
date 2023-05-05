@@ -19,16 +19,8 @@ done <&3 > "$LOG_FILE_PATH" &
 # Merge .Xresources
 [ -f ~/.Xresources ] && xrdb -merge -I"$HOME" ~/.Xresources
 
-# Set keyboard layout
-setxkbmap -layout it -variant nodeadkeys
-# Set compose key
-setxkbmap -option compose:prsc
-# Remap caps lock to Windows key when held
-xmodmap -e 'keysym Caps_Lock = Hyper_L'
-xmodmap -e 'keycode any = Caps_Lock'
-xmodmap -e 'remove lock = Hyper_L'
-xmodmap -e 'add lock = Caps_Lock'
-xcape -e 'Hyper_L=Caps_Lock'
+# Set keyboard layout and custom key mappings
+configure-keyboard
 
 # Set default cursor to left pointer instead of cross
 xsetroot -cursor_name left_ptr
