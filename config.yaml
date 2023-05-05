@@ -57,7 +57,7 @@ dotfiles:
     dst: ~/.config/dunst/dunstrc
   f_firefox_user.js:
     src: firefox/user.js
-    dst: "{{@@ firefox_profile @@}}/user.js"
+    dst: '{{@@ firefox_profile @@}}/user.js'
   f_fish_theme:
     src: config/fish/conf.d/theme.fish
     dst: ~/.config/fish/conf.d/theme.fish
