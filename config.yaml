@@ -56,6 +56,9 @@ dotfiles:
   f_dunstrc:
     src: config/dunst/dunstrc
     dst: ~/.config/dunst/dunstrc
+  f_env.sh:
+    src: config/env.sh
+    dst: ~/.config/env.sh
   f_firefox_user.js:
     src: firefox/user.js
     dst: "{{@@ firefox_profile @@}}/user.js"
@@ -114,6 +117,7 @@ profiles:
     - f_bin_recompile-xmonad
     - f_config.fish
     - f_dunstrc
+    - f_env.sh
     - f_firefox_user.js
     - f_fish_theme
     - f_git_config
@@ -142,6 +146,7 @@ profiles:
     - f_bin_wifi-status
     - f_config.fish
     - f_dunstrc
+    - f_env.sh
     - f_firefox_user.js
     - f_fish_theme
     - f_git_config
@@ -161,6 +166,7 @@ profiles:
     - d_fish_functions_linux
     - f_bin_dotdrop
     - f_config.fish
+    - f_env.sh
     - f_fish_theme
     - f_init.vim
     - f_ripgreprc
@@ -172,6 +178,7 @@ profiles:
     - f_bin_cargo-update-installed
     - f_bin_dotdrop
     - f_config.fish
+    - f_env.sh
     - f_fish_theme
     - f_git_config
     - f_init.vim
