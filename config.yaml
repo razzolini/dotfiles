@@ -162,6 +162,8 @@ profiles:
     - f_bin_dotdrop
     - f_config.fish
     - f_fish_theme
+    - f_init.vim
+    - f_ripgreprc
   work-mac:
     dotfiles:
     - d_fish_completions
