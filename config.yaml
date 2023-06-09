@@ -7,6 +7,10 @@ config:
 dynvariables:
   firefox_profile: find ~/.mozilla/firefox -name '*.default-release'
 dotfiles:
+  d_fish_completions:
+    src: config/fish/completions
+    dst: ~/.config/fish/completions
+    link: absolute
   d_fish_functions_linux:
     src: config/fish/functions/linux
     dst: ~/.config/fish/functions
@@ -55,6 +59,9 @@ dotfiles:
   f_dunstrc:
     src: config/dunst/dunstrc
     dst: ~/.config/dunst/dunstrc
+  f_env.sh:
+    src: config/env.sh
+    dst: ~/.config/env.sh
   f_firefox_user.js:
     src: firefox/user.js
     dst: '{{@@ firefox_profile @@}}/user.js'
@@ -101,6 +108,7 @@ dotfiles:
 profiles:
   home-desktop:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
@@ -113,6 +121,7 @@ profiles:
     - f_bin_recompile-xmonad
     - f_config.fish
     - f_dunstrc
+    - f_env.sh
     - f_firefox_user.js
     - f_fish_theme
     - f_git_config
@@ -128,6 +137,7 @@ profiles:
     - f_xmonad.hs
   laptop:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_linux
     - d_spacemacs.d
     - f_alacritty.yml
@@ -141,6 +151,7 @@ profiles:
     - f_bin_wifi-status
     - f_config.fish
     - f_dunstrc
+    - f_env.sh
     - f_firefox_user.js
     - f_fish_theme
     - f_git_config
@@ -154,13 +165,25 @@ profiles:
     - f_xinitrc
     - f_xmobarrc
     - f_xmonad.hs
+  work-linux:
+    dotfiles:
+    - d_fish_completions
+    - d_fish_functions_linux
+    - f_bin_dotdrop
+    - f_config.fish
+    - f_env.sh
+    - f_fish_theme
+    - f_init.vim
+    - f_ripgreprc
   work-mac:
     dotfiles:
+    - d_fish_completions
     - d_fish_functions_mac
     - d_spacemacs.d
     - f_bin_cargo-update-installed
     - f_bin_dotdrop
     - f_config.fish
+    - f_env.sh
     - f_fish_theme
     - f_git_config
     - f_init.vim
