@@ -22,31 +22,6 @@ any_output_only_args() {
     return 1
 }
 
-find_in_caches() {
-    readonly PACMAN_CACHE=/var/cache/pacman/pkg
-    readonly AUR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/paru/clone"
-    local package="$1"
-    for candidate in {"$PACMAN_CACHE","$AUR_CACHE/$package"}/"$package"-*.pkg.*; do
-        if [[ ! $candidate =~ \.sig$ ]]; then
-            printf '%s\0' "$candidate"
-        fi
-    done
-}
-
-find_merge_base_candidates() {
-    pacdiff --output | while IFS= read -r pacfile; do
-        # This is how $file is computed from $pacfile in /usr/bin/pacdiff
-        local file="${pacfile%.pac*}"
-        pacman --query --quiet --owns "$file" | while IFS= read -r package; do
-            find_in_caches "$package"
-        done
-    done
-}
-
-symlink_into() {
-    xargs --null --no-run-if-empty ln --symbolic --target-directory "$1" --
-}
-
 diffprog() {
     # When this is called to review the result after a merge, the order of the
     # "old" and "new" arguments (i.e. the original file and the merge result,
@@ -89,10 +64,15 @@ pacdiff_for_output_only() {
 }
 
 pacdiff_for_diff_merge() {
-    trap 'rm --recursive --force "$unified_cache_index"' EXIT
-    unified_cache_index="$(mktemp --directory --tmpdir unified-pacdiff-index.XXXXXXXXXX)"
-    echo 'Collecting merge base candidates from official and AUR package caches'
-    find_merge_base_candidates | symlink_into "$unified_cache_index"
+    readonly AUR_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/paru/clone/"
+
+    local cachedirs=()
+    readarray -t cachedirs < <(pacman-conf CacheDir)
+    cachedirs+=("$AUR_CACHE")
+    local cachedir_args=()
+    for cachedir in "${cachedirs[@]}"; do
+        cachedir_args+=(--cachedir "$cachedir")
+    done
 
     # The arguments that pacdiff passes to the specified DIFFPROG and MERGEPROG
     # aren't directly compatible with kdiff3 (mainly, their order is not
@@ -103,7 +83,7 @@ pacdiff_for_diff_merge() {
     # the special 'diffprog' and 'mergeprog' arguments. This idea was inspired
     # by https://www.baeldung.com/linux/run-function-in-script.
     DIFFPROG="$0 diffprog" MERGEPROG="$0 mergeprog" \
-        /usr/bin/pacdiff --sudo --backup --cachedir "$unified_cache_index" "$@"
+        /usr/bin/pacdiff --sudo --backup "${cachedir_args[@]}" "$@"
     # pacdiff is launched without using exec here, so that the previously-set
     # trap can run once pacdiff terminates.
 }
