@@ -775,7 +775,7 @@ this change makes all blocks visible again."
   ;; in a very large image with lots of empty space. The simplest way to work
   ;; around this issue is to shave off one pixel from each side before trimming.
   (with-eval-after-load 'org
-    (let ((imagemagick (copy-list (cdr (assoc 'imagemagick org-preview-latex-process-alist)))))
+    (let ((imagemagick (cl-copy-list (cdr (assoc 'imagemagick org-preview-latex-process-alist)))))
       (setq imagemagick
             (plist-put imagemagick
                        :image-converter
