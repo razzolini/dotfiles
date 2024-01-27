@@ -80,7 +80,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(real-auto-save)
+   dotspacemacs-additional-packages '(flycheck-hledger real-auto-save)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -721,6 +721,14 @@ same `major-mode'."
     (add-to-list 'ledger-reports
                  '("income" "%(binary) -f %(ledger-file) incomestatement")
                  t))
+
+  ;; Enable real-time correctness checking of hledger journals
+  (add-hook 'ledger-mode-hook #'spacemacs/toggle-syntax-checking-on)
+  (use-package flycheck-hledger
+    :after (flycheck ledger-mode)
+    :custom
+    (flycheck-hledger-strict t)
+    (flycheck-hledger-checks '("ordereddates" "tags")))
 
   ;; Configure org time tracking
   (require 'org-clock)
