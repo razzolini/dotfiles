@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+git branch --sort=-committerdate --color=always \
+    --format=$'%(if)%(upstream:track)%(then)%(color:yellow)%(end)%(upstream:remotename)\t%(refname:short)\t%(upstream:track)' \
+    | column -t -s $'\t' -n
