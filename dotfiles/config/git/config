@@ -5,14 +5,12 @@
 {%@@ else @@%}
     email = riccardo4096@gmail.com
 {%@@ endif @@%}
-[diff]
-    indentHeuristic = true
 [core]
     autocrlf = input
 [pull]
     ff = only
 [merge]
-    conflictStyle = diff3
+    conflictStyle = zdiff3
 {%@@ if profile == "work-mac" @@%}
 [init]
     defaultBranch = main
