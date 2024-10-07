@@ -49,16 +49,16 @@ if [[ $has_remote -eq 1 ]]; then
     if [[ "$remote_branch_hash" != "$local_branch_hash" ]]; then
         die "Branch '$branch' is not up to date with '$remote_branch_ref'"
     fi
-fi
 
-branch_committer_email="$(git show --no-patch --format='%ce' "refs/heads/$branch")"
-current_user_email="$(git config user.email)"
-if [[ "$branch_committer_email" != "$current_user_email" ]]; then
-    branch_committer_name="$(git show --no-patch --format='%cn' "refs/heads/$branch")"
-    branch_committer_email_local_part="$(git show --no-patch --format='%cl' "refs/heads/$branch")"
-    acknowledge \
-        "Last committer on branch '$branch' is '$branch_committer_name <$branch_committer_email>'" \
-        "$branch_committer_email_local_part"
+    branch_committer_email="$(git show --no-patch --format='%ce' "refs/heads/$branch")"
+    current_user_email="$(git config user.email)"
+    if [[ "$branch_committer_email" != "$current_user_email" ]]; then
+        branch_committer_name="$(git show --no-patch --format='%cn' "refs/heads/$branch")"
+        branch_committer_email_local_part="$(git show --no-patch --format='%cl' "refs/heads/$branch")"
+        acknowledge \
+            "Last committer on branch '$branch' is '$branch_committer_name <$branch_committer_email>'" \
+            "$branch_committer_email_local_part"
+    fi
 fi
 
 force=0
