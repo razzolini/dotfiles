@@ -4,10 +4,29 @@
 setxkbmap -layout it -variant nodeadkeys -option compose:prsc
 
 # Make caps lock act as Windows key when held
+# Step 1: change the modifier produced by the keycode of the physical caps lock
+# key (which is currently mapped to the "Caps_Lock" keysym) from "lock" to
+# "mod4", which is the same modifier that the Windows key produces.
+xmodmap -e 'remove lock = Caps_Lock'
+xmodmap -e 'add mod4 = Caps_Lock'
+# Step 2: change the keysym produced by the keycode of the physical caps lock
+# key from "Caps_Lock" to "Hyper_L", which was unused until now (to be precise,
+# it was only mapped to some keycodes that don't physically exist on my
+# keyboard).
 xmodmap -e 'keysym Caps_Lock = Hyper_L'
+# Step 3: map an unused keycode (which wasn't previously mapped to any keysyms
+# and doesn't physicall exist on my keyboard) to the "Caps_Lock" keysym, so
+# that said keysym can still be produced via software even though no physical
+# key is mapped to it anymore.
 xmodmap -e 'keycode any = Caps_Lock'
-xmodmap -e 'remove lock = Hyper_L'
+# Step 4: make the formerly-unused keycode from step 3 produce the "lock"
+# modifier (in addition to the "Caps_Lock" keysym) to fully match the behavior
+# of the original caps lock key.
 xmodmap -e 'add lock = Caps_Lock'
+# Step 5: when the physical caps lock key is pressed and releases on its own,
+# emit the keycode from step 3 (which produces the "Caps_Lock" keysym and the
+# "lock" modifier) instead of the usual keycode of the physical caps lock key
+# (which now produces the "Hyper_L" keysym and the "mod4" modifier).
 if ! pgrep xcape > /dev/null; then
     xcape -e 'Hyper_L=Caps_Lock'
 fi
