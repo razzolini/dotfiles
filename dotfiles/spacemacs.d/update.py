@@ -9,7 +9,8 @@ import tty
 
 
 DOTEMACS_DIR = os.path.expanduser('~/.emacs.d/')
-DOTSPACEMACS_TEMPLATE = 'core/templates/.spacemacs.template'
+DOTSPACEMACS_TEMPLATE = 'core/templates/dotspacemacs-template.el'
+OLD_DOTSPACEMACS_TEMPLATE_NAME_PATTERN = {'prefix': 'dotspacemacs-template-', 'suffix': '.old.el'}
 DOTSPACEMACS = os.path.expanduser('~/.spacemacs.d/init.el')
 
 NORMAL = '\x1b[0m'
@@ -196,7 +197,7 @@ def unbuffered_input():
 
 def merge_dotfile():
     """Open a merge tool to let the user merge dotfile template changes."""
-    with NamedTemporaryFile(prefix='.spacemacs-old-', suffix='.template') as old_template:
+    with NamedTemporaryFile(**OLD_DOTSPACEMACS_TEMPLATE_NAME_PATTERN) as old_template:
         run_in_dotemacs(['git', 'show', f'HEAD@{{1}}:{DOTSPACEMACS_TEMPLATE}'], stdout=old_template)
         new_template_name = os.path.join(DOTEMACS_DIR, DOTSPACEMACS_TEMPLATE)
         subprocess.run(
