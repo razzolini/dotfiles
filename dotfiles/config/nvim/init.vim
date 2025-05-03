@@ -233,6 +233,11 @@ nnoremap <silent> <Leader>J F r<CR>>>
 
 " Colors {{{
 
+" Use default Vim terminal color scheme (insted of Neovim 0.10+ color scheme
+" and 24-bit colors)
+colorscheme vim
+set notermguicolors
+
 " Use colors suited to a dark background
 set background=dark
 
@@ -341,5 +346,9 @@ set clipboard+=unnamedplus
 
 " Change cursor shape based on current mode
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+
+" Warn about swap files even if they belong to other running Neovim instances
+" (to avoid ending up with multiple unsaved versions of the same edited file)
+autocmd! nvim.swapfile
 
 " }}}
