@@ -197,32 +197,11 @@ tnoremap <silent> <F7> <C-\><C-n>:tabp<CR>
 nnoremap <silent> <F8> :tabn<CR>
 tnoremap <silent> <F8> <C-\><C-n>:tabn<CR>
 
-" Add blank line (always without comment char) before/after current line {{{
-" Code adapted from Tim Pope's vim-unimpaired
-" Original source: https://github.com/tpope/vim-unimpaired/blob/b3bd13e6d0f118e88b2a0be18bfe335f8678cb46/plugin/unimpaired.vim#L149-L165
-
-function! BlankDown(count) abort
-    put =repeat(nr2char(10), a:count)
-    '[-1
-    silent! call repeat#set("\<Plug>addBlankDown", a:count)
-endfunction
-
-function! BlankUp(count) abort
-    put!=repeat(nr2char(10), a:count)
-    ']+1
-    silent! call repeat#set("\<Plug>addBlankUp", a:count)
-endfunction
-
-" Internal mappings (used for repeat#set)
-nnoremap <silent> <Plug>addBlankDown :<C-u>call BlankDown(v:count1)<CR>
-nnoremap <silent> <Plug>addBlankUp :<C-u>call BlankUp(v:count1)<CR>
-
-" Actual mappings (on an Italian querty keyboard à and ù are right of the home
-" row, after ò)
-nmap à<Space> <Plug>addBlankUp
-nmap ù<Space> <Plug>addBlankDown
-
-" }}}
+" Create more convenient mappings to add blank line (always without comment
+" char) before/after current line (on an Italian querty keyboard à and ù are
+" right of the home row, after ò)
+nmap à<Space> [<Space>
+nmap ù<Space> ]<Space>
 
 " Unjoin (insert line break) and indent before current WORD
 nnoremap <silent> <Leader>J F r<CR>>>
