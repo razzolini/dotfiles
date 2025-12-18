@@ -9,8 +9,12 @@
     autocrlf = input
 [pull]
     ff = only
+[push]
+    useForceIfIncludes = true
 [merge]
     conflictStyle = zdiff3
+[stash]
+    showIncludeUntracked = true
 {%@@ if profile == "work-mac" @@%}
 [init]
     defaultBranch = main
