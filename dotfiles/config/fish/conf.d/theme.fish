@@ -20,7 +20,7 @@ set fish_color_param 00afff
 set fish_color_quote 999900
 set fish_color_redirection 00afff
 set fish_color_search_match --background=normal --reverse
-set fish_color_selection --background=red
+set fish_color_selection --background=red --bold
 set fish_color_status red
 set fish_color_user green
 set fish_color_valid_path --underline
