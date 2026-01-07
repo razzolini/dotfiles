@@ -1,6 +1,6 @@
 # Fish color theme
-# See https://fishshell.com/docs/current/#variables-color for a detailed
-# explanation of these variables.
+# See https://fishshell.com/docs/current/interactive.html#variables-color for
+# a detailed explanation of these variables.
 
 set fish_color_autosuggestion 555
 set fish_color_cancel --reverse
