@@ -8,12 +8,27 @@ die() {
 }
 
 print_blank_line=0
+
 acknowledge() {
     read -rp "$1. Type '$2' to acknowledge: "
     if [[ "$REPLY" != "$2" ]]; then
         die 'Incorrect acknowledgement'
     fi
     print_blank_line=1
+}
+
+print_info() {
+    echo "$1"
+    print_blank_line=1
+}
+
+get_merged_gitlab_mr_url() {
+    command -v glab >/dev/null 2>&1 || return 1
+    command -v jq >/dev/null 2>&1 || return 1
+    glab mr view --output json -- "$1" 2>/dev/null |
+        jq --raw-output --exit-status --arg local_branch_hash "$2" '
+            select(.state == "merged" and .diff_refs.head_sha == $local_branch_hash) | .web_url
+        ' 2>/dev/null
 }
 
 echo_and_run() {
@@ -63,7 +78,11 @@ fi
 
 force=0
 if ! git merge-base --is-ancestor "refs/heads/$branch" HEAD; then
-    acknowledge "Branch '$branch' is not fully merged into HEAD" 'force'
+    if merged_mr_url="$(get_merged_gitlab_mr_url "$branch" "$local_branch_hash")"; then
+        print_info "Branch '$branch' has merged GitLab MR ($merged_mr_url)"
+    else
+        acknowledge "Branch '$branch' is not fully merged into HEAD" 'force'
+    fi
     force=1
 fi
 
