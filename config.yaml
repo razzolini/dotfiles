@@ -5,7 +5,7 @@ config:
   minversion: 1.10.0
   diff_command: git diff --no-index --color=always -- {0} {1}
 dynvariables:
-  firefox_profile: find ~/.mozilla/firefox -name '*.default-release'
+  firefox_profile: find ~/.config/mozilla/firefox -name '*.default-release'
 dotfiles:
   d_fish_completions:
     src: config/fish/completions
