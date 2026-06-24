@@ -322,6 +322,11 @@ set wildmenu wildmode=longest:full,full
 
 " Use clipboard register by default
 set clipboard+=unnamedplus
+" Workaround for Neovim selecting wl-copy as the clipboard provider on X11
+" when WAYLAND_DISPLAY is set to a nonsense value
+if $WAYLAND_DISPLAY ==# 'no'
+    let g:clipboard = 'xsel'
+endif
 
 " Change cursor shape based on current mode
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
