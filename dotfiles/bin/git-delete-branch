@@ -25,9 +25,9 @@ print_info() {
 get_merged_gitlab_mr_url() {
     command -v glab >/dev/null 2>&1 || return 1
     command -v jq >/dev/null 2>&1 || return 1
-    glab mr view --output json -- "$1" 2>/dev/null |
+    glab mr list --output json --merged --source-branch "$1" 2>/dev/null |
         jq --raw-output --exit-status --arg local_branch_hash "$2" '
-            select(.state == "merged" and .diff_refs.head_sha == $local_branch_hash) | .web_url
+            .[] | select(.sha == $local_branch_hash) | .web_url
         ' 2>/dev/null
 }
 
